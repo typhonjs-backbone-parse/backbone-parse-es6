@@ -1,0 +1,106 @@
+{
+   "entryPoints":
+   [
+      {
+         "destBaseDir": "./dist/",
+         "destFilename": "backbone-parse.js",
+         "formats": ["amd", "cjs"],
+         "mangle": false,
+         "minify": false,
+         "src": "src/ModuleRuntime.js - [jquery] - [underscore] - [parse]",
+         "extraConfig":
+         {
+            "meta":
+            {
+               "jquery": { "build": false },
+               "underscore": { "build": false },
+               "parse": { "build": false }
+            }
+         }
+      },
+
+      {
+         "destBaseDir": "./dist/",
+         "destFilename": "backbone-parse.min.js",
+         "formats": ["amd", "cjs"],
+         "mangle": true,
+         "minify": true,
+         "src": "src/ModuleRuntime.js - [jquery] - [underscore] - [parse]",
+         "extraConfig":
+         {
+            "meta":
+            {
+               "jquery": { "build": false },
+               "underscore": { "build": false },
+               "parse": { "build": false }
+            }
+         }
+      },
+
+      {
+         "destBaseDir": "./dist/",
+         "destFilename": "backbone-parse.js",
+         "formats": ["global"],
+         "mangle": false,
+         "minify": false,
+         "src": "src/GlobalRuntime.js",
+         "extraConfig":
+         {
+            "map":
+            {
+               "jquery": "backbone-es6/src/delegateGlobalJQuery.js",
+               "underscore": "backbone-es6/src/delegateGlobalUnderscore.js"
+            }
+         }
+      },
+
+      {
+         "destBaseDir": "./dist/",
+         "destFilename": "backbone-parse.min.js",
+         "formats": ["global"],
+         "mangle": true,
+         "minify": true,
+         "src": "src/GlobalRuntime.js",
+         "extraConfig":
+         {
+            "map":
+            {
+               "jquery": "backbone-es6/src/delegateGlobalJQuery.js",
+               "underscore": "backbone-es6/src/delegateGlobalUnderscore.js"
+            }
+         }
+      },
+
+      {
+         "destBaseDir": "./dist/",
+         "destFilename": "backbone-parse-inclusive.js",
+         "formats": ["global"],
+         "mangle": false,
+         "minify": false,
+         "src": "src/GlobalInclusiveRuntime.js",
+         "extraConfig":
+         {
+            "meta":
+            {
+               "src/GlobalInclusiveRuntime.js": { "format": "cjs" }
+            }
+         }
+      },
+
+      {
+         "destBaseDir": "./dist/",
+         "destFilename": "backbone-parse-inclusive.min.js",
+         "formats": ["global"],
+         "mangle": true,
+         "minify": true,
+         "src": "src/GlobalInclusiveRuntime.js",
+         "extraConfig":
+         {
+            "meta":
+            {
+               "src/GlobalInclusiveRuntime.js": { "format": "cjs" }
+            }
+         }
+      }
+   ]
+}

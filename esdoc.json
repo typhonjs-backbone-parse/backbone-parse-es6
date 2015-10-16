@@ -1,0 +1,5 @@
+{
+   "title": "Backbone-Parse-ES6",
+   "source": "./src",
+   "destination": "./docs"
+}
