@@ -9,7 +9,7 @@
  * jspm-update - Executes 'jspm update'
  * npm-install - Executes 'npm install'
  * npm-uninstall - Executes 'npm uninstall'
- * test - Runs lint and bundle tasks.
+ * test - Runs lint and bundle tasks.  (Add "--travis" argument to run minimal bundle op for Travis CI)
  */
 
 /* eslint-disable */
