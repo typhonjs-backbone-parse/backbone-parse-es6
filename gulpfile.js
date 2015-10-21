@@ -16,6 +16,7 @@
 
 var gulp =        require('gulp');
 
+var argv =        require('yargs').argv;
 var esdoc =       require('gulp-esdoc');
 var eslint =      require('gulp-eslint');
 var fs =          require('fs');
@@ -52,7 +53,8 @@ gulp.task('bundle', function()
 {
    var promiseList = [];
 
-   var bundleInfo =  require('./bundle-config.json');
+   // When testing the build in Travis CI we only need to run a single bundle operation.
+   var bundleInfo = argv.travis ? require('./bundle-config-travis.json') : require('./bundle-config.json');
 
    // Attempt to create './dist' directory if it does not exist.
    if (!fs.existsSync('dist'))
