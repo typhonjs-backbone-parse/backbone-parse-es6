@@ -5,8 +5,8 @@
 [![Documentation](https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/badge.svg)](https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-brightgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 
-[![Build Status](https://img.shields.io/travis/typhonjs/backbone-parse-es6/master.svg?style=flat)](https://travis-ci.org/typhonjs/backbone-parse-es6)
-[![devDependency](https://img.shields.io/david/dev/typhonjs/backbone-parse-es6.svg?style=flat)](https://david-dm.org/typhonjs/backbone-parse-es6#info=devDependencies)
+[![Build Status](https://travis-ci.org/typhonjs/backbone-parse-es6.svg?branch=master)](https://travis-ci.org/typhonjs/backbone-parse-es6)
+[![Dependency Status](https://www.versioneye.com/user/projects/5627b8ff36d0ab0019000f7b/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5627b8ff36d0ab0019000f7b)
 
 Backbone supplies structure to JavaScript-heavy applications by providing models with key-value binding and custom events, collections with a rich API of enumerable functions, views with declarative event handling, and connects it all to your existing application over a RESTful JSON interface.
 
