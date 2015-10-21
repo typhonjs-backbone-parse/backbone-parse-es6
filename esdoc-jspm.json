@@ -1,0 +1,10 @@
+{
+   "title": "Backbone-Parse-ES6",
+   "destination": "docs",
+   "jspm": {
+      "packages": ["backbone-es6"]
+   },
+   "plugins": [
+      {"name": "./esdoc-jspm-plugin.js"}
+   ]
+}

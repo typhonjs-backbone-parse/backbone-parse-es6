@@ -39,16 +39,8 @@ import Debug         from 'backbone-es6/src/Debug.js';
  * <p>
  * If {parse: true} is passed as an option, the attributes will first be converted by parse before being set on the
  * model.
- * <p>
- * Underscore methods available to Model:
- * @see http://underscorejs.org/#chain
- * @see http://underscorejs.org/#keys
- * @see http://underscorejs.org/#invert
- * @see http://underscorejs.org/#isEmpty
- * @see http://underscorejs.org/#omit
- * @see http://underscorejs.org/#pairs
- * @see http://underscorejs.org/#pick
- * @see http://underscorejs.org/#values
+ *
+ * Please see the `Model` documentation for relevant information about the parent class / implementation.
  *
  * @example
  * import Backbone from 'backbone';

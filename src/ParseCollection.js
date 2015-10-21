@@ -12,50 +12,8 @@ import Debug            from 'backbone-es6/src/Debug.js';
  *
  * This implementation of Backbone.Collection provides a `parse` method which coverts the response of a Parse.Query
  * to ParseModels. One must set a Parse.Query instance as options.query or use a getter method such as "get query()".
- * <p>
- * You can bind "change" events to be notified when any model in the collection has been modified, listen for "add"
- * and "remove" events, fetch the collection from the server, and use a full suite of Underscore.js methods.
- * <p>
- * Any event that is triggered on a model in a collection will also be triggered on the collection directly, for
- * convenience. This allows you to listen for changes to specific attributes in any model in a collection, for
- * example: documents.on("change:selected", ...)
  *
- * ---------
- * <br>
- * Underscore methods available to Collection (including aliases):
- *
- * @see http://underscorejs.org/#chain
- * @see http://underscorejs.org/#contains
- * @see http://underscorejs.org/#countBy
- * @see http://underscorejs.org/#difference
- * @see http://underscorejs.org/#each
- * @see http://underscorejs.org/#every
- * @see http://underscorejs.org/#filter
- * @see http://underscorejs.org/#find
- * @see http://underscorejs.org/#first
- * @see http://underscorejs.org/#groupBy
- * @see http://underscorejs.org/#indexBy
- * @see http://underscorejs.org/#indexOf
- * @see http://underscorejs.org/#initial
- * @see http://underscorejs.org/#invoke
- * @see http://underscorejs.org/#isEmpty
- * @see http://underscorejs.org/#last
- * @see http://underscorejs.org/#lastIndexOf
- * @see http://underscorejs.org/#map
- * @see http://underscorejs.org/#max
- * @see http://underscorejs.org/#min
- * @see http://underscorejs.org/#partition
- * @see http://underscorejs.org/#reduce
- * @see http://underscorejs.org/#reduceRight
- * @see http://underscorejs.org/#reject
- * @see http://underscorejs.org/#rest
- * @see http://underscorejs.org/#sample
- * @see http://underscorejs.org/#shuffle
- * @see http://underscorejs.org/#some
- * @see http://underscorejs.org/#sortBy
- * @see http://underscorejs.org/#size
- * @see http://underscorejs.org/#toArray
- * @see http://underscorejs.org/#without
+ * Please see the `Collection` documentation for relevant information about the parent class / implementation.
  *
  * @example
  *

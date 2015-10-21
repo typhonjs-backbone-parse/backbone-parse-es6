@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl">
-  <title data-ice="title">Backbone-Parse-ES6 API Document</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">backbone-parse-es6/src/modelExtend.js | Backbone-Parse-ES6 API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -56,30 +56,40 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p><img src="http://i.imgur.com/aLs8I9U.png" alt="Backbone-Parse-ES6"></p>
-<p><a href="https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/"><img src="https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/badge.svg" alt="Documentation"></a>
-<a href="https://en.wikipedia.org/wiki/Indent_style#Allman_style"><img src="https://img.shields.io/badge/code%20style-allman-brightgreen.svg?style=flat" alt="Code Style"></a></p>
-<p>Backbone supplies structure to JavaScript-heavy applications by providing models with key-value binding and custom events, collections with a rich API of enumerable functions, views with declarative event handling, and connects it all to your existing application over a RESTful JSON interface.</p>
-<p>Backbone-Parse-ES6 is an extension to Backbone-ES6 which is a fork of Backbone 1.2.3 (<a href="https://github.com/jashkenas/backbone">https://github.com/jashkenas/backbone</a>) converting and modularizing it into idiomatic ES6. The impetus for this fork is to experiment with modernizing and making Backbone easier to modify in a granular fashion. In particular the Parse JS SDK (<a href="http://www.parse.com">http://www.parse.com</a>) previously also was a fork of Backbone, but with the 1.6+ SDK release the Backbone API was unceremoniously removed. Backbone-ES6 provides the base for Backbone-Parse-ES6 (<a href="https://github.com/typhonjs/backbone-parse-es6">https://github.com/typhonjs/backbone-parse-es6</a>) which provides a solution for Backbone dependent Parse users. </p>
-<p>This repository contains several pre-packed downloads in the <code>dist/</code> directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The &quot;global-inclusive&quot; bundle includes the latest Parse, jQuery and Underscore libraries.</p>
-<p>Please view the wiki for build instructions and other pertinent info:
-<a href="https://github.com/typhonjs/backbone-parse-es6/wiki">https://github.com/typhonjs/backbone-parse-es6/wiki</a></p>
-<p>API documentation can be found in the <code>docs/</code> directory and online here:
-<a href="https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/">https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/</a>&apos;</p>
-<p>It should be noted though that ESDoc isn&apos;t SystemJS / JSPM aware currently, so traversing into Backbone-ES6 is not 
-complete. In the meantime use the Backbone-ES6 API docs as a complete reference for methods available to ParseCollection
-and ParseModel:
-<a href="https://doc.esdoc.org/github.com/typhonjs/backbone-es6/">https://doc.esdoc.org/github.com/typhonjs/backbone-es6/</a>&apos;</p>
-<p>For original Backbone Docs, License, Tests, pre-packed downloads, and everything else, really, see:
-<a href="http://backbonejs.org">http://backbonejs.org</a></p>
-<p>To suggest a feature or report a bug:
-<a href="https://github.com/typhonjs/backbone-parse-es6/issues">https://github.com/typhonjs/backbone-parse-es6/issues</a></p>
-<p>Many thanks to DocumentCloud &amp; all Backbone contributors:
-<a href="https://github.com/jashkenas/backbone/graphs/contributors">https://github.com/jashkenas/backbone/graphs/contributors</a></p>
-<p>Backbone (c) 2010-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors</p>
-<p>Backbone-Parse-ES6 (c) 2015 Michael Leahy, TyphonRT, Inc. </p>
-<p>Backbone / Backbone-Parse-ES6 may be freely distributed under the MIT license.</p>
-</div>
+<div class="content" data-ice="content"><h1 data-ice="title">backbone-parse-es6/src/modelExtend.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+import extend  from &apos;backbone-es6/src/extend.js&apos;;
+
+/**
+ * Provides extend functionality for Model that is compatible to the Parse SDK.
+ *
+ * @param {string|object}  className   - Class name or object hash w/ className key
+ * @param {object}         protoProps  - instance properties
+ * @param {object}         staticProps - class properties
+ * @returns {*}            Subclass of parent class.
+ */
+export default function modelExtend(className, protoProps, staticProps)
+{
+   if (typeof className !== &apos;string&apos;)
+   {
+      if (className &amp;&amp; typeof className.className === &apos;string&apos;)
+      {
+         return modelExtend(className.className, className, protoProps);
+      }
+      else
+      {
+         throw new Error(`(Parse) Backbone.Model.extend - the first argument should be the className.`);
+      }
+   }
+
+   const child = extend.call(this, protoProps, staticProps);
+
+   child.className = className;
+
+   return child;
+}</code></pre>
+
 </div>
 
 <footer class="footer">

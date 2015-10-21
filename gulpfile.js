@@ -15,12 +15,13 @@ var gulp =        require('gulp');
 
 var esdoc =       require('gulp-esdoc');
 var eslint =      require('gulp-eslint');
-var run =         require('gulp-run');
-var mkdirp =      require('mkdirp');
-var Promise =     require("bluebird");
-var Builder =     require('systemjs-builder');
+var fs =          require('fs');
+var jspm =        require('jspm');
 
-var bundleInfo =  require('./bundle-config.json');
+var Promise =     require("bluebird");
+
+// Set the package path to the local root where config.js is located.
+jspm.setPackagePath('.');
 
 /**
  * Bundles Backbone-Parse-ES6 via the config file found in './bundle-config.json'. This file contains an array of
@@ -47,6 +48,8 @@ var bundleInfo =  require('./bundle-config.json');
 gulp.task('bundle', function()
 {
    var promiseList = [];
+
+   var bundleInfo =  require('./bundle-config.json');
 
    for (var cntr = 0; cntr < bundleInfo.entryPoints.length; cntr++)
    {
@@ -78,14 +81,87 @@ gulp.task('bundle', function()
 });
 
 /**
- * Create docs from ./src using ESDoc. The docs are located in ./docs
+ * Create docs from ./src using ESDoc. The docs are located in ./docs. Note that experimental support for inclusion
+ * of JSPM packages is provided below. This is a two step process including a preprocessing step in the Gulp task
+ * to utilizing SystemJS to perform normalization of JSPM packages finding the full path and normalized paths for the
+ * given packages in `esdoc-jspm.json` configuration.
+ *
+ * An experimental ESDoc plugin (`esdoc-jspm-plugin.js`) is provided in the root directory which uses the output of the
+ * Gulp task to further process and link code found in JSPM packages with the source of this repo.
  */
 gulp.task('docs', function()
 {
-   var esdocConfig = require('./esdoc.json');
+   var path =        require('path');
+   var url =         require('url');
 
-   return gulp.src('./src')
-    .pipe(esdoc(esdocConfig));
+   var esdocConfigLocation = '.' +path.sep +'esdoc.json';
+   var esdocJSPMConfigLocation = '.' +path.sep +'esdoc-jspm.json';
+
+   var esdocJSPMConfig = require(esdocJSPMConfigLocation);
+
+   var localSrcRoot = require(esdocConfigLocation).source;
+
+   var System = new jspm.Loader();
+
+   var promises = [];
+   var normalizedData = [];
+
+   var rootDir = __dirname.split(path.sep).pop();
+
+   if (esdocJSPMConfig.jspm && esdocJSPMConfig.jspm.packages)
+   {
+      for (var cntr = 0; cntr < esdocJSPMConfig.jspm.packages.length; cntr++)
+      {
+         (function (packageName) {
+            promises.push(System.normalize(packageName).then(function(normalized)
+            {
+               // Only process valid JSPM packages
+               if (normalized.indexOf('jspm_packages') >= 0)
+               {
+                  var parsedPath = path.parse(url.parse(normalized).pathname);
+                  var fullPath = parsedPath.dir +path.sep +parsedPath.name;
+                  var relativePath = path.relative(__dirname, parsedPath.dir) +path.sep +parsedPath.name;
+
+                  try
+                  {
+                     // Lookup JSPM package esdoc.json to pull out the source location.
+                     var packageESDocConfig = require(fullPath +path.sep +'esdoc.json');
+                     relativePath += path.sep + packageESDocConfig.source;
+                     fullPath += path.sep + packageESDocConfig.source;
+
+                     normalizedData.push(
+                     {
+                        packageName: packageName,
+                        jspmFullPath: fullPath,
+                        jspmPath: relativePath,
+                        normalizedPath: packageName +path.sep +packageESDocConfig.source,
+                        source: packageESDocConfig.source
+                     });
+                  }
+                  catch(err)
+                  {
+                     console.log('docs - failed to require JSPM package esdoc.json');
+                  }
+               }
+            }));
+         })(esdocJSPMConfig.jspm.packages[cntr]);
+      }
+   }
+
+   Promise.all(promises).then(function()
+   {
+      // There are JSPM packages so add generated config data created above.
+      if (promises.length > 0)
+      {
+         esdocJSPMConfig.jspm.localSrcRoot = localSrcRoot;
+         esdocJSPMConfig.jspm.rootDir = rootDir;
+         esdocJSPMConfig.jspm.packageData = normalizedData;
+      }
+
+      // Launch ESDoc with the generated config from above.
+      gulp.src(localSrcRoot)
+       .pipe(esdoc(esdocJSPMConfig));
+   })
 });
 
 /**
@@ -102,17 +178,57 @@ gulp.task('lint', function()
 /**
  * Runs "jspm install"
  */
-gulp.task('jspm-install', function()
+gulp.task('jspm-install', function(cb)
 {
-   return run('jspm install').exec();
+   var exec = require('child_process').exec;
+   exec('jspm install', function (err, stdout, stderr)
+   {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+   });
+});
+
+/**
+ * Runs "jspm update"
+ */
+gulp.task('jspm-update', function(cb)
+{
+   var exec = require('child_process').exec;
+   exec('jspm update', function (err, stdout, stderr)
+   {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+   });
 });
 
 /**
  * Runs "npm install"
  */
-gulp.task('npm-install', function()
+gulp.task('npm-install', function(cb)
 {
-   return run('npm install').exec();
+   var exec = require('child_process').exec;
+   exec('npm install', function (err, stdout, stderr)
+   {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+   });
+});
+
+/**
+ * Runs "npm uninstall"
+ */
+gulp.task('npm-uninstall', function(cb)
+{
+   var exec = require('child_process').exec;
+   exec('npm uninstall', function (err, stdout, stderr)
+   {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+   });
 });
 
 /**
@@ -131,50 +247,52 @@ function buildStatic(srcFilename, destDir, destFilepath, minify, mangle, format,
 {
    return new Promise(function(resolve, reject)
    {
-      mkdirp(destDir, function(err)
+      // Attempt to create destDir if it does not exist.
+      if (!fs.existsSync(destDir))
       {
-         if (err)
+         fs.mkdirSync(destDir);
+      }
+
+      // Error out early if destDir does not exist.
+      if (!fs.existsSync(destDir))
+      {
+         console.error('Could not create destination directory: ' +destDir);
+         reject();
+      }
+
+      var builder = new jspm.Builder();
+      builder.loadConfig('./config.js').then(function()
+      {
+         if (typeof extraConfig !== 'undefined')
          {
-            console.error(err);
-            reject();
+            builder.config(extraConfig);
          }
-         else
+
+         console.log('Bundle queued - srcFilename: ' +srcFilename +'; format: ' +format  +'; mangle: ' +mangle
+          +'; minify: ' +minify +'; destDir: ' +destDir +'; destFilepath: ' +destFilepath);
+
+         builder.buildStatic(srcFilename, destFilepath,
          {
-            var builder = new Builder();
-            builder.loadConfig('./config.js').then(function()
-            {
-               if (typeof extraConfig !== 'undefined')
-               {
-                  builder.config(extraConfig);
-               }
+            minify: minify,
+            mangle: mangle,
+            format: format
+         })
+         .then(function ()
+         {
+            console.log('Bundle complete - filename: ' +destFilepath +' minify: ' +minify +'; mangle: ' +mangle
+             +'; format: ' +format);
 
-               console.log("Bundle queued - srcFilename: " +srcFilename +"; format: " +format  +"; mangle: " +mangle
-                +"; minify: " +minify +"; destDir: " +destDir +"; destFilepath: " +destFilepath);
+            resolve();
+         })
+         .catch(function (err)
+         {
+            console.log('Bundle error - filename: ' +destFilepath +' minify: ' +minify + '; mangle: ' +mangle
+             +'; format: ' +format);
 
-               builder.buildStatic(srcFilename, destFilepath,
-               {
-                  minify: minify,
-                  mangle: mangle,
-                  format: format
-               })
-               .then(function ()
-               {
-                  console.log('Bundle complete - filename: ' +destFilepath +' minify: ' +minify +'; mangle: ' +mangle
-                   +'; format: ' +format);
+            console.log(err);
 
-                  resolve();
-               })
-               .catch(function (err)
-               {
-                  console.log('Bundle error - filename: ' +destFilepath +' minify: ' +minify + '; mangle: ' +mangle
-                   +'; format: ' +format);
-
-                  console.log(err);
-
-                  resolve();
-               });
-            });
-         }
+            resolve();
+         });
       });
    });
 }
