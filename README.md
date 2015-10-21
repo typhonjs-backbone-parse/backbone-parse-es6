@@ -2,7 +2,7 @@
 
 [![Backbone](https://img.shields.io/badge/backbone-1.2.3-brightgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
 [![Parse](https://img.shields.io/badge/parse-1.6.7-brightgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
-[![Documentation](https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/badge.svg)](https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/)
+[![Documentation](http://js.typhonrt.org/docs/backbone-parse-es6/badge.svg)](http://js.typhonrt.org/docs/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-brightgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 
 [![Build Status](https://travis-ci.org/typhonjs/backbone-parse-es6.svg?branch=master)](https://travis-ci.org/typhonjs/backbone-parse-es6)
