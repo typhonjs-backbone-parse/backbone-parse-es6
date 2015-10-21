@@ -3,7 +3,6 @@
 [![Documentation](https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/badge.svg)](https://doc.esdoc.org/github.com/typhonjs/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-brightgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 
-https://david-dm.org/typhonjs/backbone-parse-es6#info=devDependencies
 [![devDependency Status](https://david-dm.org/typhonjs/backbone-parse-es6/dev-status.svg)](https://david-dm.org/typhonjs/backbone-parse-es6#info=devDependencies)
 
 
