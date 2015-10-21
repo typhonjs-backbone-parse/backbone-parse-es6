@@ -17,7 +17,7 @@ https://github.com/typhonjs/backbone-parse-es6-demo
 
 When a new Backbone release is made (next 1.2.4) Backbone-ES6 will be updated. Tests from Backbone will be ported to Backbone-ES6 with the upcoming 1.2.4 release. Forthcoming tests for Parse integration will be added to this repo. 
 
-This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The "global-inclusive" bundle includes the latest Parse, jQuery and Underscore libraries.
+This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The "global-inclusive" bundle includes the latest Parse, jQuery (2.1.4) and Underscore (1.8.3) libraries.
 
 Please view the wiki for build instructions and other pertinent usage info:
 https://github.com/typhonjs/backbone-parse-es6/wiki
