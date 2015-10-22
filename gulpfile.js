@@ -120,7 +120,6 @@ gulp.task('docs', function()
 
    var System = new jspm.Loader();
 
-   var promises = [];
    var normalizedData = [];
 
    var rootDir = __dirname.split(path.sep).pop();
@@ -129,56 +128,50 @@ gulp.task('docs', function()
    {
       for (var cntr = 0; cntr < esdocJSPMConfig.jspm.packages.length; cntr++)
       {
-         (function (packageName) {
-            promises.push(System.normalize(packageName).then(function(normalized)
+         var packageName = esdocJSPMConfig.jspm.packages[cntr];
+         var normalized = System.normalizeSync(packageName);
+
+         // Only process valid JSPM packages
+         if (normalized.indexOf('jspm_packages') >= 0)
+         {
+            var parsedPath = path.parse(url.parse(normalized).pathname);
+            var fullPath = parsedPath.dir +path.sep +parsedPath.name;
+            var relativePath = path.relative(__dirname, parsedPath.dir) +path.sep +parsedPath.name;
+
+            try
             {
-               // Only process valid JSPM packages
-               if (normalized.indexOf('jspm_packages') >= 0)
-               {
-                  var parsedPath = path.parse(url.parse(normalized).pathname);
-                  var fullPath = parsedPath.dir +path.sep +parsedPath.name;
-                  var relativePath = path.relative(__dirname, parsedPath.dir) +path.sep +parsedPath.name;
+               // Lookup JSPM package esdoc.json to pull out the source location.
+               var packageESDocConfig = require(fullPath +path.sep +'esdoc.json');
+               relativePath += path.sep + packageESDocConfig.source;
+               fullPath += path.sep + packageESDocConfig.source;
 
-                  try
-                  {
-                     // Lookup JSPM package esdoc.json to pull out the source location.
-                     var packageESDocConfig = require(fullPath +path.sep +'esdoc.json');
-                     relativePath += path.sep + packageESDocConfig.source;
-                     fullPath += path.sep + packageESDocConfig.source;
-
-                     normalizedData.push(
-                     {
-                        packageName: packageName,
-                        jspmFullPath: fullPath,
-                        jspmPath: relativePath,
-                        normalizedPath: packageName +path.sep +packageESDocConfig.source,
-                        source: packageESDocConfig.source
-                     });
-                  }
-                  catch(err)
-                  {
-                     console.log('docs - failed to require JSPM package esdoc.json');
-                  }
-               }
-            }));
-         })(esdocJSPMConfig.jspm.packages[cntr]);
+               normalizedData.push(
+                {
+                   packageName: packageName,
+                   jspmFullPath: fullPath,
+                   jspmPath: relativePath,
+                   normalizedPath: packageName +path.sep +packageESDocConfig.source,
+                   source: packageESDocConfig.source
+                });
+            }
+            catch(err)
+            {
+               console.log('docs - failed to require JSPM package esdoc.json');
+            }
+         }
       }
    }
 
-   Promise.all(promises).then(function()
+   // There are JSPM packages so add generated config data created above.
+   if (normalizedData.length > 0)
    {
-      // There are JSPM packages so add generated config data created above.
-      if (promises.length > 0)
-      {
-         esdocJSPMConfig.jspm.localSrcRoot = localSrcRoot;
-         esdocJSPMConfig.jspm.rootDir = rootDir;
-         esdocJSPMConfig.jspm.packageData = normalizedData;
-      }
+      esdocJSPMConfig.jspm.localSrcRoot = localSrcRoot;
+      esdocJSPMConfig.jspm.rootDir = rootDir;
+      esdocJSPMConfig.jspm.packageData = normalizedData;
+   }
 
-      // Launch ESDoc with the generated config from above.
-      gulp.src(localSrcRoot)
-       .pipe(esdoc(esdocJSPMConfig));
-   })
+   // Launch ESDoc with the generated config from above.
+   return gulp.src(localSrcRoot).pipe(esdoc(esdocJSPMConfig));
 });
 
 /**
