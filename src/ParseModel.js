@@ -20,23 +20,23 @@ import Debug         from 'backbone-es6/src/Debug.js';
  *
  * Models are the heart of any JavaScript application, containing the interactive data as well as a large part of the
  * logic surrounding it: conversions, validations, computed properties, and access control.
- * <p>
+ *
  * Backbone-Parse-ES6 supports the older "extend" functionality of the Parse SDK. You can still use "extend" to extend
  * Backbone.Model with your domain-specific methods, and Model provides a basic set of functionality for managing
  * changes. Refer to `modelExtend` which provides the "extend" functionality for ParseModel. It differs from the
  * standard Backbone extend functionality such that the first parameter requires a class name string for the
  * associated table.
- * <p>
+ *
  * It is recommended though to use ES6 syntax for working with Backbone-Parse-ES6 foregoing the older "extend"
  * mechanism.
- * <p>
+ *
  * Create a new model with the specified attributes. A client id (`cid`) is automatically generated & assigned for you.
- * <p>
+ *
  * If you pass a {collection: ...} as the options, the model gains a collection property that will be used to indicate
  * which collection the model belongs to, and is used to help compute the model's url. The model.collection property is
  * normally created automatically when you first add a model to a collection. Note that the reverse is not true, as
  * passing this option to the constructor will not automatically add the model to the collection. Useful, sometimes.
- * <p>
+ *
  * If {parse: true} is passed as an option, the attributes will first be converted by parse before being set on the
  * model.
  *

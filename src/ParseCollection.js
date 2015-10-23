@@ -62,7 +62,7 @@ class ParseCollection extends Collection
     * may be included as an option. Passing false as the comparator option will prevent sorting. If you define an
     * initialize function, it will be invoked when the collection is created. There are a couple of options that, if
     * provided, are attached to the collection directly: model, comparator and query.
-    * <p>
+    *
     * Pass null for models to create an empty Collection with options.
     *
     * @see http://backbonejs.org/#Collection-constructor
