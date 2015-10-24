@@ -98,80 +98,16 @@ gulp.task('bundle', function()
 });
 
 /**
- * Create docs from ./src using ESDoc. The docs are located in ./docs. Note that experimental support for inclusion
- * of JSPM packages is provided below. This is a two step process including a preprocessing step in the Gulp task
- * to utilizing SystemJS to perform normalization of JSPM packages finding the full path and normalized paths for the
- * given packages in `esdoc-jspm.json` configuration.
- *
- * An experimental ESDoc plugin (`esdoc-jspm-plugin.js`) is provided in the root directory which uses the output of the
- * Gulp task to further process and link code found in JSPM packages with the source of this repo.
+ * Create docs from ./src using ESDoc. The docs are located in ./docs
  */
 gulp.task('docs', function()
 {
-   var path =        require('path');
-   var url =         require('url');
+   var path = require('path');
 
-   var esdocConfigLocation = '.' +path.sep +'esdoc.json';
-   var esdocJSPMConfigLocation = '.' +path.sep +'esdoc-jspm.json';
+   var esdocConfig = require('.' +path.sep +'esdoc.json');
 
-   var esdocJSPMConfig = require(esdocJSPMConfigLocation);
-
-   var localSrcRoot = require(esdocConfigLocation).source;
-
-   var System = new jspm.Loader();
-
-   var normalizedData = [];
-
-   var rootDir = __dirname.split(path.sep).pop();
-
-   if (esdocJSPMConfig.jspm && esdocJSPMConfig.jspm.packages)
-   {
-      for (var cntr = 0; cntr < esdocJSPMConfig.jspm.packages.length; cntr++)
-      {
-         var packageName = esdocJSPMConfig.jspm.packages[cntr];
-         var normalized = System.normalizeSync(packageName);
-
-         // Only process valid JSPM packages
-         if (normalized.indexOf('jspm_packages') >= 0)
-         {
-            var parsedPath = path.parse(url.parse(normalized).pathname);
-            var fullPath = parsedPath.dir +path.sep +parsedPath.name;
-            var relativePath = path.relative(__dirname, parsedPath.dir) +path.sep +parsedPath.name;
-
-            try
-            {
-               // Lookup JSPM package esdoc.json to pull out the source location.
-               var packageESDocConfig = require(fullPath +path.sep +'esdoc.json');
-               relativePath += path.sep + packageESDocConfig.source;
-               fullPath += path.sep + packageESDocConfig.source;
-
-               normalizedData.push(
-                {
-                   packageName: packageName,
-                   jspmFullPath: fullPath,
-                   jspmPath: relativePath,
-                   normalizedPath: packageName +path.sep +packageESDocConfig.source,
-                   source: packageESDocConfig.source
-                });
-            }
-            catch(err)
-            {
-               console.log('docs - failed to require JSPM package esdoc.json');
-            }
-         }
-      }
-   }
-
-   // There are JSPM packages so add generated config data created above.
-   if (normalizedData.length > 0)
-   {
-      esdocJSPMConfig.jspm.localSrcRoot = localSrcRoot;
-      esdocJSPMConfig.jspm.rootDir = rootDir;
-      esdocJSPMConfig.jspm.packageData = normalizedData;
-   }
-
-   // Launch ESDoc with the generated config from above.
-   return gulp.src(localSrcRoot).pipe(esdoc(esdocJSPMConfig));
+   // Launch ESDoc
+   return gulp.src(esdocConfig.source).pipe(esdoc(esdocConfig));
 });
 
 /**
