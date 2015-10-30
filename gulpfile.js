@@ -292,13 +292,25 @@ function buildStatic(srcFilename, destDir, destFilepath, minify, mangle, format,
          console.log('Bundle queued - srcFilename: ' +srcFilename +'; format: ' +format  +'; mangle: ' +mangle
           +'; minify: ' +minify +'; destDir: ' +destDir +'; destFilepath: ' +destFilepath);
 
-         builder.buildStatic(srcFilename, destFilepath,
+         var builderPromise;
+         var builderConfig =
          {
             minify: minify,
             mangle: mangle,
             format: format
-         })
-         .then(function ()
+         };
+
+         // When testing we only need to do an in memory build.
+         if (argv.travis)
+         {
+            builderPromise = builder.buildStatic(srcFilename, builderConfig);
+         }
+         else
+         {
+            builderPromise = builder.buildStatic(srcFilename, destFilepath, builderConfig);
+         }
+
+         builderPromise.then(function ()
          {
             console.log('Bundle complete - filename: ' +destFilepath +' minify: ' +minify +'; mangle: ' +mangle
              +'; format: ' +format);
