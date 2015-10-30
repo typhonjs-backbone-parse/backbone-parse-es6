@@ -1,3 +1,8 @@
+/**
+ * Provides ESLint configuration for Backbone-Parse-ES6. This configuration is rather comprehensive requiring complete
+ * documentation and strict styling of source code. All commits and pull requests must use this ESLint configuration.
+ * In the future Code Climate will be used to automate checking pull requests.
+ */
 {
    "extends": "eslint:recommended",
 
