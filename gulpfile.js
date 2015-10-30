@@ -15,13 +15,13 @@
 
 /* eslint-disable */
 
-var gulp =        require('gulp');
+var gulp =     require('gulp');
 
-var argv =        require('yargs').argv;
-var fs =          require('fs');
-var jspm =        require('jspm');
+var argv =     require('yargs').argv;
+var fs =       require('fs');
+var jspm =     require('jspm');
 
-var Promise =     require("bluebird");
+var Promise =  require("bluebird");
 
 // Set the package path to the local root where config.js is located.
 jspm.setPackagePath('.');
@@ -117,8 +117,8 @@ gulp.task('docs', function()
  */
 gulp.task('git push', ['test'], function(cb)
 {
-   var vm = require('vm');
    var exec = require('child_process').exec;
+   var vm = require('vm');
 
    var buffer = fs.readFileSync('./config.js', 'utf8');
 
