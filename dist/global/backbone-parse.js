@@ -688,7 +688,7 @@ $__System.registerDynamic("f", ["e"], true, function(req, exports, module) {
       IS_NODE: typeof process !== 'undefined' && !!process.versions && !!process.versions.node,
       REQUEST_ATTEMPT_LIMIT: 5,
       SERVER_URL: 'https://api.parse.com',
-      VERSION: '1.6.7',
+      VERSION: '1.6.8',
       APPLICATION_ID: null,
       JAVASCRIPT_KEY: null,
       MASTER_KEY: null,
@@ -880,277 +880,320 @@ $__System.registerDynamic("f", ["e"], true, function(req, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("10", ["9", "a"], true, function(req, exports, module) {
+$__System.registerDynamic("10", ["9", "a", "e"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  'use strict';
-  var _createClass = req('9')['default'];
-  var _classCallCheck = req('a')['default'];
-  Object.defineProperty(exports, '__esModule', {value: true});
-  var _isPromisesAPlusCompliant = false;
-  var ParsePromise = (function() {
-    function ParsePromise() {
-      _classCallCheck(this, ParsePromise);
-      this._resolved = false;
-      this._rejected = false;
-      this._resolvedCallbacks = [];
-      this._rejectedCallbacks = [];
-    }
-    _createClass(ParsePromise, [{
-      key: 'resolve',
-      value: function resolve() {
-        if (this._resolved || this._rejected) {
-          throw new Error('A promise was resolved even though it had already been ' + (this._resolved ? 'resolved' : 'rejected') + '.');
-        }
-        this._resolved = true;
-        for (var _len = arguments.length,
-            results = Array(_len),
-            _key = 0; _key < _len; _key++) {
-          results[_key] = arguments[_key];
-        }
-        this._result = results;
-        for (var i = 0; i < this._resolvedCallbacks.length; i++) {
-          this._resolvedCallbacks[i].apply(this, results);
-        }
+  (function(process) {
+    'use strict';
+    var _createClass = req('9')['default'];
+    var _classCallCheck = req('a')['default'];
+    Object.defineProperty(exports, '__esModule', {value: true});
+    var _isPromisesAPlusCompliant = false;
+    var ParsePromise = (function() {
+      function ParsePromise() {
+        _classCallCheck(this, ParsePromise);
+        this._resolved = false;
+        this._rejected = false;
         this._resolvedCallbacks = [];
         this._rejectedCallbacks = [];
       }
-    }, {
-      key: 'reject',
-      value: function reject(error) {
-        if (this._resolved || this._rejected) {
-          throw new Error('A promise was resolved even though it had already been ' + (this._resolved ? 'resolved' : 'rejected') + '.');
+      _createClass(ParsePromise, [{
+        key: 'resolve',
+        value: function resolve() {
+          if (this._resolved || this._rejected) {
+            throw new Error('A promise was resolved even though it had already been ' + (this._resolved ? 'resolved' : 'rejected') + '.');
+          }
+          this._resolved = true;
+          for (var _len = arguments.length,
+              results = Array(_len),
+              _key = 0; _key < _len; _key++) {
+            results[_key] = arguments[_key];
+          }
+          this._result = results;
+          for (var i = 0; i < this._resolvedCallbacks.length; i++) {
+            this._resolvedCallbacks[i].apply(this, results);
+          }
+          this._resolvedCallbacks = [];
+          this._rejectedCallbacks = [];
         }
-        this._rejected = true;
-        this._error = error;
-        for (var i = 0; i < this._rejectedCallbacks.length; i++) {
-          this._rejectedCallbacks[i](error);
+      }, {
+        key: 'reject',
+        value: function reject(error) {
+          if (this._resolved || this._rejected) {
+            throw new Error('A promise was resolved even though it had already been ' + (this._resolved ? 'resolved' : 'rejected') + '.');
+          }
+          this._rejected = true;
+          this._error = error;
+          for (var i = 0; i < this._rejectedCallbacks.length; i++) {
+            this._rejectedCallbacks[i](error);
+          }
+          this._resolvedCallbacks = [];
+          this._rejectedCallbacks = [];
         }
-        this._resolvedCallbacks = [];
-        this._rejectedCallbacks = [];
-      }
-    }, {
-      key: 'then',
-      value: function then(resolvedCallback, rejectedCallback) {
-        var _this = this;
-        var promise = new ParsePromise();
-        var wrappedResolvedCallback = function wrappedResolvedCallback() {
-          for (var _len2 = arguments.length,
-              results = Array(_len2),
-              _key2 = 0; _key2 < _len2; _key2++) {
-            results[_key2] = arguments[_key2];
-          }
-          if (typeof resolvedCallback === 'function') {
-            results = [resolvedCallback.apply(this, results)];
-          }
-          if (results.length === 1 && ParsePromise.is(results[0])) {
-            results[0].then(function() {
-              promise.resolve.apply(promise, arguments);
-            }, function(error) {
-              promise.reject(error);
-            });
-          } else {
-            promise.resolve.apply(promise, results);
-          }
-        };
-        var wrappedRejectedCallback = function wrappedRejectedCallback(error) {
-          var result = [];
-          if (typeof rejectedCallback === 'function') {
-            result = [rejectedCallback(error)];
-            if (result.length === 1 && ParsePromise.is(result[0])) {
-              result[0].then(function() {
+      }, {
+        key: 'then',
+        value: function then(resolvedCallback, rejectedCallback) {
+          var _this = this;
+          var promise = new ParsePromise();
+          var wrappedResolvedCallback = function wrappedResolvedCallback() {
+            for (var _len2 = arguments.length,
+                results = Array(_len2),
+                _key2 = 0; _key2 < _len2; _key2++) {
+              results[_key2] = arguments[_key2];
+            }
+            if (typeof resolvedCallback === 'function') {
+              if (_isPromisesAPlusCompliant) {
+                try {
+                  results = [resolvedCallback.apply(this, results)];
+                } catch (e) {
+                  results = [ParsePromise.error(e)];
+                }
+              } else {
+                results = [resolvedCallback.apply(this, results)];
+              }
+            }
+            if (results.length === 1 && ParsePromise.is(results[0])) {
+              results[0].then(function() {
                 promise.resolve.apply(promise, arguments);
               }, function(error) {
                 promise.reject(error);
               });
             } else {
-              promise.reject(result[0]);
-            }
-          } else {
-            promise.reject(error);
-          }
-        };
-        var runLater = function runLater(fn) {
-          fn.call();
-        };
-        if (this._resolved) {
-          runLater(function() {
-            wrappedResolvedCallback.apply(_this, _this._result);
-          });
-        } else if (this._rejected) {
-          runLater(function() {
-            wrappedRejectedCallback(_this._error);
-          });
-        } else {
-          this._resolvedCallbacks.push(wrappedResolvedCallback);
-          this._rejectedCallbacks.push(wrappedRejectedCallback);
-        }
-        return promise;
-      }
-    }, {
-      key: 'always',
-      value: function always(callback) {
-        return this.then(callback, callback);
-      }
-    }, {
-      key: 'done',
-      value: function done(callback) {
-        return this.then(callback);
-      }
-    }, {
-      key: 'fail',
-      value: function fail(callback) {
-        return this.then(null, callback);
-      }
-    }, {
-      key: '_thenRunCallbacks',
-      value: function _thenRunCallbacks(optionsOrCallback, model) {
-        var options = {};
-        if (typeof optionsOrCallback === 'function') {
-          options.success = function(result) {
-            optionsOrCallback(result, null);
-          };
-          options.error = function(error) {
-            optionsOrCallback(null, error);
-          };
-        } else if (typeof optionsOrCallback === 'object') {
-          if (typeof optionsOrCallback.success === 'function') {
-            options.success = optionsOrCallback.success;
-          }
-          if (typeof optionsOrCallback.error === 'function') {
-            options.error = optionsOrCallback.error;
-          }
-        }
-        return this.then(function() {
-          for (var _len3 = arguments.length,
-              results = Array(_len3),
-              _key3 = 0; _key3 < _len3; _key3++) {
-            results[_key3] = arguments[_key3];
-          }
-          if (options.success) {
-            options.success.apply(this, results);
-          }
-          return ParsePromise.as.apply(ParsePromise, arguments);
-        }, function(error) {
-          if (options.error) {
-            if (typeof model !== 'undefined') {
-              options.error(model, error);
-            } else {
-              options.error(error);
-            }
-          }
-          return ParsePromise.error(error);
-        });
-      }
-    }, {
-      key: '_continueWith',
-      value: function _continueWith(continuation) {
-        return this.then(function() {
-          return continuation(arguments, null);
-        }, function(error) {
-          return continuation(null, error);
-        });
-      }
-    }], [{
-      key: 'is',
-      value: function is(promise) {
-        return typeof promise !== 'undefined' && typeof promise.then === 'function';
-      }
-    }, {
-      key: 'as',
-      value: function as() {
-        var promise = new ParsePromise();
-        for (var _len4 = arguments.length,
-            values = Array(_len4),
-            _key4 = 0; _key4 < _len4; _key4++) {
-          values[_key4] = arguments[_key4];
-        }
-        promise.resolve.apply(promise, values);
-        return promise;
-      }
-    }, {
-      key: 'error',
-      value: function error() {
-        var promise = new ParsePromise();
-        for (var _len5 = arguments.length,
-            errors = Array(_len5),
-            _key5 = 0; _key5 < _len5; _key5++) {
-          errors[_key5] = arguments[_key5];
-        }
-        promise.reject.apply(promise, errors);
-        return promise;
-      }
-    }, {
-      key: 'when',
-      value: function when(promises) {
-        var objects;
-        if (Array.isArray(promises)) {
-          objects = promises;
-        } else {
-          objects = arguments;
-        }
-        var total = objects.length;
-        var hadError = false;
-        var results = [];
-        var errors = [];
-        results.length = objects.length;
-        errors.length = objects.length;
-        if (total === 0) {
-          return ParsePromise.as.apply(this, results);
-        }
-        var promise = new ParsePromise();
-        var resolveOne = function resolveOne() {
-          total--;
-          if (total <= 0) {
-            if (hadError) {
-              promise.reject(errors);
-            } else {
               promise.resolve.apply(promise, results);
             }
+          };
+          var wrappedRejectedCallback = function wrappedRejectedCallback(error) {
+            var result = [];
+            if (typeof rejectedCallback === 'function') {
+              if (_isPromisesAPlusCompliant) {
+                try {
+                  result = [rejectedCallback(error)];
+                } catch (e) {
+                  result = [ParsePromise.error(e)];
+                }
+              } else {
+                result = [rejectedCallback(error)];
+              }
+              if (result.length === 1 && ParsePromise.is(result[0])) {
+                result[0].then(function() {
+                  promise.resolve.apply(promise, arguments);
+                }, function(error) {
+                  promise.reject(error);
+                });
+              } else {
+                if (_isPromisesAPlusCompliant) {
+                  promise.resolve.apply(promise, result);
+                } else {
+                  promise.reject(result[0]);
+                }
+              }
+            } else {
+              promise.reject(error);
+            }
+          };
+          var runLater = function runLater(fn) {
+            fn.call();
+          };
+          if (_isPromisesAPlusCompliant) {
+            if (typeof process !== 'undefined' && typeof process.nextTick === 'function') {
+              runLater = function(fn) {
+                process.nextTick(fn);
+              };
+            } else if (typeof setTimeout === 'function') {
+              runLater = function(fn) {
+                setTimeout(fn, 0);
+              };
+            }
           }
-        };
-        var chain = function chain(object, index) {
-          if (ParsePromise.is(object)) {
-            object.then(function(result) {
-              results[index] = result;
-              resolveOne();
-            }, function(error) {
-              errors[index] = error;
-              hadError = true;
-              resolveOne();
+          if (this._resolved) {
+            runLater(function() {
+              wrappedResolvedCallback.apply(_this, _this._result);
+            });
+          } else if (this._rejected) {
+            runLater(function() {
+              wrappedRejectedCallback(_this._error);
             });
           } else {
-            results[i] = object;
-            resolveOne();
+            this._resolvedCallbacks.push(wrappedResolvedCallback);
+            this._rejectedCallbacks.push(wrappedRejectedCallback);
           }
-        };
-        for (var i = 0; i < objects.length; i++) {
-          chain(objects[i], i);
+          return promise;
         }
-        return promise;
-      }
-    }, {
-      key: '_continueWhile',
-      value: function _continueWhile(predicate, asyncFunction) {
-        if (predicate()) {
-          return asyncFunction().then(function() {
-            return ParsePromise._continueWhile(predicate, asyncFunction);
+      }, {
+        key: 'always',
+        value: function always(callback) {
+          return this.then(callback, callback);
+        }
+      }, {
+        key: 'done',
+        value: function done(callback) {
+          return this.then(callback);
+        }
+      }, {
+        key: 'fail',
+        value: function fail(callback) {
+          return this.then(null, callback);
+        }
+      }, {
+        key: '_thenRunCallbacks',
+        value: function _thenRunCallbacks(optionsOrCallback, model) {
+          var options = {};
+          if (typeof optionsOrCallback === 'function') {
+            options.success = function(result) {
+              optionsOrCallback(result, null);
+            };
+            options.error = function(error) {
+              optionsOrCallback(null, error);
+            };
+          } else if (typeof optionsOrCallback === 'object') {
+            if (typeof optionsOrCallback.success === 'function') {
+              options.success = optionsOrCallback.success;
+            }
+            if (typeof optionsOrCallback.error === 'function') {
+              options.error = optionsOrCallback.error;
+            }
+          }
+          return this.then(function() {
+            for (var _len3 = arguments.length,
+                results = Array(_len3),
+                _key3 = 0; _key3 < _len3; _key3++) {
+              results[_key3] = arguments[_key3];
+            }
+            if (options.success) {
+              options.success.apply(this, results);
+            }
+            return ParsePromise.as.apply(ParsePromise, arguments);
+          }, function(error) {
+            if (options.error) {
+              if (typeof model !== 'undefined') {
+                options.error(model, error);
+              } else {
+                options.error(error);
+              }
+            }
+            return ParsePromise.error(error);
           });
         }
-        return ParsePromise.as();
-      }
-    }, {
-      key: 'isPromisesAPlusCompliant',
-      value: function isPromisesAPlusCompliant() {
-        return _isPromisesAPlusCompliant;
-      }
-    }]);
-    return ParsePromise;
-  })();
-  exports['default'] = ParsePromise;
-  module.exports = exports['default'];
+      }, {
+        key: '_continueWith',
+        value: function _continueWith(continuation) {
+          return this.then(function() {
+            return continuation(arguments, null);
+          }, function(error) {
+            return continuation(null, error);
+          });
+        }
+      }], [{
+        key: 'is',
+        value: function is(promise) {
+          return typeof promise !== 'undefined' && typeof promise.then === 'function';
+        }
+      }, {
+        key: 'as',
+        value: function as() {
+          var promise = new ParsePromise();
+          for (var _len4 = arguments.length,
+              values = Array(_len4),
+              _key4 = 0; _key4 < _len4; _key4++) {
+            values[_key4] = arguments[_key4];
+          }
+          promise.resolve.apply(promise, values);
+          return promise;
+        }
+      }, {
+        key: 'error',
+        value: function error() {
+          var promise = new ParsePromise();
+          for (var _len5 = arguments.length,
+              errors = Array(_len5),
+              _key5 = 0; _key5 < _len5; _key5++) {
+            errors[_key5] = arguments[_key5];
+          }
+          promise.reject.apply(promise, errors);
+          return promise;
+        }
+      }, {
+        key: 'when',
+        value: function when(promises) {
+          var objects;
+          if (Array.isArray(promises)) {
+            objects = promises;
+          } else {
+            objects = arguments;
+          }
+          var total = objects.length;
+          var hadError = false;
+          var results = [];
+          var errors = [];
+          results.length = objects.length;
+          errors.length = objects.length;
+          if (total === 0) {
+            return ParsePromise.as.apply(this, results);
+          }
+          var promise = new ParsePromise();
+          var resolveOne = function resolveOne() {
+            total--;
+            if (total <= 0) {
+              if (hadError) {
+                promise.reject(errors);
+              } else {
+                promise.resolve.apply(promise, results);
+              }
+            }
+          };
+          var chain = function chain(object, index) {
+            if (ParsePromise.is(object)) {
+              object.then(function(result) {
+                results[index] = result;
+                resolveOne();
+              }, function(error) {
+                errors[index] = error;
+                hadError = true;
+                resolveOne();
+              });
+            } else {
+              results[i] = object;
+              resolveOne();
+            }
+          };
+          for (var i = 0; i < objects.length; i++) {
+            chain(objects[i], i);
+          }
+          return promise;
+        }
+      }, {
+        key: '_continueWhile',
+        value: function _continueWhile(predicate, asyncFunction) {
+          if (predicate()) {
+            return asyncFunction().then(function() {
+              return ParsePromise._continueWhile(predicate, asyncFunction);
+            });
+          }
+          return ParsePromise.as();
+        }
+      }, {
+        key: 'isPromisesAPlusCompliant',
+        value: function isPromisesAPlusCompliant() {
+          return _isPromisesAPlusCompliant;
+        }
+      }, {
+        key: 'enableAPlusCompliant',
+        value: function enableAPlusCompliant() {
+          _isPromisesAPlusCompliant = true;
+        }
+      }, {
+        key: 'disableAPlusCompliant',
+        value: function disableAPlusCompliant() {
+          _isPromisesAPlusCompliant = false;
+        }
+      }]);
+      return ParsePromise;
+    })();
+    exports['default'] = ParsePromise;
+    module.exports = exports['default'];
+  })(req('e'));
   global.define = __define;
   return module.exports;
 });
@@ -1377,7 +1420,7 @@ $__System.registerDynamic("15", [], true, function(req, exports, module) {
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var core = module.exports = {version: '1.2.2'};
+  var core = module.exports = {version: '1.2.3'};
   if (typeof __e == 'number')
     __e = core;
   global.define = __define;
@@ -1637,7 +1680,7 @@ $__System.registerDynamic("24", ["23"], true, function(req, exports, module) {
       __define = global.define;
   global.define = undefined;
   var cof = req('23');
-  module.exports = 0 in Object('z') ? Object : function(it) {
+  module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
   global.define = __define;
@@ -1713,7 +1756,6 @@ $__System.registerDynamic("29", ["28"], true, function(req, exports, module) {
       var object = _x,
           property = _x2,
           receiver = _x3;
-      desc = parent = getter = undefined;
       _again = false;
       if (object === null)
         object = Function.prototype;
@@ -1727,6 +1769,7 @@ $__System.registerDynamic("29", ["28"], true, function(req, exports, module) {
           _x2 = property;
           _x3 = receiver;
           _again = true;
+          desc = parent = undefined;
           continue _function;
         }
       } else if ("value" in desc) {
@@ -3474,19 +3517,7 @@ $__System.registerDynamic("3a", ["1b", "5", "34", "11", "37", "35", "3c", "3b"],
         return value.toPointer();
       }
       seen = seen.concat(seenEntry);
-      var json = encode(value.attributes, disallowObjects, forcePointers, seen);
-      if (json.createdAt) {
-        json.createdAt = json.createdAt.iso;
-      }
-      if (json.updatedAt) {
-        json.updatedAt = json.updatedAt.iso;
-      }
-      json.className = value.className;
-      json.__type = 'Object';
-      if (value.id) {
-        json.objectId = value.id;
-      }
-      return json;
+      return value._toFullJSON(seen);
     }
     if (value instanceof _ParseOp.Op || value instanceof _ParseACL2['default'] || value instanceof _ParseGeoPoint2['default'] || value instanceof _ParseRelation2['default']) {
       return value.toJSON();
@@ -4208,6 +4239,10 @@ $__System.registerDynamic("42", ["29", "31", "9", "a", "8", "5", "22", "f", "36"
       }, {
         key: 'setUsername',
         value: function setUsername(username) {
+          var authData = this.get('authData');
+          if (authData && authData.hasOwnProperty('anonymous')) {
+            authData.anonymous = null;
+          }
           this.set('username', username);
         }
       }, {
@@ -5238,8 +5273,8 @@ $__System.registerDynamic("35", ["9", "a", "1b", "1f", "21", "8", "5", "22", "f"
       }
     }, {
       key: '_toFullJSON',
-      value: function _toFullJSON() {
-        var json = this.toJSON();
+      value: function _toFullJSON(seen) {
+        var json = this.toJSON(seen);
         json.__type = 'Object';
         json.className = this.className;
         return json;
@@ -5367,15 +5402,16 @@ $__System.registerDynamic("35", ["9", "a", "1b", "1f", "21", "8", "5", "22", "f"
       value: function initialize() {}
     }, {
       key: 'toJSON',
-      value: function toJSON() {
+      value: function toJSON(seen) {
         var seenEntry = this.id ? this.className + ':' + this.id : this;
+        var seen = seen || [seenEntry];
         var json = {};
         var attrs = this.attributes;
         for (var attr in attrs) {
           if ((attr === 'createdAt' || attr === 'updatedAt') && attrs[attr].toJSON) {
             json[attr] = attrs[attr].toJSON();
           } else {
-            json[attr] = (0, _encode2['default'])(attrs[attr], false, false, [seenEntry]);
+            json[attr] = (0, _encode2['default'])(attrs[attr], false, false, seen);
           }
         }
         var pending = this._getPendingOps();
@@ -6357,21 +6393,21 @@ $__System.register('4a', ['47', '48', '49', 'a'], function (_export) {
     execute: function () {
 
       /**
-       * Backbone.js<br>
+       * Backbone.js
        *
-       * (c) 2010-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors<br>
-       * Backbone may be freely distributed under the MIT license.<br>
+       * (c) 2010-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+       * Backbone may be freely distributed under the MIT license.
        *
-       * For all details and documentation:<br>
-       * http://backbonejs.org<br>
+       * For all details and documentation:
+       * http://backbonejs.org
        *
        * ---------
        *
-       * Backbone-ES6<br>
-       * https://github.com/typhonjs/backbone-es6<br>
-       * (c) 2015 Michael Leahy<br>
-       * Backbone-ES6 may be freely distributed under the MIT license.<br>
-       * <br>
+       * Backbone-ES6
+       * https://github.com/typhonjs/backbone-es6
+       * (c) 2015 Michael Leahy
+       * Backbone-ES6 may be freely distributed under the MIT license.
+       *
        * This fork of Backbone converts it to ES6 and provides extension through constructor injection for easy modification.
        * The only major difference from Backbone is that Backbone itself is not a global Events instance anymore. Please
        * see @link{Events.js} for documentation on easily setting up an ES6 event module for global usage.
@@ -6777,8 +6813,8 @@ $__System.registerDynamic("5a", ["4e", "16", "52", "51", "53", "56", "57", "59",
     Iterators[TAG] = returnThis;
     if (DEFAULT) {
       methods = {
-        keys: IS_SET ? _default : createMethod(KEYS),
         values: DEFAULT == VALUES ? _default : createMethod(VALUES),
+        keys: IS_SET ? _default : createMethod(KEYS),
         entries: DEFAULT != VALUES ? _default : createMethod('entries')
       };
       if (FORCE)
@@ -7061,7 +7097,24 @@ $__System.registerDynamic("68", ["6", "56", "50"], true, function(req, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("69", [], true, function(req, exports, module) {
+$__System.registerDynamic("69", ["2a", "2b", "56"], true, function(req, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var anObject = req('2a'),
+      aFunction = req('2b'),
+      SPECIES = req('56')('species');
+  module.exports = function(O, D) {
+    var C = anObject(O).constructor,
+        S;
+    return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("6a", [], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7086,7 +7139,7 @@ $__System.registerDynamic("69", [], true, function(req, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("6a", ["14"], true, function(req, exports, module) {
+$__System.registerDynamic("6b", ["14"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7096,7 +7149,7 @@ $__System.registerDynamic("6a", ["14"], true, function(req, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("6b", ["1c", "14"], true, function(req, exports, module) {
+$__System.registerDynamic("6c", ["1c", "14"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7111,7 +7164,7 @@ $__System.registerDynamic("6b", ["1c", "14"], true, function(req, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("6c", ["2c", "69", "6a", "6b", "14", "23", "e"], true, function(req, exports, module) {
+$__System.registerDynamic("6d", ["2c", "6a", "6b", "6c", "14", "23", "e"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7119,9 +7172,9 @@ $__System.registerDynamic("6c", ["2c", "69", "6a", "6b", "14", "23", "e"], true,
   (function(process) {
     'use strict';
     var ctx = req('2c'),
-        invoke = req('69'),
-        html = req('6a'),
-        cel = req('6b'),
+        invoke = req('6a'),
+        html = req('6b'),
+        cel = req('6c'),
         global = req('14'),
         process = global.process,
         setTask = global.setImmediate,
@@ -7195,14 +7248,14 @@ $__System.registerDynamic("6c", ["2c", "69", "6a", "6b", "14", "23", "e"], true,
   return module.exports;
 });
 
-$__System.registerDynamic("6d", ["14", "6c", "23", "e"], true, function(req, exports, module) {
+$__System.registerDynamic("6e", ["14", "6d", "23", "e"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   (function(process) {
     var global = req('14'),
-        macrotask = req('6c').set,
+        macrotask = req('6d').set,
         Observer = global.MutationObserver || global.WebKitMutationObserver,
         process = global.process,
         isNode = req('23')(process) == 'process',
@@ -7264,7 +7317,7 @@ $__System.registerDynamic("6d", ["14", "6c", "23", "e"], true, function(req, exp
   return module.exports;
 });
 
-$__System.registerDynamic("6e", ["52"], true, function(req, exports, module) {
+$__System.registerDynamic("6f", ["52"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7279,7 +7332,7 @@ $__System.registerDynamic("6e", ["52"], true, function(req, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("6f", ["56"], true, function(req, exports, module) {
+$__System.registerDynamic("70", ["56"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7316,7 +7369,7 @@ $__System.registerDynamic("6f", ["56"], true, function(req, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("70", ["6", "4e", "14", "2c", "60", "16", "1c", "2a", "2b", "61", "66", "2d", "67", "68", "56", "55", "6d", "50", "6e", "58", "15", "6f", "e"], true, function(req, exports, module) {
+$__System.registerDynamic("71", ["6", "4e", "14", "2c", "60", "16", "1c", "2a", "2b", "61", "66", "2d", "67", "68", "56", "69", "55", "6e", "50", "6f", "58", "15", "70", "e"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7338,8 +7391,9 @@ $__System.registerDynamic("70", ["6", "4e", "14", "2c", "60", "16", "1c", "2a", 
         same = req('67'),
         species = req('68'),
         SPECIES = req('56')('species'),
+        speciesConstructor = req('69'),
         RECORD = req('55')('record'),
-        asap = req('6d'),
+        asap = req('6e'),
         PROMISE = 'Promise',
         process = global.process,
         isNode = classof(process) == 'process',
@@ -7525,14 +7579,13 @@ $__System.registerDynamic("70", ["6", "4e", "14", "2c", "60", "16", "1c", "2a", 
           $reject.call(record, err);
         }
       };
-      req('6e')(P.prototype, {
+      req('6f')(P.prototype, {
         then: function then(onFulfilled, onRejected) {
-          var S = anObject(anObject(this).constructor)[SPECIES];
           var react = {
             ok: typeof onFulfilled == 'function' ? onFulfilled : true,
             fail: typeof onRejected == 'function' ? onRejected : false
           };
-          var promise = react.P = new (S != undefined ? S : P)(function(res, rej) {
+          var promise = react.P = new (speciesConstructor(this, P))(function(res, rej) {
             react.res = res;
             react.rej = rej;
           });
@@ -7565,7 +7618,7 @@ $__System.registerDynamic("70", ["6", "4e", "14", "2c", "60", "16", "1c", "2a", 
           res(x);
         });
       }});
-    $def($def.S + $def.F * !(useNative && req('6f')(function(iter) {
+    $def($def.S + $def.F * !(useNative && req('70')(function(iter) {
       P.all(iter)['catch'](function() {});
     })), PROMISE, {
       all: function all(iterable) {
@@ -7600,7 +7653,7 @@ $__System.registerDynamic("70", ["6", "4e", "14", "2c", "60", "16", "1c", "2a", 
   return module.exports;
 });
 
-$__System.registerDynamic("71", ["4b", "5b", "5f", "70", "15"], true, function(req, exports, module) {
+$__System.registerDynamic("72", ["4b", "5b", "5f", "71", "15"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7608,26 +7661,26 @@ $__System.registerDynamic("71", ["4b", "5b", "5f", "70", "15"], true, function(r
   req('4b');
   req('5b');
   req('5f');
-  req('70');
+  req('71');
   module.exports = req('15').Promise;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("72", ["71"], true, function(req, exports, module) {
+$__System.registerDynamic("73", ["72"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": req('71'),
+    "default": req('72'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.register('73', ['9', '48', 'a'], function (_export) {
+$__System.register('74', ['9', '48', 'a'], function (_export) {
    var _createClass, _, _classCallCheck, s_EVENT_SPLITTER, s_EVENTS_API, s_INTERNAL_ON, s_OFF_API, s_ON_API, s_ONCE_MAP, s_TRIGGER_API, s_TRIGGER_EVENTS, Events;
 
    return {
@@ -7904,35 +7957,34 @@ $__System.register('73', ['9', '48', 'a'], function (_export) {
           *
           * An important consideration of Backbone-ES6 is that Events are no longer an object literal, but a full blown ES6
           * class. This is the biggest potential breaking change for Backbone-ES6 when compared to the original Backbone.
-          * <p>
+          *
           * Previously Events could be mixed in to any object. This is no longer possible with Backbone-ES6 when working from
           * source or the bundled versions. It should be noted that Events is also no longer mixed into Backbone itself, so
           * Backbone is not a Global events instance.
-          * <p>
-          * Catalog of Events:<br>
+          *
+          * Catalog of Events:
           * Here's the complete list of built-in Backbone events, with arguments. You're also free to trigger your own events on
-          * Models, Collections and Views as you see fit. The Backbone object itself mixes in Events, and can be used to emit any
-          * global events that your application needs.
-          * <p>
-          * "add" (model, collection, options) — when a model is added to a collection.<br>
-          * "remove" (model, collection, options) — when a model is removed from a collection.<br>
+          * Models, Collections and Views as you see fit.
+          *
+          * "add" (model, collection, options) — when a model is added to a collection.
+          * "remove" (model, collection, options) — when a model is removed from a collection.
           * "update" (collection, options) — single event triggered after any number of models have been added or removed from a
-          * collection.<br>
-          * "reset" (collection, options) — when the collection's entire contents have been replaced.<br>
-          * "sort" (collection, options) — when the collection has been re-sorted.<br>
-          * "change" (model, options) — when a model's attributes have changed.<br>
-          * "change:[attribute]" (model, value, options) — when a specific attribute has been updated.<br>
-          * "destroy" (model, collection, options) — when a model is destroyed.<br>
-          * "request" (model_or_collection, xhr, options) — when a model or collection has started a request to the server.<br>
+          * collection.
+          * "reset" (collection, options) — when the collection's entire contents have been replaced.
+          * "sort" (collection, options) — when the collection has been re-sorted.
+          * "change" (model, options) — when a model's attributes have changed.
+          * "change:[attribute]" (model, value, options) — when a specific attribute has been updated.
+          * "destroy" (model, collection, options) — when a model is destroyed.
+          * "request" (model_or_collection, xhr, options) — when a model or collection has started a request to the server.
           * "sync" (model_or_collection, resp, options) — when a model or collection has been successfully synced with the
-          * server.<br>
-          * "error" (model_or_collection, resp, options) — when a model's or collection's request to the server has failed.<br>
-          * "invalid" (model, error, options) — when a model's validation fails on the client.<br>
-          * "route:[name]" (params) — Fired by the router when a specific route is matched.<br>
-          * "route" (route, params) — Fired by the router when any route has been matched.<br>
-          * "route" (router, route, params) — Fired by history when any route has been matched.<br>
-          * "all" — this special event fires for any triggered event, passing the event name as the first argument.<br>
-          * <p>
+          * server.
+          * "error" (model_or_collection, resp, options) — when a model's or collection's request to the server has failed.
+          * "invalid" (model, error, options) — when a model's validation fails on the client.
+          * "route:[name]" (params) — Fired by the router when a specific route is matched.
+          * "route" (route, params) — Fired by the router when any route has been matched.
+          * "route" (router, route, params) — Fired by history when any route has been matched.
+          * "all" — this special event fires for any triggered event, passing the event name as the first argument.
+          *
           * Generally speaking, when calling a function that emits an event (model.set, collection.add, and so on...), if you'd
           * like to prevent the event from being triggered, you may pass {silent: true} as an option. Note that this is rarely,
           * perhaps even never, a good idea. Passing through a specific flag in the options for your event callback to look at,
@@ -8229,7 +8281,7 @@ $__System.register('73', ['9', '48', 'a'], function (_export) {
    };
 });
 
-$__System.registerDynamic("74", ["2c", "16", "13", "62", "63", "64", "65", "6f"], true, function(req, exports, module) {
+$__System.registerDynamic("75", ["2c", "16", "13", "62", "63", "64", "65", "70"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -8242,7 +8294,7 @@ $__System.registerDynamic("74", ["2c", "16", "13", "62", "63", "64", "65", "6f"]
       isArrayIter = req('63'),
       toLength = req('64'),
       getIterFn = req('65');
-  $def($def.S + $def.F * !req('6f')(function(iter) {
+  $def($def.S + $def.F * !req('70')(function(iter) {
     Array.from(iter);
   }), 'Array', {from: function from(arrayLike) {
       var O = toObject(arrayLike),
@@ -8276,27 +8328,14 @@ $__System.registerDynamic("74", ["2c", "16", "13", "62", "63", "64", "65", "6f"]
   return module.exports;
 });
 
-$__System.registerDynamic("75", ["5b", "74", "15"], true, function(req, exports, module) {
+$__System.registerDynamic("76", ["5b", "75", "15"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   req('5b');
-  req('74');
+  req('75');
   module.exports = req('15').Array.from;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("76", ["75"], true, function(req, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = {
-    "default": req('75'),
-    __esModule: true
-  };
   global.define = __define;
   return module.exports;
 });
@@ -8306,8 +8345,21 @@ $__System.registerDynamic("77", ["76"], true, function(req, exports, module) {
   var global = this,
       __define = global.define;
   global.define = undefined;
+  module.exports = {
+    "default": req('76'),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("78", ["77"], true, function(req, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
   "use strict";
-  var _Array$from = req('76')["default"];
+  var _Array$from = req('77')["default"];
   exports["default"] = function(arr) {
     if (Array.isArray(arr)) {
       for (var i = 0,
@@ -8323,7 +8375,7 @@ $__System.registerDynamic("77", ["76"], true, function(req, exports, module) {
   return module.exports;
 });
 
-$__System.register('78', ['9', '48', '49', '77', 'a'], function (_export) {
+$__System.register('79', ['9', '48', '49', '78', 'a'], function (_export) {
    var _createClass, _, BackboneProxy, _toConsumableArray, _classCallCheck, s_ADD_METHOD, s_CB, s_MODEL_MATCHER, Utils;
 
    return {
@@ -8513,7 +8565,7 @@ $__System.register('78', ['9', '48', '49', '77', 'a'], function (_export) {
    };
 });
 
-$__System.register('79', ['9', '29', '31', '48', '49', '73', '78', 'a'], function (_export) {
+$__System.register('7a', ['9', '29', '31', '48', '49', '74', '79', 'a'], function (_export) {
    var _createClass, _get, _inherits, _, BackboneProxy, Events, Utils, _classCallCheck, Model, modelMethods;
 
    return {
@@ -8542,23 +8594,23 @@ $__System.register('79', ['9', '29', '31', '48', '49', '73', '78', 'a'], functio
           *
           * Models are the heart of any JavaScript application, containing the interactive data as well as a large part of the
           * logic surrounding it: conversions, validations, computed properties, and access control.
-          * <p>
+          *
           * Backbone-ES6 supports the older "extend" functionality of Backbone. You can still use "extend" to extend
           * Backbone.Model with your domain-specific methods, and Model provides a basic set of functionality for managing
           * changes.
-          * <p>
+          *
           * It is recommended though to use ES6 syntax for working with Backbone-ES6 foregoing the older "extend" mechanism.
-          * <p>
+          *
           * Create a new model with the specified attributes. A client id (`cid`) is automatically generated & assigned for you.
-          * <p>
+          *
           * If you pass a {collection: ...} as the options, the model gains a collection property that will be used to indicate
           * which collection the model belongs to, and is used to help compute the model's url. The model.collection property is
           * normally created automatically when you first add a model to a collection. Note that the reverse is not true, as
           * passing this option to the constructor will not automatically add the model to the collection. Useful, sometimes.
-          * <p>
+          *
           * If {parse: true} is passed as an option, the attributes will first be converted by parse before being set on the
           * model.
-          * <p>
+          *
           * Underscore methods available to Model:
           * @see http://underscorejs.org/#chain
           * @see http://underscorejs.org/#keys
@@ -8699,7 +8751,7 @@ $__System.register('79', ['9', '29', '31', '48', '49', '73', '78', 'a'], functio
              * @example
              * ES6 example: If you're looking to get fancy, you may want to override constructor, which allows you to replace
              * the actual constructor function for your model.
-             * <br>
+             *
              * class Library extends Backbone.Model {
              *    constructor() {
              *       super(...arguments);
@@ -9013,7 +9065,7 @@ $__System.register('79', ['9', '29', '31', '48', '49', '73', '78', 'a'], functio
                /**
                 * Has the model changed since its last set? If an attribute is passed, returns true if that specific attribute has
                 * changed.
-                * <p>
+                *
                 * Note that this method, and the following change-related ones, are only useful during the course of a "change"
                 * event.
                 *
@@ -9182,14 +9234,14 @@ $__System.register('79', ['9', '29', '31', '48', '49', '73', '78', 'a'], functio
                 * the model has a validate method, and validation fails, the model will not be saved. If the model isNew, the save
                 * will be a "create" (HTTP POST), if the model already exists on the server, the save will be an "update"
                 * (HTTP PUT).
-                * <p>
+                *
                 * If instead, you'd only like the changed attributes to be sent to the server, call model.save(attrs,
                 * {patch: true}). You'll get an HTTP PATCH request to the server with just the passed-in attributes.
-                * <p>
+                *
                 * Calling save with new attributes will cause a "change" event immediately, a "request" event as the Ajax request
                 * begins to go to the server, and a "sync" event after the server has acknowledged the successful change. Pass
                 * {wait: true} if you'd like to wait for the server before setting the new attributes on the model.
-                * <p>
+                *
                 * In the following example, notice how our overridden version of Backbone.sync receives a "create" request the
                 * first time the model is saved and an "update" request the second time.
                 *
@@ -9452,7 +9504,7 @@ $__System.register('79', ['9', '29', '31', '48', '49', '73', '78', 'a'], functio
                 * somewhere else, override this method with the correct logic. Generates URLs of the form: "[collection.url]/[id]"
                 * by default, but you may override by specifying an explicit urlRoot if the model's collection shouldn't be taken
                 * into account.
-                * <p>
+                *
                 * Delegates to Collection#url to generate the URL, so make sure that you have it defined, or a urlRoot property,
                 * if all models of this class share a common root URL. A model with an id of 101, stored in a Backbone.Collection
                 * with a url of "/documents/7/notes", would have this URL: "/documents/7/notes/101"
@@ -9521,7 +9573,7 @@ $__System.register('79', ['9', '29', '31', '48', '49', '73', '78', 'a'], functio
    };
 });
 
-$__System.registerDynamic("7a", ["5", "f", "10", "44"], true, function(req, exports, module) {
+$__System.registerDynamic("7b", ["5", "f", "10", "44"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -9538,7 +9590,6 @@ $__System.registerDynamic("7a", ["5", "f", "10", "44"], true, function(req, expo
   function hexOctet() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   }
-  ;
   function generateId() {
     return hexOctet() + hexOctet() + '-' + hexOctet() + '-' + hexOctet() + '-' + hexOctet() + '-' + hexOctet() + hexOctet() + hexOctet();
   }
@@ -9571,7 +9622,7 @@ $__System.registerDynamic("7a", ["5", "f", "10", "44"], true, function(req, expo
   return module.exports;
 });
 
-$__System.registerDynamic("7b", ["5", "f", "32", "10", "44", "e"], true, function(req, exports, module) {
+$__System.registerDynamic("7c", ["5", "f", "32", "10", "44", "e"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -9646,10 +9697,12 @@ $__System.registerDynamic("7b", ["5", "f", "32", "10", "44", "e"], true, functio
                 promise.reject(e);
               }
               promise.resolve(response, xhr.status, xhr);
-            } else if (xhr.status >= 500) {
+            } else if (xhr.status >= 500 || xhr.status === 0) {
               if (++attempts < _CoreManager2['default'].get('REQUEST_ATTEMPT_LIMIT')) {
                 var delay = Math.round(Math.random() * 125 * Math.pow(2, attempts));
                 setTimeout(dispatch, delay);
+              } else if (xhr.status === 0) {
+                promise.reject('Unable to connect to the Parse API');
               } else {
                 promise.reject(xhr);
               }
@@ -9749,7 +9802,7 @@ $__System.registerDynamic("7b", ["5", "f", "32", "10", "44", "e"], true, functio
   return module.exports;
 });
 
-$__System.registerDynamic("7c", ["5", "f"], true, function(req, exports, module) {
+$__System.registerDynamic("7d", ["5", "f"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -9783,7 +9836,7 @@ $__System.registerDynamic("7c", ["5", "f"], true, function(req, exports, module)
   return module.exports;
 });
 
-$__System.registerDynamic("7d", ["5", "f", "3e", "3a", "32", "10"], true, function(req, exports, module) {
+$__System.registerDynamic("7e", ["5", "f", "3e", "3a", "32", "10"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -9807,12 +9860,26 @@ $__System.registerDynamic("7d", ["5", "f", "3e", "3a", "32", "10"], true, functi
     if (typeof name !== 'string' || name.length === 0) {
       throw new TypeError('Cloud function name must be a string.');
     }
-    return _CoreManager2['default'].getCloudController().run(name, data, {useMasterKey: options.useMasterKey})._thenRunCallbacks(options);
+    var requestOptions = {};
+    if (options.useMasterKey) {
+      requestOptions.useMasterKey = options.useMasterKey;
+    }
+    if (options.sessionToken) {
+      requestOptions.sessionToken = options.sessionToken;
+    }
+    return _CoreManager2['default'].getCloudController().run(name, data, requestOptions)._thenRunCallbacks(options);
   }
   _CoreManager2['default'].setCloudController({run: function run(name, data, options) {
       var RESTController = _CoreManager2['default'].getRESTController();
       var payload = (0, _encode2['default'])(data, true);
-      var request = RESTController.request('POST', 'functions/' + name, payload, {useMasterKey: !!options.useMasterKey});
+      var requestOptions = {};
+      if (options.hasOwnProperty('useMasterKey')) {
+        requestOptions.useMasterKey = options.useMasterKey;
+      }
+      if (options.hasOwnProperty('sessionToken')) {
+        requestOptions.sessionToken = options.sessionToken;
+      }
+      var request = RESTController.request('POST', 'functions/' + name, payload, requestOptions);
       return request.then(function(res) {
         var decoded = (0, _decode2['default'])(res);
         if (decoded && decoded.hasOwnProperty('result')) {
@@ -9825,7 +9892,7 @@ $__System.registerDynamic("7d", ["5", "f", "3e", "3a", "32", "10"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("7e", ["9", "a", "5", "f", "3e", "3a", "45", "32", "10", "44"], true, function(req, exports, module) {
+$__System.registerDynamic("7f", ["9", "a", "5", "f", "3e", "3a", "45", "32", "10", "44"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -9958,7 +10025,7 @@ $__System.registerDynamic("7e", ["9", "a", "5", "f", "3e", "3a", "45", "32", "10
   return module.exports;
 });
 
-$__System.registerDynamic("7f", ["5", "46", "42"], true, function(req, exports, module) {
+$__System.registerDynamic("80", ["5", "46", "42"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -10097,7 +10164,7 @@ $__System.registerDynamic("7f", ["5", "46", "42"], true, function(req, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("80", ["29", "31", "a", "5", "35"], true, function(req, exports, module) {
+$__System.registerDynamic("81", ["29", "31", "a", "5", "35"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -10130,7 +10197,7 @@ $__System.registerDynamic("80", ["29", "31", "a", "5", "35"], true, function(req
   return module.exports;
 });
 
-$__System.registerDynamic("81", ["5", "f", "39"], true, function(req, exports, module) {
+$__System.registerDynamic("82", ["5", "f", "39"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -10168,7 +10235,7 @@ $__System.registerDynamic("81", ["5", "f", "39"], true, function(req, exports, m
   return module.exports;
 });
 
-$__System.registerDynamic("82", ["5", "22", "3e", "3a", "f", "7a", "3c", "7b", "34", "7c", "7d", "7e", "32", "7f", "11", "37", "80", "35", "10", "81", "39", "3b", "33", "41", "44", "42"], true, function(req, exports, module) {
+$__System.registerDynamic("83", ["5", "22", "3e", "3a", "f", "7b", "3c", "7c", "34", "7d", "7e", "7f", "32", "80", "11", "37", "81", "35", "10", "82", "39", "3b", "33", "41", "44", "42"], true, function(req, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -10182,11 +10249,11 @@ $__System.registerDynamic("82", ["5", "22", "3e", "3a", "f", "7a", "3c", "7b", "
   var _encode2 = _interopRequireDefault(_encode);
   var _CoreManager = req('f');
   var _CoreManager2 = _interopRequireDefault(_CoreManager);
-  var _InstallationController = req('7a');
+  var _InstallationController = req('7b');
   var _InstallationController2 = _interopRequireDefault(_InstallationController);
   var _ParseOp = req('3c');
   var ParseOp = _interopRequireWildcard(_ParseOp);
-  var _RESTController = req('7b');
+  var _RESTController = req('7c');
   var _RESTController2 = _interopRequireDefault(_RESTController);
   var Parse = {
     initialize: function initialize(applicationId, javaScriptKey) {
@@ -10235,15 +10302,15 @@ $__System.registerDynamic("82", ["5", "22", "3e", "3a", "f", "7a", "3c", "7b", "
     }
   });
   Parse.ACL = req('34');
-  Parse.Analytics = req('7c');
-  Parse.Cloud = req('7d');
+  Parse.Analytics = req('7d');
+  Parse.Cloud = req('7e');
   Parse.CoreManager = req('f');
-  Parse.Config = req('7e');
+  Parse.Config = req('7f');
   Parse.Error = req('32');
-  Parse.FacebookUtils = req('7f');
+  Parse.FacebookUtils = req('80');
   Parse.File = req('11');
   Parse.GeoPoint = req('37');
-  Parse.Installation = req('80');
+  Parse.Installation = req('81');
   Parse.Object = req('35');
   Parse.Op = {
     Set: ParseOp.SetOp,
@@ -10255,7 +10322,7 @@ $__System.registerDynamic("82", ["5", "22", "3e", "3a", "f", "7a", "3c", "7b", "
     Relation: ParseOp.RelationOp
   };
   Parse.Promise = req('10');
-  Parse.Push = req('81');
+  Parse.Push = req('82');
   Parse.Query = req('39');
   Parse.Relation = req('3b');
   Parse.Role = req('33');
@@ -10295,16 +10362,6 @@ $__System.registerDynamic("82", ["5", "22", "3e", "3a", "f", "7a", "3c", "7b", "
   return module.exports;
 });
 
-$__System.registerDynamic("83", ["82"], true, function(req, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = req('82');
-  global.define = __define;
-  return module.exports;
-});
-
 $__System.registerDynamic("84", ["83"], true, function(req, exports, module) {
   ;
   var global = this,
@@ -10315,7 +10372,17 @@ $__System.registerDynamic("84", ["83"], true, function(req, exports, module) {
   return module.exports;
 });
 
-$__System.register('85', ['9', 'a'], function (_export) {
+$__System.registerDynamic("85", ["84"], true, function(req, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = req('84');
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.register('86', ['9', 'a'], function (_export) {
    var _createClass, _classCallCheck, s_DEBUG_LOG, s_DEBUG_TRACE, Debug;
 
    return {
@@ -10373,8 +10440,8 @@ $__System.register('85', ['9', 'a'], function (_export) {
    };
 });
 
-$__System.register('86', ['9', '29', '31', '48', '72', '78', '79', '84', '85', 'a'], function (_export) {
-   var _createClass, _get, _inherits, _, _Promise, Utils, Model, Parse, Debug, _classCallCheck, ParseModel;
+$__System.register('87', ['9', '29', '31', '48', '73', '79', '85', '86', 'a', '7a'], function (_export) {
+   var _createClass, _get, _inherits, _, _Promise, Utils, Parse, Debug, _classCallCheck, Model, ParseModel;
 
    return {
       setters: [function (_4) {
@@ -10387,16 +10454,16 @@ $__System.register('86', ['9', '29', '31', '48', '72', '78', '79', '84', '85', '
          _ = _6['default'];
       }, function (_5) {
          _Promise = _5['default'];
-      }, function (_8) {
-         Utils = _8['default'];
       }, function (_7) {
-         Model = _7['default'];
+         Utils = _7['default'];
+      }, function (_8) {
+         Parse = _8['default'];
       }, function (_9) {
-         Parse = _9['default'];
-      }, function (_10) {
-         Debug = _10['default'];
+         Debug = _9['default'];
       }, function (_a) {
          _classCallCheck = _a['default'];
+      }, function (_a2) {
+         Model = _a2['default'];
       }],
       execute: function () {
 
@@ -10412,35 +10479,27 @@ $__System.register('86', ['9', '29', '31', '48', '72', '78', '79', '84', '85', '
           *
           * Models are the heart of any JavaScript application, containing the interactive data as well as a large part of the
           * logic surrounding it: conversions, validations, computed properties, and access control.
-          * <p>
+          *
           * Backbone-Parse-ES6 supports the older "extend" functionality of the Parse SDK. You can still use "extend" to extend
           * Backbone.Model with your domain-specific methods, and Model provides a basic set of functionality for managing
           * changes. Refer to `modelExtend` which provides the "extend" functionality for ParseModel. It differs from the
           * standard Backbone extend functionality such that the first parameter requires a class name string for the
           * associated table.
-          * <p>
+          *
           * It is recommended though to use ES6 syntax for working with Backbone-Parse-ES6 foregoing the older "extend"
           * mechanism.
-          * <p>
+          *
           * Create a new model with the specified attributes. A client id (`cid`) is automatically generated & assigned for you.
-          * <p>
+          *
           * If you pass a {collection: ...} as the options, the model gains a collection property that will be used to indicate
           * which collection the model belongs to, and is used to help compute the model's url. The model.collection property is
           * normally created automatically when you first add a model to a collection. Note that the reverse is not true, as
           * passing this option to the constructor will not automatically add the model to the collection. Useful, sometimes.
-          * <p>
+          *
           * If {parse: true} is passed as an option, the attributes will first be converted by parse before being set on the
           * model.
-          * <p>
-          * Underscore methods available to Model:
-          * @see http://underscorejs.org/#chain
-          * @see http://underscorejs.org/#keys
-          * @see http://underscorejs.org/#invert
-          * @see http://underscorejs.org/#isEmpty
-          * @see http://underscorejs.org/#omit
-          * @see http://underscorejs.org/#pairs
-          * @see http://underscorejs.org/#pick
-          * @see http://underscorejs.org/#values
+          *
+          * Please see the `Model` documentation for relevant information about the parent class / implementation.
           *
           * @example
           * import Backbone from 'backbone';
@@ -10942,8 +11001,8 @@ $__System.register('86', ['9', '29', '31', '48', '72', '78', '79', '84', '85', '
    };
 });
 
-$__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', 'a'], function (_export) {
-   var _createClass, _get, _inherits, _, BackboneProxy, Events, Utils, Model, Debug, _classCallCheck, s_ADD_OPTIONS, s_SET_OPTIONS, s_ADD_REFERENCE, s_ON_MODEL_EVENT, s_REMOVE_MODELS, s_REMOVE_REFERENCE, s_SPLICE, Collection, collectionMethods;
+$__System.register('88', ['9', '29', '31', '48', '49', '74', '79', '86', 'a', '7a'], function (_export) {
+   var _createClass, _get, _inherits, _, BackboneProxy, Events, Utils, Debug, _classCallCheck, Model, s_ADD_OPTIONS, s_SET_OPTIONS, s_ADD_REFERENCE, s_ON_MODEL_EVENT, s_REMOVE_MODELS, s_REMOVE_REFERENCE, s_SPLICE, Collection, collectionMethods;
 
    return {
       setters: [function (_4) {
@@ -10958,14 +11017,14 @@ $__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', '
          BackboneProxy = _6['default'];
       }, function (_7) {
          Events = _7['default'];
-      }, function (_9) {
-         Utils = _9['default'];
       }, function (_8) {
-         Model = _8['default'];
-      }, function (_10) {
-         Debug = _10['default'];
+         Utils = _8['default'];
+      }, function (_9) {
+         Debug = _9['default'];
       }, function (_a) {
          _classCallCheck = _a['default'];
+      }, function (_a2) {
+         Model = _a2['default'];
       }],
       execute: function () {
 
@@ -11139,13 +11198,13 @@ $__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', '
           *
           * You can bind "change" events to be notified when any model in the collection has been modified, listen for "add"
           * and "remove" events, fetch the collection from the server, and use a full suite of Underscore.js methods.
-          * <p>
+          *
           * Any event that is triggered on a model in a collection will also be triggered on the collection directly, for
           * convenience. This allows you to listen for changes to specific attributes in any model in a collection, for
           * example: documents.on("change:selected", ...)
           *
           * ---------
-          * <p>
+          *
           * Underscore methods available to Collection (including aliases):
           *
           * @see http://underscorejs.org/#chain
@@ -11219,7 +11278,7 @@ $__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', '
              * may be included as an option. Passing false as the comparator option will prevent sorting. If you define an
              * initialize function, it will be invoked when the collection is created. There are a couple of options that, if
              * provided, are attached to the collection directly: model and comparator.
-             * <p>
+             *
              * Pass null for models to create an empty Collection with options.
              *
              * @see http://backbonejs.org/#Collection-constructor
@@ -11290,7 +11349,7 @@ $__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', '
              * splice the model into the collection at the specified index. If you're adding models to the collection that are
              * already in the collection, they'll be ignored, unless you pass {merge: true}, in which case their attributes will
              * be merged into the corresponding models, firing any appropriate "change" events.
-             * <p>
+             *
              * Note that adding the same model (a model with the same id) to a collection more than once is a no-op.
              *
              * @example
@@ -11358,7 +11417,7 @@ $__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', '
                 * created. Returns the new model. If client-side validation failed, the model will be unsaved, with validation
                 * errors. In order for this to work, you should set the model property of the collection. The create method can
                 * accept either an attributes hash or an existing, unsaved model object.
-                * <p>
+                *
                 * Creating a model will cause an immediate "add" event to be triggered on the collection, a "request" event as the
                 * new model is sent to the server, as well as a "sync" event, once the server has responded with the successful
                 * creation of the model. Pass {wait: true} if you'd like to wait for the server before adding the new model to the
@@ -11445,14 +11504,14 @@ $__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', '
                 * fetched models, unless you pass {reset: true}, in which case the collection will be (efficiently) reset.
                 * Delegates to Backbone.sync under the covers for custom persistence strategies and returns a jqXHR. The server
                 * handler for fetch requests should return a JSON array of models.
-                * <p>
+                *
                 * The behavior of fetch can be customized by using the available set options. For example, to fetch a collection,
                 * getting an "add" event for every new model, and a "change" event for every changed existing model, without
                 * removing anything: collection.fetch({remove: false})
-                * <p>
+                *
                 * jQuery.ajax options can also be passed directly as fetch options, so to fetch a specific page of a paginated
                 * collection: Documents.fetch({data: {page: 3}})
-                * <p>
+                *
                 * Note that fetch should not be used to populate collections on page load — all models needed at load time should
                 * already be bootstrapped in to place. fetch is intended for lazily-loading models for interfaces that are not
                 * needed immediately: for example, documents with collections of notes that may be toggled open and closed.
@@ -11731,9 +11790,9 @@ $__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', '
                 * (or attribute hashes), triggering a single "reset" event at the end. Returns the newly-set models. For
                 * convenience, within a "reset" event, the list of any previous models is available as options.previousModels.
                 * Pass null for models to empty your Collection with options.
-                * <p>
+                *
                 * Calling collection.reset() without passing any models as arguments will empty the entire collection.
-                * <p>
+                *
                 * Here's an example using reset to bootstrap a collection during initial page load, in a Rails application:
                 * @example
                 * <script>
@@ -12137,7 +12196,7 @@ $__System.register('87', ['9', '29', '31', '48', '49', '73', '78', '79', '85', '
    };
 });
 
-$__System.register('88', ['9', '29', '31', '48', '85', '86', '87', 'a'], function (_export) {
+$__System.register('89', ['9', '29', '31', '48', '86', '87', '88', 'a'], function (_export) {
    var _createClass, _get, _inherits, _, Debug, Model, Collection, _classCallCheck, ParseCollection;
 
    return {
@@ -12166,50 +12225,8 @@ $__System.register('88', ['9', '29', '31', '48', '85', '86', '87', 'a'], functio
           *
           * This implementation of Backbone.Collection provides a `parse` method which coverts the response of a Parse.Query
           * to ParseModels. One must set a Parse.Query instance as options.query or use a getter method such as "get query()".
-          * <p>
-          * You can bind "change" events to be notified when any model in the collection has been modified, listen for "add"
-          * and "remove" events, fetch the collection from the server, and use a full suite of Underscore.js methods.
-          * <p>
-          * Any event that is triggered on a model in a collection will also be triggered on the collection directly, for
-          * convenience. This allows you to listen for changes to specific attributes in any model in a collection, for
-          * example: documents.on("change:selected", ...)
           *
-          * ---------
-          * <br>
-          * Underscore methods available to Collection (including aliases):
-          *
-          * @see http://underscorejs.org/#chain
-          * @see http://underscorejs.org/#contains
-          * @see http://underscorejs.org/#countBy
-          * @see http://underscorejs.org/#difference
-          * @see http://underscorejs.org/#each
-          * @see http://underscorejs.org/#every
-          * @see http://underscorejs.org/#filter
-          * @see http://underscorejs.org/#find
-          * @see http://underscorejs.org/#first
-          * @see http://underscorejs.org/#groupBy
-          * @see http://underscorejs.org/#indexBy
-          * @see http://underscorejs.org/#indexOf
-          * @see http://underscorejs.org/#initial
-          * @see http://underscorejs.org/#invoke
-          * @see http://underscorejs.org/#isEmpty
-          * @see http://underscorejs.org/#last
-          * @see http://underscorejs.org/#lastIndexOf
-          * @see http://underscorejs.org/#map
-          * @see http://underscorejs.org/#max
-          * @see http://underscorejs.org/#min
-          * @see http://underscorejs.org/#partition
-          * @see http://underscorejs.org/#reduce
-          * @see http://underscorejs.org/#reduceRight
-          * @see http://underscorejs.org/#reject
-          * @see http://underscorejs.org/#rest
-          * @see http://underscorejs.org/#sample
-          * @see http://underscorejs.org/#shuffle
-          * @see http://underscorejs.org/#some
-          * @see http://underscorejs.org/#sortBy
-          * @see http://underscorejs.org/#size
-          * @see http://underscorejs.org/#toArray
-          * @see http://underscorejs.org/#without
+          * Please see the `Collection` documentation for relevant information about the parent class / implementation.
           *
           * @example
           *
@@ -12261,7 +12278,7 @@ $__System.register('88', ['9', '29', '31', '48', '85', '86', '87', 'a'], functio
              * may be included as an option. Passing false as the comparator option will prevent sorting. If you define an
              * initialize function, it will be invoked when the collection is created. There are a couple of options that, if
              * provided, are attached to the collection directly: model, comparator and query.
-             * <p>
+             *
              * Pass null for models to create an empty Collection with options.
              *
              * @see http://backbonejs.org/#Collection-constructor
@@ -12409,7 +12426,7 @@ $__System.register('88', ['9', '29', '31', '48', '85', '86', '87', 'a'], functio
    };
 });
 
-$__System.register('89', ['9', '29', '31', '48', '73', 'a'], function (_export) {
+$__System.register('8a', ['9', '29', '31', '48', '74', 'a'], function (_export) {
    var _createClass, _get, _inherits, _, Events, _classCallCheck, s_ROUTE_STRIPPER, s_ROOT_STRIPPER, s_PATH_STRIPPER, s_UPDATE_HASH, History;
 
    return {
@@ -12472,7 +12489,7 @@ $__System.register('89', ['9', '29', '31', '48', '73', 'a'], function (_export) 
           * History serves as a global router (per frame) to handle hashchange events or pushState, match the appropriate route,
           * and trigger callbacks. You shouldn't ever have to create one of these yourself since Backbone.history already
           * contains one.
-          * <p>
+          *
           * pushState support exists on a purely opt-in basis in Backbone. Older browsers that don't support pushState will
           * continue to use hash-based URL fragments, and if a hash URL is visited by a pushState-capable browser, it will be
           * transparently upgraded to the true URL. Note that using real URLs requires your web server to be able to correctly
@@ -12481,7 +12498,7 @@ $__System.register('89', ['9', '29', '31', '48', '73', 'a'], function (_export) 
           * crawlability, it's best to have the server generate the complete HTML for the page ... but if it's a web application,
           * just rendering the same content you would have for the root URL, and filling in the rest with Backbone Views and
           * JavaScript works fine.
-          * <p>
+          *
           * Handles cross-browser history management, based on either [pushState](http://diveintohtml5.info/history.html) and
           * real URLs, or [onhashchange](https://developer.mozilla.org/en-US/docs/DOM/window.onhashchange) and URL fragments.
           * If the browser supports neither (old IE, natch), falls back to polling.
@@ -12759,20 +12776,20 @@ $__System.register('89', ['9', '29', '31', '48', '73', 'a'], function (_export) 
                 * Backbone.history.start() to begin monitoring hashchange events, and dispatching routes. Subsequent calls to
                 * Backbone.history.start() will throw an error, and Backbone.History.started is a boolean value indicating whether
                 * it has already been called.
-                * <br>
+                *
                 * To indicate that you'd like to use HTML5 pushState support in your application, use
                 * Backbone.history.start({pushState: true}). If you'd like to use pushState, but have browsers that don't support
                 * it natively use full page refreshes instead, you can add {hashChange: false} to the options.
-                * <br>
+                *
                 * If your application is not being served from the root url / of your domain, be sure to tell History where the
                 * root really is, as an option: Backbone.history.start({pushState: true, root: "/public/search/"})
-                * <br>
+                *
                 * When called, if a route succeeds with a match for the current URL, Backbone.history.start() returns true. If no
                 * defined route matches the current URL, it returns false.
-                * <br>
+                *
                 * If the server has already rendered the entire page, and you don't want the initial route to trigger when starting
                 * History, pass silent: true.
-                * <br>
+                *
                 * Because hash-based history in Internet Explorer relies on an <iframe>, be sure to call start() only after the DOM
                 * is ready.
                 *
@@ -12939,7 +12956,7 @@ $__System.register('89', ['9', '29', '31', '48', '73', 'a'], function (_export) 
    };
 });
 
-$__System.register('8a', ['9', '29', '31', '48', '49', '73', '77', 'a'], function (_export) {
+$__System.register('8b', ['9', '29', '31', '48', '49', '74', '78', 'a'], function (_export) {
    var _createClass, _get, _inherits, _, BackboneProxy, Events, _toConsumableArray, _classCallCheck, s_ESCAPE_REGEX, s_NAMED_PARAM, s_OPTIONAL_PARAM, s_SPLAT_PARAM, s_BIND_ROUTES, s_EXTRACT_PARAMETERS, s_ROUTE_TO_REGEX, Router;
 
    return {
@@ -13038,28 +13055,28 @@ $__System.register('8a', ['9', '29', '31', '48', '49', '73', '77', 'a'], functio
           * it's now possible to use standard URLs (/page). Backbone.Router provides methods for routing client-side pages, and
           * connecting them to actions and events. For browsers which don't yet support the History API, the Router handles
           * graceful fallback and transparent translation to the fragment version of the URL.
-          * <p>
+          *
           * During page load, after your application has finished creating all of its routers, be sure to call
           * Backbone.history.start() or Backbone.history.start({pushState: true}) to route the initial URL.
-          * <p>
-          * routes - router.routes<br>
+          *
+          * routes - router.routes
           * The routes hash maps URLs with parameters to functions on your router (or just direct function definitions, if you
           * prefer), similar to the View's events hash. Routes can contain parameter parts, :param, which match a single URL
           * component between slashes; and splat parts *splat, which can match any number of URL components. Part of a route can
           * be made optional by surrounding it in parentheses (/:optional).
-          * <p>
+          *
           * For example, a route of "search/:query/p:page" will match a fragment of #search/obama/p2, passing "obama" and "2" to
           * the action.
-          * <p>
+          *
           * A route of "file/*path" will match #file/nested/folder/file.txt, passing "nested/folder/file.txt" to the action.
-          * <p>
+          *
           * A route of "docs/:section(/:subsection)" will match #docs/faq and #docs/faq/installing, passing "faq" to the action
           * in the first case, and passing "faq" and "installing" to the action in the second.
-          * <p>
+          *
           * Trailing slashes are treated as part of the URL, and (correctly) treated as a unique route when accessed. docs and
           * docs/ will fire different callbacks. If you can't avoid generating both types of URLs, you can define a "docs(/)"
           * matcher to capture both cases.
-          * <p>
+          *
           * When the visitor presses the back button, or enters a URL, and a particular route is matched, the name of the action
           * will be fired as an event, so that other objects can listen to the router, and be notified. In the following example,
           * visiting #help/uploading will fire a route:help event from the router.
@@ -13260,7 +13277,7 @@ $__System.register('8a', ['9', '29', '31', '48', '49', '73', '77', 'a'], functio
    };
 });
 
-$__System.register('8b', ['9', '29', '31', '48', '49', '73', 'a'], function (_export) {
+$__System.register('8c', ['9', '29', '31', '48', '49', '74', 'a'], function (_export) {
   var _createClass, _get, _inherits, _, BackboneProxy, Events, _classCallCheck, s_DELEGATE_EVENT_SPLITTER, s_VIEW_OPTIONS, View;
 
   return {
@@ -13467,19 +13484,19 @@ $__System.register('8b', ['9', '29', '31', '48', '49', '73', 'a'], function (_ex
            * causes the event to be bound to the view's root element (this.el). By default, delegateEvents is called within
            * the View's constructor for you, so if you have a simple events hash, all of your DOM events will always already
            * be connected, and you will never have to call this function yourself.
-           * <p>
+           *
            * The events property may also be defined as a function that returns an events hash, to make it easier to
            * programmatically define your events, as well as inherit them from parent views.
-           * <p>
+           *
            * Using delegateEvents provides a number of advantages over manually using jQuery to bind events to child elements
            * during render. All attached callbacks are bound to the view before being handed off to jQuery, so when the
            * callbacks are invoked, this continues to refer to the view object. When delegateEvents is run again, perhaps with
            * a different events hash, all callbacks are removed and delegated afresh — useful for views which need to behave
            * differently when in different modes.
-           * <p>
+           *
            * A single-event version of delegateEvents is available as delegate. In fact, delegateEvents is simply a multi-event
            * wrapper around delegate. A counterpart to undelegateEvents is available as undelegate.
-           * <p>
+           *
            * Callbacks will be bound to the view, with `this` set properly. Uses event delegation for efficiency.
            * Omitting the selector binds the event to `this.el`.
            *
@@ -13638,13 +13655,13 @@ $__System.register('8b', ['9', '29', '31', '48', '49', '73', 'a'], function (_ex
            * The default implementation of render is a no-op. Override this function with your code that renders the view
            * template from model data, and updates this.el with the new HTML. A good convention is to return this at the end
            * of render to enable chained calls.
-           * <p>
+           *
            * Backbone is agnostic with respect to your preferred method of HTML templating. Your render function could even
            * munge together an HTML string, or use document.createElement to generate a DOM tree. However, we suggest choosing
            * a nice JavaScript templating library. Mustache.js, Haml-js, and Eco are all fine alternatives. Because
            * Underscore.js is already on the page, _.template is available, and is an excellent choice if you prefer simple
            * interpolated-JavaScript style templates.
-           * <p>
+           *
            * Whatever templating strategy you end up with, it's nice if you never have to put strings of HTML in your
            * JavaScript. At DocumentCloud, we use Jammit in order to package up JavaScript templates stored in /app/views as
            * part of our main core.js asset package.
@@ -13774,7 +13791,7 @@ $__System.register('8b', ['9', '29', '31', '48', '49', '73', 'a'], function (_ex
   };
 });
 
-$__System.register('8c', ['48', '49', '85'], function (_export) {
+$__System.register('8d', ['48', '49', '86'], function (_export) {
 
    /**
     * Syncs a Backbone.Collection via an associated Parse.Query.
@@ -13882,7 +13899,7 @@ $__System.register('8c', ['48', '49', '85'], function (_export) {
    };
 });
 
-$__System.register('8d', ['48'], function (_export) {
+$__System.register('8e', ['48'], function (_export) {
 
    /**
     * Provides older "extend" functionality for Backbone. While it is still accessible it is recommended
@@ -13950,7 +13967,7 @@ $__System.register('8d', ['48'], function (_export) {
    };
 });
 
-$__System.register('8e', ['8d'], function (_export) {
+$__System.register('8f', ['8e'], function (_export) {
 
    /**
     * Provides extend functionality for Model that is compatible to the Parse SDK.
@@ -13975,7 +13992,6 @@ $__System.register('8e', ['8d'], function (_export) {
          var className = _x,
              protoProps = _x2,
              staticProps = _x3;
-         child = undefined;
          _again = false;
 
          if (typeof className !== 'string') {
@@ -13999,14 +14015,14 @@ $__System.register('8e', ['8d'], function (_export) {
    }
 
    return {
-      setters: [function (_d) {
-         extend = _d['default'];
+      setters: [function (_e) {
+         extend = _e['default'];
       }],
       execute: function () {}
    };
 });
 
-$__System.register('8f', ['48', '84', '8d', '8e'], function (_export) {
+$__System.register('90', ['48', '85', '8e', '8f'], function (_export) {
 
    // Add HTTPS image fetch substitution to Parse.Object ---------------------------------------------------------------
 
@@ -14057,10 +14073,10 @@ $__System.register('8f', ['48', '84', '8d', '8e'], function (_export) {
          _ = _3['default'];
       }, function (_2) {
          Parse = _2['default'];
-      }, function (_d) {
-         extend = _d['default'];
       }, function (_e) {
-         modelExtend = _e['default'];
+         extend = _e['default'];
+      }, function (_f) {
+         modelExtend = _f['default'];
       }],
       execute: function () {
          Parse.Object.prototype.getHTTPSUrl = function (key) {
@@ -14074,33 +14090,33 @@ $__System.register('8f', ['48', '84', '8d', '8e'], function (_export) {
    };
 });
 
-$__System.register('90', ['73', '86', '88', '89', '4a', '8a', '8b', '8c', '8f'], function (_export) {
+$__System.register('91', ['74', '87', '89', '90', '4a', '8a', '8b', '8c', '8d'], function (_export) {
   /**
    * ModuleRuntime.js (Parse) -- Provides the standard / default configuration that is the same as Backbone 1.2.3
    */
 
   'use strict';
 
-  var Events, Model, Collection, History, Backbone, Router, View, parseSync, parseExtend, options, backbone;
+  var Events, Model, Collection, parseExtend, Backbone, History, Router, View, parseSync, options, backbone;
   return {
     setters: [function (_2) {
       Events = _2['default'];
-    }, function (_4) {
-      Model = _4['default'];
+    }, function (_3) {
+      Model = _3['default'];
     }, function (_) {
       Collection = _['default'];
-    }, function (_3) {
-      History = _3['default'];
+    }, function (_4) {
+      parseExtend = _4['default'];
     }, function (_a) {
       Backbone = _a['default'];
     }, function (_a2) {
-      Router = _a2['default'];
+      History = _a2['default'];
     }, function (_b) {
-      View = _b['default'];
+      Router = _b['default'];
     }, function (_c) {
-      parseSync = _c['default'];
-    }, function (_f) {
-      parseExtend = _f['default'];
+      View = _c['default'];
+    }, function (_d) {
+      parseSync = _d['default'];
     }],
     execute: function () {
       options = {
@@ -14116,7 +14132,7 @@ $__System.register('90', ['73', '86', '88', '89', '4a', '8a', '8b', '8c', '8f'],
   };
 });
 
-$__System.register('4', ['84', '90'], function (_export) {
+$__System.register('4', ['85', '91'], function (_export) {
   /**
    * GlobalRuntime.js (Parse) -- Initializes Backbone and Parse setting them to "root.Backbone" and "root.Parse"
    * if root exists. "root" is defined as self in the browser or global if on the server.
