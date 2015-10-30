@@ -3,7 +3,7 @@
    [
       {
          "destBaseDir": "./dist/",
-         "destFilename": "backbone.js",
+         "destFilename": "backbone-parse.js",
          "formats": ["amd"],
          "mangle": false,
          "minify": false,
