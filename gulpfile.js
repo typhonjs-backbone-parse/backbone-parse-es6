@@ -324,7 +324,7 @@ function buildStatic(srcFilename, destDir, destFilepath, minify, mangle, format,
 
             console.log(err);
 
-            resolve();
+            reject();
          });
       });
    });
