@@ -2,7 +2,7 @@
    "entryPoints":
    [
       {
-         "destBaseDir": "./dist/",
+         "destBaseDir": "./dist",
          "destFilename": "backbone-parse.js",
          "formats": ["amd", "cjs"],
          "mangle": false,
@@ -20,7 +20,7 @@
       },
 
       {
-         "destBaseDir": "./dist/",
+         "destBaseDir": "./dist",
          "destFilename": "backbone-parse.min.js",
          "formats": ["amd", "cjs"],
          "mangle": true,
@@ -38,7 +38,7 @@
       },
 
       {
-         "destBaseDir": "./dist/",
+         "destBaseDir": "./dist",
          "destFilename": "backbone-parse.js",
          "formats": ["global"],
          "mangle": false,
@@ -55,7 +55,7 @@
       },
 
       {
-         "destBaseDir": "./dist/",
+         "destBaseDir": "./dist",
          "destFilename": "backbone-parse.min.js",
          "formats": ["global"],
          "mangle": true,
@@ -72,7 +72,7 @@
       },
 
       {
-         "destBaseDir": "./dist/",
+         "destBaseDir": "./dist",
          "destFilename": "backbone-parse-inclusive.js",
          "formats": ["global"],
          "mangle": false,
@@ -88,7 +88,7 @@
       },
 
       {
-         "destBaseDir": "./dist/",
+         "destBaseDir": "./dist",
          "destFilename": "backbone-parse-inclusive.min.js",
          "formats": ["global"],
          "mangle": true,
