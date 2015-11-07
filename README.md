@@ -15,7 +15,7 @@ backbone-parse-es6 is an extension to [backbone-es6](https://github.com/typhonjs
 
 Another reason for backbone-parse-es6 is supporting end to end documentation via ESDoc for ES6 frameworks and apps built on top of backbone-parse-es6. Two ESDoc plugins, [esdoc-plugin-jspm](https://github.com/typhonjs/esdoc-plugin-jspm) & [esdoc-plugin-extends-replace](https://github.com/typhonjs/esdoc-plugin-extends-replace) along with a complete integrated set of Gulp tasks, [typhonjs-core-gulptasks](https://github.com/typhonjs/typhonjs-core-gulptasks) provide documentation generation across multiple modules / source roots via JSPM along with ESLint and several JSPM & NPM tasks.
 
-backbone-parse-es6 uses [JSPM](www.jspm.io) / [SystemJS](https://github.com/systemjs/systemjs) for dependency management and bundling distributions. For an example of using SystemJS / JSPM directly with backbone-parse-es6 including typhonjs-core-gulptasks support please see this demo repo:
+backbone-parse-es6 uses [JSPM](www.jspm.io) / [SystemJS](https://github.com/systemjs/systemjs) for dependency management and bundling distributions. For an example of using JSPM / SystemJS directly with backbone-parse-es6 including typhonjs-core-gulptasks support please see this demo repo:
 https://github.com/typhonjs/backbone-parse-es6-demo
 
 When a new Backbone release is made (next 1.2.4) backbone-es6 will be updated. Tests from Backbone will be ported to backbone-es6 with the upcoming 1.2.4 release. Forthcoming tests for Parse integration will be added to this repo. 
