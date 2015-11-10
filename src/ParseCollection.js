@@ -168,7 +168,7 @@ Debug.log(`ParseCollection - parse - 0`, true);
       if (!_.isArray(resp))
       {
          const parseObject = resp;
-         output = new this.model({}, { parseObject });
+         output = new this.model({}, { parseObject, updateParseObject: false });
 
 Debug.log(`ParseCollection - parse - 1 - toJSON: ${JSON.stringify(parseObject.toJSON())}`);
       }
