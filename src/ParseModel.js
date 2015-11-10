@@ -326,7 +326,7 @@ Debug.log(`ParseModel - parse - 1 - ParseModel.prototype.idAttribute: ${ParseMod
          const mergeId = {};
          mergeId[ParseModel.prototype.idAttribute] = resp.id;
 
-Debug.log(`ParseModel - parse - 2 - mergeId: ${mergeId[Model.prototype.idAttribute]}`);
+Debug.log(`ParseModel - parse - 2 - mergeId: ${mergeId[ParseModel.prototype.idAttribute]}`);
 
          merged = _.extend(mergeId, resp.attributes);
 
@@ -446,7 +446,7 @@ Debug.log(`ParseModel - set - 3 - prev[attr] == val delete changed for key: ${at
                continue;
             }
 
-            if (updateParseObject && this.parseObject !== null && attr !== Model.prototype.idAttribute)
+            if (updateParseObject && this.parseObject !== null && attr !== ParseModel.prototype.idAttribute)
             {
                // Parse.Object returns itself on success
                unsetSuccess = this.parseObject === this.parseObject.unset(attr);
