@@ -180,7 +180,7 @@ Debug.log(`ParseCollection - parse - 2 - resp.length: ${resp.length}`);
 
          _.each(resp, (parseObject) =>
          {
-            const model = new this.model({}, { parseObject });
+            const model = new this.model({}, { parseObject, updateParseObject: false });
             output.push(model);
 
 Debug.log(`ParseCollection - parse - 3 - parseObject: ${JSON.stringify(model.toJSON())}`);
