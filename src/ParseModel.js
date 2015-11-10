@@ -155,7 +155,7 @@ class ParseModel extends Model
       let attrs = attributes || {};
 
       options.parse = true;
-      options.updateParseObject = options.updateParseObject || true;
+      options.updateParseObject = _.isBoolean(options.updateParseObject) ? options.updateParseObject : true;
 
       /**
        * Client side ID
