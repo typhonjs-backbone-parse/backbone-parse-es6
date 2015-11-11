@@ -15,13 +15,13 @@
     "main": "src/ModuleRuntime.js",
     "dependencies": {
       "backbone-es6": "github:typhonjs/backbone-es6@master",
-      "parse": "npm:parse@^1.6.8",
+      "parse": "npm:parse@^1.6.9",
       "underscore": "npm:underscore@^1.8.3"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.8.25",
-      "babel-runtime": "npm:babel-runtime@^5.8.25",
-      "core-js": "npm:core-js@^1.2.1",
+      "babel": "npm:babel-core@^5.8.33",
+      "babel-runtime": "npm:babel-runtime@^5.8.29",
+      "core-js": "npm:core-js@^1.2.6",
       "jquery": "npm:jquery@^2.1.4"
     }
   },

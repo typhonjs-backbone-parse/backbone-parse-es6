@@ -228,7 +228,7 @@ Debug.log(`ParseCollection - parse - 0`, true);
       if (!_.isArray(resp))
       {
          const parseObject = resp;
-         output = new this.model({}, { parseObject });
+         output = new this.model({}, { parseObject, updateParseObject: false });
 
 Debug.log(`ParseCollection - parse - 1 - toJSON: ${JSON.stringify(parseObject.toJSON())}`);
       }
@@ -240,7 +240,7 @@ Debug.log(`ParseCollection - parse - 2 - resp.length: ${resp.length}`);
 
          _.each(resp, (parseObject) =&gt;
          {
-            const model = new this.model({}, { parseObject });
+            const model = new this.model({}, { parseObject, updateParseObject: false });
             output.push(model);
 
 Debug.log(`ParseCollection - parse - 3 - parseObject: ${JSON.stringify(model.toJSON())}`);
