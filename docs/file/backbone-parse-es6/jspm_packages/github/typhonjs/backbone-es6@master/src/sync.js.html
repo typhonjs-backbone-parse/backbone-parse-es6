@@ -120,7 +120,7 @@ export default function sync(method, model, options = {})
    }
 
    // Ensure that we have the appropriate request data.
-   if (options.data === null &amp;&amp; model &amp;&amp; (method === &apos;create&apos; || method === &apos;update&apos; || method === &apos;patch&apos;))
+   if (Utils.isNullOrUndef(options.data) &amp;&amp; model &amp;&amp; (method === &apos;create&apos; || method === &apos;update&apos; || method === &apos;patch&apos;))
    {
       params.contentType = &apos;application/json&apos;;
       params.data = JSON.stringify(options.attrs || model.toJSON(options));
