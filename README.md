@@ -26,7 +26,7 @@ Please view the wiki for build instructions and other pertinent usage info:
 https://github.com/typhonjs/backbone-parse-es6/wiki
 
 API documentation can be found in the `docs/` directory and online here:
-http://js.typhonrt.org/docs/backbone-parse-es6/
+http://js.docs.typhonrt.org/backbone-parse-es6/
 
 For original Backbone Docs, License, Tests, pre-packed downloads, see:
 http://backbonejs.org
@@ -38,7 +38,7 @@ Many thanks to DocumentCloud & all Backbone contributors.
 
 Backbone (c) 2010-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 
-backbone-parse-es6 (c) 2015 Michael Leahy, TyphonRT, Inc. 
+backbone-parse-es6 (c) 2015 Michael Leahy, TyphonRT Inc. 
 
 Parse JS SDK (c) 2015 Parse / Facebook 
 
