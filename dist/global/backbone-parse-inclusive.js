@@ -13675,9 +13675,17 @@ $__System.register('8b', ['4', '9', '14', '81', 'b', 'c', 'd', 'e'], function (_
                }
 
                // Must detect if there are any getters defined in order to skip setting these values directly.
+               var hasComparatorGetter = !_.isUndefined(this.comparator);
                var hasModelGetter = !_.isUndefined(this.model);
                var hasQueryGetter = !_.isUndefined(this.query);
-               var hasComparatorGetter = !_.isUndefined(this.comparator);
+
+               if (options.comparator !== void 0 && !hasComparatorGetter) {
+                  /**
+                   * A comparator string indicating the attribute to sort.
+                   * @type {string}
+                   */
+                  this.comparator = options.comparator;
+               }
 
                // The default model for a collection is just a **Backbone.Model**. This should be overridden in most cases.
                if (!hasModelGetter) {
@@ -13690,7 +13698,7 @@ $__System.register('8b', ['4', '9', '14', '81', 'b', 'c', 'd', 'e'], function (_
 
                if (options.model && !hasModelGetter) {
                   if (!(options.model instanceof Model)) {
-                     throw TypeError('options.model is not an instance of ParseModel.');
+                     throw new TypeError('options.model is not an instance of ParseModel.');
                   }
 
                   this.model = options.model;
@@ -13702,14 +13710,6 @@ $__System.register('8b', ['4', '9', '14', '81', 'b', 'c', 'd', 'e'], function (_
                    * @type {Parse.Query}
                    */
                   this.query = options.query;
-               }
-
-               if (options.comparator !== void 0 && !hasComparatorGetter) {
-                  /**
-                   * A comparator string indicating the attribute to sort.
-                   * @type {string}
-                   */
-                  this.comparator = options.comparator;
                }
 
                // Allows child classes to postpone initialization.
@@ -13742,9 +13742,9 @@ $__System.register('8b', ['4', '9', '14', '81', 'b', 'c', 'd', 'e'], function (_
                key: 'clone',
                value: function clone() {
                   return new this.constructor(this.models, {
+                     comparator: this.comparator,
                      model: this.model,
-                     query: this.query,
-                     comparator: this.comparator
+                     query: this.query
                   });
                }
 
