@@ -78,9 +78,18 @@ class ParseCollection extends Collection
       if (_.isBoolean(options.abortCtor) && options.abortCtor) { return; }
 
       // Must detect if there are any getters defined in order to skip setting these values directly.
+      const hasComparatorGetter = !_.isUndefined(this.comparator);
       const hasModelGetter = !_.isUndefined(this.model);
       const hasQueryGetter = !_.isUndefined(this.query);
-      const hasComparatorGetter = !_.isUndefined(this.comparator);
+
+      if (options.comparator !== void 0 && !hasComparatorGetter)
+      {
+         /**
+          * A comparator string indicating the attribute to sort.
+          * @type {string}
+          */
+         this.comparator = options.comparator;
+      }
 
       // The default model for a collection is just a **Backbone.Model**. This should be overridden in most cases.
       if (!hasModelGetter)
@@ -96,7 +105,7 @@ class ParseCollection extends Collection
       {
          if (!(options.model instanceof Model))
          {
-            throw TypeError('options.model is not an instance of ParseModel.');
+            throw new TypeError('options.model is not an instance of ParseModel.');
          }
 
          this.model = options.model;
@@ -109,15 +118,6 @@ class ParseCollection extends Collection
           * @type {Parse.Query}
           */
          this.query = options.query;
-      }
-
-      if (options.comparator !== void 0 && !hasComparatorGetter)
-      {
-         /**
-          * A comparator string indicating the attribute to sort.
-          * @type {string}
-          */
-         this.comparator = options.comparator;
       }
 
       // Allows child classes to postpone initialization.
@@ -140,9 +140,9 @@ class ParseCollection extends Collection
    clone()
    {
       return new this.constructor(this.models, {
+         comparator: this.comparator,
          model: this.model,
-         query: this.query,
-         comparator: this.comparator
+         query: this.query
       });
    }
 
