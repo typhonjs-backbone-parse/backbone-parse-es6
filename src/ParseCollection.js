@@ -4,6 +4,8 @@ import _                from 'underscore';
 import Model            from './ParseModel.js';
 import Collection       from 'backbone-es6/src/Collection.js';
 
+import BackboneQuery    from 'backbone-query';
+
 import Debug            from 'backbone-es6/src/Debug.js';
 
 /**
@@ -14,6 +16,9 @@ import Debug            from 'backbone-es6/src/Debug.js';
  * to ParseModels. One must set a Parse.Query instance as options.query or use a getter method such as "get query()".
  *
  * Please see the `Collection` documentation for relevant information about the parent class / implementation.
+ *
+ * In addition ParseCollection includes BackboneQuery support which supports local query / sorting of collections.
+ * Additional methods: `find, findOne, resetQueryCache, sortAll, whereBy`.
  *
  * @example
  *
@@ -146,6 +151,29 @@ class ParseCollection extends Collection
       });
    }
 
+   /**
+    * Delegates to `BackboneQuery.find` to return an array of models that match the sort query.
+    *
+    * @param {string}   query    - A query string.
+    * @param {Object}   options  - Optional parameters
+    * @returns {Array<Model>}
+    */
+   find(query, options)
+   {
+      return BackboneQuery.find(this, query, options);
+   }
+
+   /**
+    * Delegates to `BackboneQuery.findOne` to return the first model that matches the sort query.
+    *
+    * @param {string}   query    - A query string.
+    * @returns {Model}
+    */
+   findOne(query)
+   {
+      return BackboneQuery.findOne(this, query);
+   }
+
    /* eslint-disable no-unused-vars */
    /**
     * `parse` is called by Backbone whenever a collection's models are returned by the server, in fetch. The function is
@@ -188,6 +216,42 @@ Debug.log(`ParseCollection - parse - 3 - parseObject: ${JSON.stringify(model.toJ
       }
 
       return output;
+   }
+
+   /**
+    * Delegates to `BackboneQuery.resetQueryCache` to reset this collections query cache.
+    */
+   resetQueryCache()
+   {
+      BackboneQuery.resetQueryCache(this);
+   }
+
+   /**
+    * Delegates to `BackboneQuery.sortAll` to return all models that match the sort query.
+    *
+    * @param {string}   query    - A query string.
+    * @returns {Array<Model>}
+    */
+   sortAll(query)
+   {
+      return BackboneQuery.sortAll(this, query);
+   }
+
+   /**
+    * Delegates to `BackboneQuery.whereBy` to return a new collection with the models that match the sort query.
+    *
+    * @param {string}   query    - A query string.
+    * @param {Object}   options  - Optional parameters
+    * @returns {Collection}
+    */
+   whereBy(query, options)
+   {
+      return BackboneQuery.whereBy(this, query, options,
+      {
+         model: this.model,
+         query: this.query,
+         comparator: this.comparator
+      });
    }
 }
 
