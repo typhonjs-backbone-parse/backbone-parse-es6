@@ -53,6 +53,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BackboneProxy">BackboneProxy</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-collection">collection</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-model">model</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">(typhonjs-core-backbone-common):<br>typhonjs-backbone-common/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html">TyphonEvents</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-typhonExtend">typhonExtend</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">(typhonjs-core-backbone-query):<br>backbone-query/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html">BackboneQuery</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -64,6 +67,8 @@ import _                from &apos;underscore&apos;;
 import Model            from &apos;./ParseModel.js&apos;;
 import Collection       from &apos;backbone-es6/src/Collection.js&apos;;
 
+import BackboneQuery    from &apos;backbone-query&apos;;
+
 import Debug            from &apos;backbone-es6/src/Debug.js&apos;;
 
 /**
@@ -74,6 +79,9 @@ import Debug            from &apos;backbone-es6/src/Debug.js&apos;;
  * to ParseModels. One must set a Parse.Query instance as options.query or use a getter method such as &quot;get query()&quot;.
  *
  * Please see the `Collection` documentation for relevant information about the parent class / implementation.
+ *
+ * In addition ParseCollection includes BackboneQuery support which supports local query / sorting of collections.
+ * Additional methods: `find, findOne, resetQueryCache, sortAll, whereBy`.
  *
  * @example
  *
@@ -206,6 +214,29 @@ class ParseCollection extends Collection
       });
    }
 
+   /**
+    * Delegates to `BackboneQuery.find` to return an array of models that match the sort query.
+    *
+    * @param {string}   query    - A query string.
+    * @param {Object}   options  - Optional parameters
+    * @returns {Array&lt;Model&gt;}
+    */
+   find(query, options)
+   {
+      return BackboneQuery.find(this, query, options);
+   }
+
+   /**
+    * Delegates to `BackboneQuery.findOne` to return the first model that matches the sort query.
+    *
+    * @param {string}   query    - A query string.
+    * @returns {Model}
+    */
+   findOne(query)
+   {
+      return BackboneQuery.findOne(this, query);
+   }
+
    /* eslint-disable no-unused-vars */
    /**
     * `parse` is called by Backbone whenever a collection&apos;s models are returned by the server, in fetch. The function is
@@ -248,6 +279,42 @@ Debug.log(`ParseCollection - parse - 3 - parseObject: ${JSON.stringify(model.toJ
       }
 
       return output;
+   }
+
+   /**
+    * Delegates to `BackboneQuery.resetQueryCache` to reset this collections query cache.
+    */
+   resetQueryCache()
+   {
+      BackboneQuery.resetQueryCache(this);
+   }
+
+   /**
+    * Delegates to `BackboneQuery.sortAll` to return all models that match the sort query.
+    *
+    * @param {string}   query    - A query string.
+    * @returns {Array&lt;Model&gt;}
+    */
+   sortAll(query)
+   {
+      return BackboneQuery.sortAll(this, query);
+   }
+
+   /**
+    * Delegates to `BackboneQuery.whereBy` to return a new collection with the models that match the sort query.
+    *
+    * @param {string}   query    - A query string.
+    * @param {Object}   options  - Optional parameters
+    * @returns {Collection}
+    */
+   whereBy(query, options)
+   {
+      return BackboneQuery.whereBy(this, query, options,
+      {
+         model: this.model,
+         query: this.query,
+         comparator: this.comparator
+      });
    }
 }
 

@@ -12,6 +12,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "backbone-query/src/backbonequery.js~backbonequery",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html",
+    "<span>BackboneQuery</span> <span class=\"search-result-import-path\">backbone-query/src/BackboneQuery.js</span>",
+    "class"
+  ],
+  [
     "backbone-es6/src/collection.js~collection",
     "class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Collection.js~Collection.html",
     "<span>Collection</span> <span class=\"search-result-import-path\">backbone-es6/src/Collection.js</span>",
@@ -57,6 +63,12 @@ window.esdocSearchIndex = [
     "backbone-es6/src/router.js~router",
     "class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Router.js~Router.html",
     "<span>Router</span> <span class=\"search-result-import-path\">backbone-es6/src/Router.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-backbone-common/src/typhonevents.js~typhonevents",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html",
+    "<span>TyphonEvents</span> <span class=\"search-result-import-path\">typhonjs-backbone-common/src/TyphonEvents.js</span>",
     "class"
   ],
   [
@@ -123,6 +135,12 @@ window.esdocSearchIndex = [
     "backbone-es6/src/sync.js~sync",
     "function/index.html#static-function-sync",
     "<span>sync</span> <span class=\"search-result-import-path\">backbone-es6/src/sync.js</span>",
+    "function"
+  ],
+  [
+    "typhonjs-backbone-common/src/typhonextend.js~typhonextend",
+    "function/index.html#static-function-typhonExtend",
+    "<span>typhonExtend</span> <span class=\"search-result-import-path\">typhonjs-backbone-common/src/typhonExtend.js</span>",
     "function"
   ],
   [
@@ -1374,6 +1392,72 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/typhonevents.js",
+    "file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html",
+    "typhonjs-backbone-common/src/TyphonEvents.js",
+    "file"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/typhonevents.js~typhonevents#triggerfirst",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html#instance-method-triggerFirst",
+    "typhonjs-backbone-common/src/TyphonEvents.js~TyphonEvents#triggerFirst",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/typhonevents.js~typhonevents#triggerresults",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html#instance-method-triggerResults",
+    "typhonjs-backbone-common/src/TyphonEvents.js~TyphonEvents#triggerResults",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/typhonevents.js~typhonevents#triggerthen",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html#instance-method-triggerThen",
+    "typhonjs-backbone-common/src/TyphonEvents.js~TyphonEvents#triggerThen",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/typhonextend.js",
+    "file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/typhonExtend.js.html",
+    "typhonjs-backbone-common/src/typhonExtend.js",
+    "file"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/backbonequery.js",
+    "file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js.html",
+    "backbone-query/src/BackboneQuery.js",
+    "file"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/backbonequery.js~backbonequery.find",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html#static-method-find",
+    "backbone-query/src/BackboneQuery.js~BackboneQuery.find",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/backbonequery.js~backbonequery.findone",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html#static-method-findOne",
+    "backbone-query/src/BackboneQuery.js~BackboneQuery.findOne",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/backbonequery.js~backbonequery.resetquerycache",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html#static-method-resetQueryCache",
+    "backbone-query/src/BackboneQuery.js~BackboneQuery.resetQueryCache",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/backbonequery.js~backbonequery.sortall",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html#static-method-sortAll",
+    "backbone-query/src/BackboneQuery.js~BackboneQuery.sortAll",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/backbonequery.js~backbonequery.whereby",
+    "class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html#static-method-whereBy",
+    "backbone-query/src/BackboneQuery.js~BackboneQuery.whereBy",
+    "method"
+  ],
+  [
     "backbone-parse-es6/src/globalinclusiveruntime.js",
     "file/backbone-parse-es6/src/GlobalInclusiveRuntime.js.html",
     "backbone-parse-es6/src/GlobalInclusiveRuntime.js",
@@ -1416,6 +1500,18 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "backbone-parse-es6/src/parsecollection.js~parsecollection#find",
+    "class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html#instance-method-find",
+    "backbone-parse-es6/src/ParseCollection.js~ParseCollection#find",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/src/parsecollection.js~parsecollection#findone",
+    "class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html#instance-method-findOne",
+    "backbone-parse-es6/src/ParseCollection.js~ParseCollection#findOne",
+    "method"
+  ],
+  [
     "backbone-parse-es6/src/parsecollection.js~parsecollection#model",
     "class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html#instance-member-model",
     "backbone-parse-es6/src/ParseCollection.js~ParseCollection#model",
@@ -1432,6 +1528,24 @@ window.esdocSearchIndex = [
     "class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html#instance-member-query",
     "backbone-parse-es6/src/ParseCollection.js~ParseCollection#query",
     "member"
+  ],
+  [
+    "backbone-parse-es6/src/parsecollection.js~parsecollection#resetquerycache",
+    "class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html#instance-method-resetQueryCache",
+    "backbone-parse-es6/src/ParseCollection.js~ParseCollection#resetQueryCache",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/src/parsecollection.js~parsecollection#sortall",
+    "class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html#instance-method-sortAll",
+    "backbone-parse-es6/src/ParseCollection.js~ParseCollection#sortAll",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/src/parsecollection.js~parsecollection#whereby",
+    "class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html#instance-method-whereBy",
+    "backbone-parse-es6/src/ParseCollection.js~ParseCollection#whereBy",
+    "method"
   ],
   [
     "backbone-parse-es6/src/parsemodel.js",
