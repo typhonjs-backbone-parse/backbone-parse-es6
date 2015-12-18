@@ -444,9 +444,104 @@
   // etc UMD / module pattern
 })*/
 
-(['1'], ["4","4","6","4","6","4","63","4","4","4","4","4","4","4","4","4"], function($__System) {
+(['1'], ["3","3","7","3","7","3","67","3","3","3","3","3","3","3","3","3","3","3","3"], function($__System) {
 
 $__System.register('2', ['3'], function (_export) {
+   /**
+    * typhonExtend.js (TyphonJS) -- Extends Backbone for use with TyphonJS.
+    */
+
+   /**
+    * Provides support for TyphonJS adding several methods to Backbone.
+    *
+    * @param {Backbone} Backbone - Backbone instance
+    */
+   'use strict';
+
+   var _;
+
+   _export('default', typhonExtend);
+
+   function typhonExtend(Backbone) {
+      Backbone.isCollection = function (collection) {
+         return !_.isUndefined(collection) && collection !== null && collection instanceof Backbone.Collection;
+      };
+
+      Backbone.isEventbus = function (eventbus) {
+         return !_.isUndefined(eventbus) && eventbus !== null && (eventbus instanceof Backbone.Events || eventbus instanceof Backbone.Events.constructor);
+      };
+
+      Backbone.isViewCtor = function (viewCtor) {
+         return !_.isUndefined(viewCtor) && viewCtor !== null && viewCtor instanceof Backbone.View.constructor;
+      };
+
+      Backbone.isModel = function (model) {
+         return !_.isUndefined(model) && model !== null && model instanceof Backbone.Model;
+      };
+
+      // Add ViewController support to Backbone.View ----------------------------------------------------------------------
+
+      Backbone.View.prototype.close = function () {
+         var remove = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+
+         if (!_.isBoolean(remove)) {
+            throw new TypeError('close - remove is not a boolean.');
+         }
+
+         if (this.onBeforeClose) {
+            // onBeforeClose may veto closing
+            var closeable = this.onBeforeClose();
+            closeable = _.isBoolean(closeable) ? closeable : true;
+
+            if (!closeable) {
+               return false;
+            }
+         }
+
+         this.stopListening();
+         this.unbind();
+         this.undelegateEvents();
+
+         if (remove) {
+            this.$el.remove();
+         } else {
+            this.$el.empty();
+         }
+
+         if (this.onDestroy) {
+            this.onDestroy();
+         }
+
+         return true;
+      };
+
+      // Empty function that gets called by ViewController.setCurrentView when the same view is requested to be shown;
+      // useful for passing messages to views.
+      Backbone.View.prototype.onContinue = function () {};
+
+      // The following functions provide lifecycle events used in various group views like tab-view-group.js
+      Backbone.View.prototype.onStart = function () {
+         this.render();
+      };
+
+      Backbone.View.prototype.onResume = function () {
+         this.render();
+      };
+
+      Backbone.View.prototype.onPause = function () {
+         this.undelegateEvents();
+      };
+   }
+
+   return {
+      setters: [function (_2) {
+         _ = _2['default'];
+      }],
+      execute: function () {}
+   };
+});
+
+$__System.register('4', ['5'], function (_export) {
 
    /**
     * Provides extend functionality for Model that is compatible to the Parse SDK.
@@ -501,7 +596,7 @@ $__System.register('2', ['3'], function (_export) {
    };
 });
 
-$__System.register('3', ['4'], function (_export) {
+$__System.register('5', ['3'], function (_export) {
 
    /**
     * Provides older "extend" functionality for Backbone. While it is still accessible it is recommended
@@ -569,7 +664,7 @@ $__System.register('3', ['4'], function (_export) {
    };
 });
 
-$__System.register('5', ['2', '3', '4', '6'], function (_export) {
+$__System.register('6', ['3', '4', '5', '7'], function (_export) {
 
    // Add HTTPS image fetch substitution to Parse.Object ---------------------------------------------------------------
 
@@ -581,7 +676,7 @@ $__System.register('5', ['2', '3', '4', '6'], function (_export) {
     */
    'use strict';
 
-   var modelExtend, extend, _, Parse;
+   var _, modelExtend, extend, Parse;
 
    _export('default', parseExtend);
 
@@ -616,12 +711,12 @@ $__System.register('5', ['2', '3', '4', '6'], function (_export) {
    }
 
    return {
-      setters: [function (_5) {
+      setters: [function (_3) {
+         _ = _3['default'];
+      }, function (_5) {
          modelExtend = _5['default'];
       }, function (_4) {
          extend = _4['default'];
-      }, function (_3) {
-         _ = _3['default'];
       }, function (_2) {
          Parse = _2['default'];
       }],
@@ -637,7 +732,7 @@ $__System.register('5', ['2', '3', '4', '6'], function (_export) {
    };
 });
 
-$__System.register('7', ['4', '8', '9'], function (_export) {
+$__System.register('8', ['3', '9', 'a'], function (_export) {
 
    /**
     * Syncs a Backbone.Collection via an associated Parse.Query.
@@ -683,8 +778,8 @@ $__System.register('7', ['4', '8', '9'], function (_export) {
          _ = _2['default'];
       }, function (_3) {
          BackboneProxy = _3['default'];
-      }, function (_4) {
-         Debug = _4['default'];
+      }, function (_a) {
+         Debug = _a['default'];
       }],
       execute: function () {
          syncCollection = function syncCollection(method, collection, options) {
@@ -745,24 +840,24 @@ $__System.register('7', ['4', '8', '9'], function (_export) {
    };
 });
 
-$__System.register('a', ['4', '8', 'b', 'c', 'd', 'e', 'f'], function (_export) {
-  var _, BackboneProxy, _get, _inherits, _createClass, _classCallCheck, Events, s_DELEGATE_EVENT_SPLITTER, s_VIEW_OPTIONS, View;
+$__System.register('b', ['3', '9', '10', 'c', 'd', 'e', 'f'], function (_export) {
+  var _, BackboneProxy, Events, _get, _inherits, _createClass, _classCallCheck, s_DELEGATE_EVENT_SPLITTER, s_VIEW_OPTIONS, View;
 
   return {
     setters: [function (_2) {
       _ = _2['default'];
     }, function (_3) {
       BackboneProxy = _3['default'];
-    }, function (_b) {
-      _get = _b['default'];
+    }, function (_4) {
+      Events = _4['default'];
     }, function (_c) {
-      _inherits = _c['default'];
+      _get = _c['default'];
     }, function (_d) {
-      _createClass = _d['default'];
+      _inherits = _d['default'];
     }, function (_e) {
-      _classCallCheck = _e['default'];
+      _createClass = _e['default'];
     }, function (_f) {
-      Events = _f['default'];
+      _classCallCheck = _f['default'];
     }],
     execute: function () {
 
@@ -1259,26 +1354,26 @@ $__System.register('a', ['4', '8', 'b', 'c', 'd', 'e', 'f'], function (_export) 
   };
 });
 
-$__System.register('10', ['4', '8', '11', 'b', 'c', 'd', 'e', 'f'], function (_export) {
-   var _, BackboneProxy, _toConsumableArray, _get, _inherits, _createClass, _classCallCheck, Events, s_ESCAPE_REGEX, s_NAMED_PARAM, s_OPTIONAL_PARAM, s_SPLAT_PARAM, s_BIND_ROUTES, s_EXTRACT_PARAMETERS, s_ROUTE_TO_REGEX, Router;
+$__System.register('11', ['3', '9', '10', '12', 'c', 'd', 'e', 'f'], function (_export) {
+   var _, BackboneProxy, Events, _toConsumableArray, _get, _inherits, _createClass, _classCallCheck, s_ESCAPE_REGEX, s_NAMED_PARAM, s_OPTIONAL_PARAM, s_SPLAT_PARAM, s_BIND_ROUTES, s_EXTRACT_PARAMETERS, s_ROUTE_TO_REGEX, Router;
 
    return {
       setters: [function (_3) {
          _ = _3['default'];
       }, function (_4) {
          BackboneProxy = _4['default'];
+      }, function (_5) {
+         Events = _5['default'];
       }, function (_2) {
          _toConsumableArray = _2['default'];
-      }, function (_b) {
-         _get = _b['default'];
       }, function (_c) {
-         _inherits = _c['default'];
+         _get = _c['default'];
       }, function (_d) {
-         _createClass = _d['default'];
+         _inherits = _d['default'];
       }, function (_e) {
-         _classCallCheck = _e['default'];
+         _createClass = _e['default'];
       }, function (_f) {
-         Events = _f['default'];
+         _classCallCheck = _f['default'];
       }],
       execute: function () {
 
@@ -1580,24 +1675,24 @@ $__System.register('10', ['4', '8', '11', 'b', 'c', 'd', 'e', 'f'], function (_e
    };
 });
 
-$__System.register('12', ['4', '13', 'b', 'c', 'd', 'e', 'f'], function (_export) {
-   var _, Utils, _get, _inherits, _createClass, _classCallCheck, Events, s_ROUTE_STRIPPER, s_ROOT_STRIPPER, s_PATH_STRIPPER, s_UPDATE_HASH, History;
+$__System.register('13', ['3', '10', '14', 'c', 'd', 'e', 'f'], function (_export) {
+   var _, Events, Utils, _get, _inherits, _createClass, _classCallCheck, s_ROUTE_STRIPPER, s_ROOT_STRIPPER, s_PATH_STRIPPER, s_UPDATE_HASH, History;
 
    return {
       setters: [function (_2) {
          _ = _2['default'];
       }, function (_3) {
-         Utils = _3['default'];
-      }, function (_b) {
-         _get = _b['default'];
+         Events = _3['default'];
+      }, function (_4) {
+         Utils = _4['default'];
       }, function (_c) {
-         _inherits = _c['default'];
+         _get = _c['default'];
       }, function (_d) {
-         _createClass = _d['default'];
+         _inherits = _d['default'];
       }, function (_e) {
-         _classCallCheck = _e['default'];
+         _createClass = _e['default'];
       }, function (_f) {
-         Events = _f['default'];
+         _classCallCheck = _f['default'];
       }],
       execute: function () {
 
@@ -2112,30 +2207,1825 @@ $__System.register('12', ['4', '13', 'b', 'c', 'd', 'e', 'f'], function (_export
    };
 });
 
-$__System.register('14', ['4', '8', '9', '13', '15', 'b', 'c', 'd', 'e', 'f'], function (_export) {
-   var _, BackboneProxy, Debug, Utils, Model, _get, _inherits, _createClass, _classCallCheck, Events, s_ADD_OPTIONS, s_SET_OPTIONS, s_ADD_REFERENCE, s_ON_MODEL_EVENT, s_REMOVE_MODELS, s_REMOVE_REFERENCE, s_SPLICE, Collection, collectionMethods;
+$__System.register('15', ['3', '10', '16', 'c', 'd', 'e', 'f'], function (_export) {
+   var _, Events, _Promise, _get, _inherits, _createClass, _classCallCheck, TyphonEvents, s_EVENT_SPLITTER, s_EVENTS_API, s_TRIGGER_API, s_TRIGGER_FIRST_EVENTS, s_TRIGGER_RESULTS_EVENTS, s_TRIGGER_THEN_EVENTS;
+
+   return {
+      setters: [function (_3) {
+         _ = _3['default'];
+      }, function (_4) {
+         Events = _4['default'];
+      }, function (_2) {
+         _Promise = _2['default'];
+      }, function (_c) {
+         _get = _c['default'];
+      }, function (_d) {
+         _inherits = _d['default'];
+      }, function (_e) {
+         _createClass = _e['default'];
+      }, function (_f) {
+         _classCallCheck = _f['default'];
+      }],
+      execute: function () {
+
+         /**
+          * TyphonEvents adds new functionality for trigger events. The following are new trigger mechanisms:
+          *
+          * Please refer to the Events documentation for all inherited functionality.
+          *
+          * `triggerDefer` - Defers invoking `trigger`.
+          *
+          * `triggerFirst` - Only invokes the first target matched and passes back any result to the callee.
+          *
+          * `triggerResults` - Invokes all targets matched and passes back an array of results in an array to the callee.
+          *
+          * `triggerThen` - Invokes all targets matched and adds any returned promises through Promise.all which returns
+          *  a single promise to the callee.
+          */
+         'use strict';
+
+         TyphonEvents = (function (_Events) {
+            _inherits(TyphonEvents, _Events);
+
+            function TyphonEvents() {
+               _classCallCheck(this, TyphonEvents);
+
+               _get(Object.getPrototypeOf(TyphonEvents.prototype), 'constructor', this).apply(this, arguments);
+            }
+
+            // Private / internal methods ---------------------------------------------------------------------------------------
+
+            /**
+             * Regular expression used to split event strings.
+             * @type {RegExp}
+             */
+
+            _createClass(TyphonEvents, [{
+               key: 'triggerDefer',
+
+               /**
+                * Defers invoking `trigger`.
+                *
+                * @returns {TyphonEvents}
+                */
+               value: function triggerDefer() {
+                  var _this = this,
+                      _arguments = arguments;
+
+                  setTimeout(function () {
+                     _get(Object.getPrototypeOf(TyphonEvents.prototype), 'trigger', _this).apply(_this, _arguments);
+                  }, 0);
+
+                  return this;
+               }
+
+               /**
+                * Provides `trigger` functionality that only invokes the first target matched and passes back any result to
+                * the callee.
+                *
+                * @param {string}   name  - Event name(s)
+                * @returns {*}
+                */
+            }, {
+               key: 'triggerFirst',
+               value: function triggerFirst(name) {
+                  if (!this._events) {
+                     return null;
+                  }
+
+                  var length = Math.max(0, arguments.length - 1);
+                  var args = new Array(length);
+                  for (var i = 0; i < length; i++) {
+                     args[i] = arguments[i + 1];
+                  }
+
+                  return s_EVENTS_API(s_TRIGGER_API, s_TRIGGER_FIRST_EVENTS, this._events, name, void 0, args);
+               }
+
+               /**
+                * Provides `trigger` functionality, but collects any returned results from invoked targets in an array and passes
+                * back this array to the callee.
+                *
+                * @param {string}   name  - Event name(s)
+                * @returns {Array<*>}
+                */
+            }, {
+               key: 'triggerResults',
+               value: function triggerResults(name) {
+                  if (!this._events) {
+                     return [];
+                  }
+
+                  var length = Math.max(0, arguments.length - 1);
+                  var args = new Array(length);
+                  for (var i = 0; i < length; i++) {
+                     args[i] = arguments[i + 1];
+                  }
+
+                  return s_EVENTS_API(s_TRIGGER_API, s_TRIGGER_RESULTS_EVENTS, this._events, name, void 0, args);
+               }
+
+               /**
+                * Provides `trigger` functionality, but collects any returned Promises from invoked targets and returns a
+                * single Promise generated by `Promise.all`. This is a very useful mechanism to invoke asynchronous operations
+                * over an eventbus.
+                *
+                * @param {string}   name  - Event name(s)
+                * @returns {Promise}
+                */
+            }, {
+               key: 'triggerThen',
+               value: function triggerThen(name) {
+                  if (!this._events) {
+                     _Promise.all([]);
+                  }
+
+                  var length = Math.max(0, arguments.length - 1);
+                  var args = new Array(length);
+                  for (var i = 0; i < length; i++) {
+                     args[i] = arguments[i + 1];
+                  }
+
+                  return s_EVENTS_API(s_TRIGGER_API, s_TRIGGER_THEN_EVENTS, this._events, name, void 0, args);
+               }
+            }]);
+
+            return TyphonEvents;
+         })(Events);
+
+         _export('default', TyphonEvents);
+
+         s_EVENT_SPLITTER = /\s+/;
+
+         /**
+          * Iterates over the standard `event, callback` (as well as the fancy multiple space-separated events `"change blur",
+          * callback` and jQuery-style event maps `{event: callback}`).
+          *
+          * @param {function} iteratee       - Trigger API
+          * @param {function} iterateeTarget - Internal function which is dispatched to.
+          * @param {Array<*>} events         - Array of stored event callback data.
+          * @param {string}   name           - Event name(s)
+          * @param {function} callback       - callback
+          * @param {Object}   opts           - Optional parameters
+          * @returns {*}
+          */
+
+         s_EVENTS_API = function s_EVENTS_API(iteratee, iterateeTarget, events, name, callback, opts) {
+            var i = 0,
+                names = undefined;
+
+            if (name && typeof name === 'object') {
+               // Handle event maps.
+               if (callback !== void 0 && 'context' in opts && opts.context === void 0) {
+                  opts.context = callback;
+               }
+               for (names = _.keys(name); i < names.length; i++) {
+                  events = s_EVENTS_API(iteratee, iterateeTarget, events, names[i], name[names[i]], opts);
+               }
+            } else if (name && s_EVENT_SPLITTER.test(name)) {
+               // Handle space separated event names by delegating them individually.
+               for (names = name.split(s_EVENT_SPLITTER); i < names.length; i++) {
+                  events = iteratee(iterateeTarget, events, names[i], callback, opts);
+               }
+            } else {
+               // Finally, standard events.
+               events = iteratee(iterateeTarget, events, name, callback, opts);
+            }
+
+            return events;
+         };
+
+         /**
+          * Handles triggering the appropriate event callbacks.
+          *
+          * @param {function} iterateeTarget - Internal function which is dispatched to.
+          * @param {Array<*>} objEvents      - Array of stored event callback data.
+          * @param {string}   name           - Event name(s)
+          * @param {function} cb             - callback
+          * @param {Array<*>} args           - Arguments supplied to a trigger method.
+          * @returns {*}
+          */
+
+         s_TRIGGER_API = function s_TRIGGER_API(iterateeTarget, objEvents, name, cb, args) {
+            var result = undefined;
+
+            if (objEvents) {
+               var events = objEvents[name];
+               var allEvents = objEvents.all;
+               if (events && allEvents) {
+                  allEvents = allEvents.slice();
+               }
+               if (events) {
+                  result = iterateeTarget(events, args);
+               }
+               if (allEvents) {
+                  result = iterateeTarget(allEvents, [name].concat(args));
+               }
+            }
+
+            return result;
+         };
+
+         /**
+          * A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual
+          * cases speedy (most internal Backbone events have 3 arguments). This method stop event propagation after the first
+          * target is invoked. It also passes back a return value from the target.
+          *
+          * @param {Array<*>} events   -  Array of stored event callback data.
+          * @param {Array<*>} args     -  Arguments supplied to `triggerFirst`.
+          * @returns {*}
+          */
+
+         s_TRIGGER_FIRST_EVENTS = function s_TRIGGER_FIRST_EVENTS(events, args) {
+            var ev = undefined,
+                i = -1;
+            var a1 = args[0],
+                a2 = args[1],
+                a3 = args[2],
+                l = events.length;
+
+            var result = undefined;
+
+            switch (args.length) {
+               case 0:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.call(ev.ctx);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        return result;
+                     }
+                  }
+                  return;
+               case 1:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.call(ev.ctx, a1);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        return result;
+                     }
+                  }
+                  return;
+               case 2:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.call(ev.ctx, a1, a2);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        return result;
+                     }
+                  }
+                  return;
+               case 3:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.call(ev.ctx, a1, a2, a3);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        return result;
+                     }
+                  }
+                  return;
+               default:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.apply(ev.ctx, args);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        return result;
+                     }
+                  }
+                  return;
+            }
+         };
+
+         /**
+          * A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual
+          * cases speedy (most internal Backbone events have 3 arguments). This dispatch method passes back an array with
+          * all results returned by any invoked targets.
+          *
+          * @param {Array<*>} events   -  Array of stored event callback data.
+          * @param {Array<*>} args     -  Arguments supplied to `triggerResults`.
+          * @returns {Array<*>}
+          */
+
+         s_TRIGGER_RESULTS_EVENTS = function s_TRIGGER_RESULTS_EVENTS(events, args) {
+            var ev = undefined,
+                i = -1;
+            var a1 = args[0],
+                a2 = args[1],
+                a3 = args[2],
+                l = events.length;
+
+            var result = undefined;
+            var results = [];
+
+            switch (args.length) {
+               case 0:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.call(ev.ctx);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        results.push(result);
+                     }
+                  }
+                  return results;
+               case 1:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.call(ev.ctx, a1);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        results.push(result);
+                     }
+                  }
+                  return results;
+               case 2:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.call(ev.ctx, a1, a2);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        results.push(result);
+                     }
+                  }
+                  return results;
+               case 3:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.call(ev.ctx, a1, a2, a3);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        results.push(result);
+                     }
+                  }
+                  return results;
+               default:
+                  while (++i < l) {
+                     result = (ev = events[i]).callback.apply(ev.ctx, args);
+
+                     // If we received a valid result return immediately.
+                     if (!_.isUndefined(result)) {
+                        results.push(result);
+                     }
+                  }
+                  return results;
+            }
+         };
+
+         /**
+          * A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual
+          * cases speedy (most internal Backbone events have 3 arguments). This dispatch method uses ES6 Promises and adds
+          * any returned promises to an array which is added to a Promise.all construction which passes back a Promise which
+          * waits until all Promises complete. Any target invoked may return a Promise. This is very useful to use for any
+          * asynchronous operations.
+          *
+          * @param {Array<*>} events   -  Array of stored event callback data.
+          * @param {Array<*>} args     -  Arguments supplied to `triggerThen`.
+          * @returns {Promise}
+          */
+
+         s_TRIGGER_THEN_EVENTS = function s_TRIGGER_THEN_EVENTS(events, args) {
+            var ev = undefined,
+                i = -1;
+            var a1 = args[0],
+                a2 = args[1],
+                a3 = args[2],
+                l = events.length;
+
+            var promise = undefined;
+            var promises = [];
+
+            try {
+               switch (args.length) {
+                  case 0:
+                     while (++i < l) {
+                        promise = (ev = events[i]).callback.call(ev.ctx);
+
+                        // If we received a valid promise add it to the promises array.
+                        if (!_.isUndefined(promise)) {
+                           promises.push(promise);
+                        }
+                     }
+                     break;
+
+                  case 1:
+                     while (++i < l) {
+                        promise = (ev = events[i]).callback.call(ev.ctx, a1);
+
+                        // If we received a valid promise add it to the promises array.
+                        if (!_.isUndefined(promise)) {
+                           promises.push(promise);
+                        }
+                     }
+                     break;
+
+                  case 2:
+                     while (++i < l) {
+                        promise = (ev = events[i]).callback.call(ev.ctx, a1, a2);
+
+                        // If we received a valid promise add it to the promises array.
+                        if (!_.isUndefined(promise)) {
+                           promises.push(promise);
+                        }
+                     }
+                     break;
+
+                  case 3:
+                     while (++i < l) {
+                        promise = (ev = events[i]).callback.call(ev.ctx, a1, a2, a3);
+
+                        // If we received a valid promise add it to the promises array.
+                        if (!_.isUndefined(promise)) {
+                           promises.push(promise);
+                        }
+                     }
+                     break;
+
+                  default:
+                     while (++i < l) {
+                        promise = (ev = events[i]).callback.apply(ev.ctx, args);
+
+                        // If we received a valid promise add it to the promises array.
+                        if (!_.isUndefined(promise)) {
+                           promises.push(promise);
+                        }
+                     }
+                     break;
+               }
+            } catch (error) {
+               return _Promise.reject(error);
+            }
+
+            return _Promise.all(promises);
+         };
+      }
+   };
+});
+
+$__System.register('17', ['3', 'e', 'f'], function (_export) {
+   var _, _createClass, _classCallCheck, BackboneQuery, __slice, __hasProp, __indexOf, s_DETECT, s_FILTER, s_GET_CACHE, s_GET_SORTED_MODELS, s_GET_TYPE, s_ITERATOR, s_MAKE_OBJ, s_PAGE_MODELS, s_PARSE_SUB_QUERY, s_PARSE_QUERY, s_PERFORM_QUERY, s_PROCESS_QUERY, s_REJECT, s_RUN_QUERY, s_SORT_MODELS, s_TEST_MODEL_ATTRIBUTE, s_TEST_QUERY_VALUE;
+
+   return {
+      setters: [function (_2) {
+         _ = _2['default'];
+      }, function (_e) {
+         _createClass = _e['default'];
+      }, function (_f) {
+         _classCallCheck = _f['default'];
+      }],
+      execute: function () {
+         /**
+          * A fork of Backbone Query...
+          *
+          * Backbone Query - A lightweight query API for Backbone Collections
+          * (c)2012 - Dave Tonge
+          * May be freely distributed according to MIT license.
+          * https://github.com/davidgtonge/backbone_query
+          *
+          *
+          * (c)2015-present Michael Leahy
+          * https://github.com/typhonjs/typhonjs-core-backbone-query
+          */
+
+         /**
+          * BackboneQuery -- Provides client side sorting based on a query API.
+          * -------------
+          *
+          * Forked from https://github.com/davidgtonge/backbone_query
+          *
+          * A lightweight (3KB minified) utility for Backbone projects, that works in the Browser and on the Server. Adds the
+          * ability to search for models with a Query API similar to MongoDB.
+          *
+          * The huge benefit of using BackboneQuery is that queries can be stored as JSON.
+          *
+          * Usage
+          * -----
+          *
+          * The major difference of this implementation is that the API is not attached to a collection, but can be run against
+          * any collection by invoking the methods with a target collection.
+          *
+          * Find
+          * -----
+          * **_ $equal _**
+          *
+          * Performs a strict equality test using ===. If no operator is provided and the query value isn't a regex then `$equal`
+          * is assumed.
+          *
+          * If the attribute in the model is an array then the query value is searched for in the array in the same way as
+          * `$contains`.
+          *
+          * If the query value is an object (including array) then a deep comparison is performed using underscores `_.isEqual`.
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { title: "Test" });
+          * // Returns all models which have a "title" attribute of "Test"
+          *
+          *
+          * BackboneQuery.find(collection, { title: { $equal: "Test" } }); // Same as above
+          * BackboneQuery.find(collection, { colors: "red" });
+          * // Returns models which contain the value "red" in a "colors" attribute that is an array.
+          *
+          *
+          * BackboneQuery.find(collection, { colors: ["red", "yellow"] });
+          * // Returns models which contain a colors attribute with the array ["red", "yellow"]
+          * ```
+          *
+          * **_ $contains _**
+          *
+          * Assumes that the model property is an array and searches for the query value in the array.
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { colors: { $contains: "red" } });
+          * // Returns models which contain the value "red" in a "colors" attribute that is an array.
+          * e.g. a model with this attribute colors:["red", "yellow", "blue"] would be returned.
+          * ```
+          *
+          *
+          * **_ $ne _**
+          *
+          * "Not equal", the opposite of $equal, returns all models which don't have the query value
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { title: { $ne: "Test" } });
+          * // Returns all models which don't have a "title" attribute of "Test"
+          * ```
+          *
+          *
+          * **_ $lt, $lte, $gt, $gte _**
+          *
+          * These conditional operators can be used for greater than and less than comparisons in queries
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { likes: { $lt:10 } });
+          * // Returns all models which have a "likes" attribute of less than 10
+          *
+          *
+          * BackboneQuery.find(collection, { likes: { $lte:10 } });
+          * // Returns all models which have a "likes" attribute of less than or equal to 10
+          *
+          *
+          * BackboneQuery.find(collection, { likes: { $gt:10 } });
+          * // Returns all models which have a "likes" attribute of greater than 10
+          *
+          *
+          * BackboneQuery.find(collection, { likes: { $gte:10 } });
+          * // Returns all models which have a "likes" attribute of greater than or equal to 10
+          * ```
+          *
+          *
+          * **_ $between _**
+          *
+          * To check if a value is in-between 2 query values use the $between operator and supply an array with the min and max
+          * value.
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { likes: { $between: [5, 15] } });
+          * // Returns all models which have a "likes" attribute of greater than 5 and less then 15
+          * ```
+          *
+          *
+          * **_ $in _**
+          *
+          * An array of possible values can be supplied using $in, a model will be returned if any of the supplied values is
+          * matched.
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { title: { $in: ["About", "Home", "Contact"] } });
+          * // Returns all models which have a title attribute of either "About", "Home", or "Contact"
+          * ```
+          *
+          *
+          * **_ $nin _**
+          *
+          * "Not in", the opposite of $in. A model will be returned if none of the supplied values is matched.
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { title: { $nin: ["About", "Home", "Contact"] } });
+          * // Returns all models which don't have a title attribute of either "About", "Home", or "Contact"
+          * ```
+          *
+          *
+          * **_ $all _**
+          *
+          * Assumes the model property is an array and only returns models where all supplied values are matched.
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { colors: { $all: ["red", "yellow"] } });
+          * // Returns all models which have "red" and "yellow" in their colors attribute.
+          * // A model with the attribute colors:["red","yellow","blue"] would be returned.
+          * // But a model with the attribute colors:["red","blue"] would not be returned.
+          * ```
+          *
+          *
+          * **_ $any _**
+          *
+          * Assumes the model property is an array and returns models where any of the supplied values are matched.
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { colors: { $any: ["red", "yellow"] } });
+          * // Returns models which have either "red" or "yellow" in their colors attribute.
+          * ```
+          *
+          *
+          * **_ $size _**
+          *
+          * Assumes the model property has a length (i.e. is either an array or a string). Only returns models the model
+          * property's length matches the supplied values.
+          *
+          * ** Example: **
+          * ```
+          * BackboneQuery.find(collection, { colors: { $size:2 } });
+          * // Returns all models which 2 values in the colors attribute
+          * ```
+          *
+          *
+          * $exists or $has
+          *
+          * Checks for the existence of an attribute. Can be supplied either true or false.
+          *
+          * Example:
+          *
+          * BackboneQuery.find(collection, { title: { $exists: true } });
+          *
+          * // Returns all models which have a "title" attribute
+          *
+          * BackboneQuery.find(collection, { title: { $has: false } });
+          *
+          * // Returns all models which don't have a "title" attribute
+          *
+          *
+          *
+          * $like
+          *
+          * Assumes the model attribute is a string and checks if the supplied query value is a substring of the property.
+          * Uses indexOf rather than regex for performance reasons.
+          *
+          * Example:
+          *
+          * BackboneQuery.find(collection, { title: { $like: "Test" } });
+          *
+          * //Returns all models which have a "title" attribute that
+          *
+          * //contains the string "Test", e.g. "Testing", "Tests", "Test", etc.
+          *
+          *
+          *
+          * $likeI
+          *
+          * The same as above but performs a case insensitive search using indexOf and toLowerCase (still faster than Regex).
+          *
+          * Example:
+          *
+          * BackboneQuery.find(collection, { title: { $likeI: "Test" } });
+          *
+          * //Returns all models which have a "title" attribute that
+          *
+          * //contains the string "Test", "test", "tEst","tesT", etc.
+          *
+          *
+          *
+          * $regex
+          *
+          * Checks if the model attribute matches the supplied regular expression. The regex query can be supplied without
+          * the `$regex` keyword.
+          *
+          * Example:
+          *
+          * BackboneQuery.find(collection, { content: { $regex: /coffeescript/gi } });
+          *
+          * // Checks for a regex match in the content attribute
+          *
+          * BackboneQuery.find(collection, { content: /coffeescript/gi });
+          *
+          * // Same as above
+          *
+          *
+          *
+          * $cb
+          *
+          * A callback function can be supplied as a test. The callback will receive the attribute and should return either
+          * true or false. `this` will be set to the current model, this can help with tests against computed properties.
+          *
+          * Example:
+          *
+          * BackboneQuery.find(collection, { title: { $cb: function(attr){ return attr.charAt(0) === "c"; } } });
+          *
+          * // Returns all models that have a title attribute that starts with "c"
+          *
+          * BackboneQuery.find(collection, { computed_test: { $cb: function(){ return this.computed_property() > 10; } } });
+          *
+          * // Returns all models where the computed_property method returns a value greater than 10.
+          *
+          * For callbacks that use `this` rather than the model attribute, the key name supplied is arbitrary and has no
+          * effect on the results. If the only test you were performing was like the above test it would make more sense to
+          * simply use `Collection.filter`. However if you are performing other tests or are using the
+          * paging / sorting / caching options of backbone query, then this functionality is useful.
+          *
+          *
+          *
+          * $elemMatch
+          *
+          * This operator allows you to perform queries in nested arrays similar to MongoDB For example you may have a
+          * collection of models in with this kind of data structure:
+          *
+          * Example:
+          *
+          * let posts = new Collection([
+          *
+          *    {title: "Home", comments:[
+          *
+          *       {text:"I like this post"},
+          *
+          *       {text:"I love this post"},
+          *
+          *       {text:"I hate this post"}
+          *
+          *    ]},
+          *
+          *    {title: "About", comments:[
+          *
+          *       {text:"I like this page"},
+          *
+          *       {text:"I love this page"},
+          *
+          *       {text:"I really like this page"}
+          *
+          *    ]}
+          *
+          * ]);
+          *
+          *
+          * To search for posts which have the text "really" in any of the comments you could search like this:
+          *
+          * BackboneQuery.find(posts, {
+          *
+          *    comments: {
+          *
+          *       $elemMatch: {
+          *
+          *          text: /really/i
+          *
+          *       }
+          *
+          *    }
+          *
+          * });
+          *
+          *
+          * All of the operators above can be performed on `$elemMatch` queries, e.g. `$all`, `$size` or `$lt`. `$elemMatch`
+          * queries also accept compound operators, for example this query searches for all posts that have at least one
+          * comment without the word "really" and with the word "totally".
+          *
+          * BackboneQuery.find(posts, {
+          *
+          *    comments: {
+          *
+          *       $elemMatch: {
+          *
+          *          $not: {
+          *
+          *             text: /really/i
+          *
+          *          },
+          *
+          *          $and: {
+          *
+          *             text: /totally/i
+          *
+          *          }
+          *       }
+          *
+          *    }
+          *
+          * });
+          *
+          *
+          *
+          * $computed
+          *
+          * This operator allows you to perform queries on computed properties. For example you may want to perform a query
+          * for a persons full name, even though the first and last name are stored separately in your db / model. For
+          * example:
+          *
+          * Example:
+          *
+          * class TestModel extends Backbone.Model {
+          *
+          *    full_name() {
+          *
+          *       return (this.get('first_name')) + " " + (this.get('last_name'));
+          *
+          *    }
+          *
+          * });
+          *
+          * let a = new TestModel({
+          *
+          *    first_name: "Dave",
+          *
+          *    last_name: "Tonge"
+          *
+          * });
+          *
+          * let b = new TestModel({
+          *
+          *    first_name: "John",
+          *
+          *    last_name: "Smith"
+          *
+          * });
+          *
+          * let collection = new Collection([a, b]);
+          *
+          * BackboneQuery.find(collection, { full_name: { $computed: "Dave Tonge" } });
+          *
+          * // Returns the model with the computed `full_name` equal to Dave Tonge
+          *
+          * BackboneQuery.find(collection, { full_name: { $computed: { $likeI: "john smi" } } });
+          *
+          * // Any of the previous operators can be used (including elemMatch is required)
+          *
+          *
+          *
+          * Combined Queries
+          * ----------------
+          * Multiple queries can be combined together. By default all supplied queries use the `$and` operator. However it is
+          * possible to specify either `$or`, `$nor`, `$not` to implement alternate logic.
+          *
+          *
+          * $and
+          *
+          * BackboneQuery.find(collection, { $and: { title: { $like: "News" }, likes: { $gt: 10 }}});
+          *
+          * // Returns all models that contain "News" in the title and have more than 10 likes.
+          *
+          * BackboneQuery.find(collection, { title: { $like: "News" }, likes: { $gt: 10 } });
+          *
+          * // Same as above as $and is assumed if not supplied
+          *
+          *
+          *
+          * $or
+          *
+          * BackboneQuery.find(collection, { $or: { title: { $like: "News" }, likes: { $gt: 10 } } });
+          *
+          * // Returns all models that contain "News" in the title OR have more than 10 likes.
+          *
+          *
+          * $nor
+          *
+          * The opposite of `$or`
+          *
+          * BackboneQuery.find(collection, { $nor: { title: { $like: "News" }, likes: { $gt: 10 } } });
+          *
+          * // Returns all models that don't contain "News" in the title NOR have more than 10 likes.
+          *
+          *
+          * $not
+          *
+          * The opposite of `$and`
+          *
+          * BackboneQuery.find(collection, { $not: { title: { $like: "News" }, likes: { $gt: 10 } } });
+          *
+          * // Returns all models that don't contain "News" in the title AND DON'T have more than 10 likes.
+          *
+          *
+          * If you need to perform multiple queries on the same key, then you can supply the query as an array:
+          *
+          * BackboneQuery.find(collection, {
+          *
+          *    $or:[
+          *
+          *       {title:"News"},
+          *
+          *       {title:"About"}
+          *
+          *    ]
+          *
+          * });
+          *
+          * // Returns all models with the title "News" or "About".
+          *
+          *
+          * Compound Queries
+          * ----------------
+          * It is possible to use multiple combined queries, for example searching for models that have a specific title
+          * attribute, and either a category of "abc" or a tag of "xyz".
+          *
+          * BackboneQuery.find(collection, {
+          *
+          *    $and: { title: { $like: "News" } },
+          *
+          *    $or: {likes: { $gt: 10 }, color: { $contains:"red" } }
+          *
+          * });
+          *
+          * //Returns models that have "News" in their title and either have more than 10 likes or contain the color red.
+          *
+          *
+          * Sorting
+          * -------
+          * Optional `sortBy` and `order` attributes can be supplied as part of an options object. `sortBy` can either be a
+          * model key or a callback function which will be called with each model in the array.
+          *
+          * BackboneQuery.find(collection, { title: { $like: "News" } }, { sortBy: "likes" });
+          *
+          * // Returns all models that contain "News" in the title, sorted according to their "likes" attribute (ascending)
+          *
+          * BackboneQuery.find(collection, { title: { $like: "News" } }, { sortBy: "likes", order: "desc" });
+          *
+          * // Same as above, but "descending"
+          *
+          * BackboneQuery.find(collection,
+          *
+          *    { title: { $like: "News" } },
+          *
+          *    { sortBy: function(model){ return model.get("title").charAt(1); } }
+          *
+          * );
+          *
+          * // Results sorted according to 2nd character of the title attribute
+          *
+          *
+          *
+          * Paging
+          * ------
+          * To return only a subset of the results paging properties can be supplied as part of an options object. A limit
+          * property must be supplied and optionally a offset or a page property can be supplied.
+          *
+          * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10 });
+          *
+          * // Returns the first 10 models that have more than 10 likes.
+          *
+          * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10, offset: 5 });
+          *
+          * // Returns 10 models that have more than 10 likes starting at the 6th model in the results.
+          *
+          * BackboneQuery.find(collection, { likes: { $gt: 10 } }, { limit: 10, page: 2 });
+          *
+          * // Returns 10 models that have more than 10 likes starting at the 11th model in the results (page 2).
+          *
+          *
+          * When using the paging functionality, you will normally need to know the number of pages so that you can render
+          * the correct interface for the user. Backbone Query can send the number of pages of results to a supplied callback.
+          * The callback should be passed as a pager property on the options object. This callback will also receive the
+          * sliced models as a second variable.
+          *
+          * Here is an example of a simple paging setup using the pager callback option:
+          *
+          * TODO Provide example!
+          *
+          * Caching Results
+          * ---------------
+          * To enable caching set the cache flag to true in the options object. This can greatly improve performance when
+          * paging through results as the unpaged results will be saved. This options is not enabled by default as if models
+          * are changed, added to, or removed from the collection, then the query cache will be out of date. If you know that
+          * your data is static and won't change then caching can be enabled without any problems. If your data is dynamic
+          * (as in most Backbone Apps) then a helper cache reset method is provided: `reset_query_cache`. This method should
+          * be bound to your collections change, add and remove events (depending on how your data can be changed).
+          *
+          * Cache will be saved in a `_query_cache` property on each collection where a cache query is performed.
+          *
+          * @example
+          * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10, page: 1, cache: true });
+          * //The first query will operate as normal and return the first page of results
+          *
+          * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit:10, page: 2, cache: true });
+          * //The second query has an identical query object to the first query, so therefore the results will be retrieved
+          * //from the cache, before the paging parameters are applied.
+          *
+          * // Binding the reset_query_cache method
+          * MyCollection extends Backbone.Collection {
+          *    initialize() {
+          *       this.bind("change", () => { BackboneQuery.resetQueryCache(this) }, this);
+          *    }
+          * });
+          */
+         'use strict';
+
+         BackboneQuery = (function () {
+            function BackboneQuery() {
+               _classCallCheck(this, BackboneQuery);
+            }
+
+            // Private / internal methods ---------------------------------------------------------------------------------------
+
+            _createClass(BackboneQuery, null, [{
+               key: 'find',
+
+               /**
+                * Returns a sorted array of models from the collection that match the query.
+                *
+                * @param {Collection}  collection  - Target collection
+                * @param {string}      query       - Query string
+                * @param {Object}      options     - Optional parameters
+                * @returns {*}
+                */
+               value: function find(collection, query) {
+                  var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+                  var models = undefined;
+
+                  if (options.cache) {
+                     models = s_GET_CACHE(collection, query, options);
+                  } else {
+                     models = s_GET_SORTED_MODELS(collection, query, options);
+                  }
+
+                  if (options.limit) {
+                     models = s_PAGE_MODELS(models, options);
+                  }
+
+                  return models;
+               }
+
+               /**
+                * Returns the first model that matches the query.
+                *
+                * @param {Collection}  collection  - Target collection
+                * @param {string}      query       - Query string
+                * @returns {*}
+                */
+            }, {
+               key: 'findOne',
+               value: function findOne(collection, query) {
+                  return BackboneQuery.find(collection, query)[0];
+               }
+
+               /**
+                * Resets the query cache of the target collection.
+                *
+                * @param {Collection}  collection  - Target collection
+                */
+            }, {
+               key: 'resetQueryCache',
+               value: function resetQueryCache(collection) {
+                  collection._queryCache = {};
+               }
+
+               /**
+                * Returns a sorted array of all models from the collection that match the query.
+                *
+                * @param {Collection}  collection  - Target collection
+                * @param {string}      query       - Query string
+                * @returns {Array<*>}
+                */
+            }, {
+               key: 'sortAll',
+               value: function sortAll(collection, query) {
+                  return s_SORT_MODELS(collection.models, query);
+               }
+
+               /**
+                * Runs a query and returns a new collection with the results. Useful for chaining.
+                *
+                * @param {Collection}  collection     - Target collection
+                * @param {string}      query          - Query string
+                * @param {Object}      queryOptions   - Optional parameters for query.
+                * @param {Object}      options        - Optional parameters (used to construct the new collection).
+                * @returns {Collection}
+                */
+            }, {
+               key: 'whereBy',
+               value: function whereBy(collection, query) {
+                  var queryOptions = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+                  var options = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
+
+                  return new collection.constructor(BackboneQuery.find(collection, query, queryOptions), options);
+               }
+            }]);
+
+            return BackboneQuery;
+         })();
+
+         _export('default', BackboneQuery);
+
+         __slice = [].slice;
+         __hasProp = ({}).hasOwnProperty;
+
+         __indexOf = [].indexOf || function (item) {
+            for (var i = 0, l = this.length; i < l; i++) {
+               if (i in this && this[i] === item) {
+                  return i;
+               }
+            }
+
+            return -1;
+         };
+
+         /**
+          * Detects if any value in the array matches a test.
+          *
+          * @param {Array<*>} array - An array to detect.
+          * @param {function} test  - A test function.
+          * @returns {boolean}
+          */
+
+         s_DETECT = function s_DETECT(array, test) {
+            var _i = undefined,
+                _len = undefined,
+                val = undefined;
+
+            for (_i = 0, _len = array.length; _i < _len; _i++) {
+               val = array[_i];
+               if (test(val)) {
+                  return true;
+               }
+            }
+
+            return false;
+         };
+
+         /**
+          * Filters an array only adding results that `test` passes.
+          *
+          * @param {Array<*>} array - An array to filter.
+          * @param {function} test  - A test function.
+          * @returns {Array<*>}
+          */
+
+         s_FILTER = function s_FILTER(array, test) {
+            var _results = [];
+            var _i = undefined,
+                _len = undefined,
+                val = undefined;
+
+            for (_i = 0, _len = array.length; _i < _len; _i++) {
+               val = array[_i];
+               if (test(val)) {
+                  _results.push(val);
+               }
+            }
+
+            return _results;
+         };
+
+         /**
+          * Gets the query cache from a collection.
+          *
+          * @param {Collection}  collection  - Target collection
+          * @param {string}      query       - A query
+          * @param {Object}      options     - Optional parameters
+          * @returns {*}
+          */
+
+         s_GET_CACHE = function s_GET_CACHE(collection, query, options) {
+            var _ref = undefined,
+                cache = undefined,
+                models = undefined,
+                queryString = undefined;
+            queryString = JSON.stringify(query);
+            cache = (_ref = collection._queryCache) !== null ? _ref : collection._queryCache = {};
+            models = cache[queryString];
+
+            if (!models) {
+               models = s_GET_SORTED_MODELS(collection, query, options);
+               cache[queryString] = models;
+            }
+
+            return models;
+         };
+
+         /**
+          * Runs a query then sorts the models.
+          *
+          * @param {Collection}  collection  - Target collection
+          * @param {string}      query       - A query
+          * @param {Object}      options     - Optional parameters
+          * @returns {*}
+          */
+
+         s_GET_SORTED_MODELS = function s_GET_SORTED_MODELS(collection, query, options) {
+            var models = undefined;
+            models = s_RUN_QUERY(collection.models, query);
+
+            if (options.sortBy) {
+               models = s_SORT_MODELS(models, options);
+            }
+
+            return models;
+         };
+
+         /**
+          * Tests an item and returns a string representation of the type or `false` if no type matched.
+          *
+          * @param {*}  item  - Item to test.
+          * @returns {string|boolean}
+          */
+
+         s_GET_TYPE = function s_GET_TYPE(item) {
+            if (_.isRegExp(item)) {
+               return '$regex';
+            }
+
+            if (_.isDate(item)) {
+               return '$date';
+            }
+
+            if (_.isObject(item) && !_.isArray(item)) {
+               return 'object';
+            }
+
+            if (_.isArray(item)) {
+               return 'array';
+            }
+
+            if (_.isString(item)) {
+               return 'string';
+            }
+
+            if (_.isNumber(item)) {
+               return 'number';
+            }
+
+            if (_.isBoolean(item)) {
+               return 'boolean';
+            }
+
+            if (_.isFunction(item)) {
+               return 'function';
+            }
+
+            return false;
+         };
+
+         /**
+          *
+          * @param {Array<Model>}   models         -
+          * @param {Array<*>}       query          - An array of sub-queries.
+          * @param {boolean}        andOr          -
+          * @param {function}       filterFunction -
+          * @param {string}         itemType       -
+          * @returns {*}
+          */
+
+         s_ITERATOR = function s_ITERATOR(models, query, andOr, filterFunction, itemType) {
+            if (itemType === null) {
+               itemType = false;
+            }
+
+            return filterFunction(models, function (model) {
+               var _i = undefined,
+                   _len = undefined,
+                   attr = undefined,
+                   q = undefined,
+                   test = undefined;
+
+               for (_i = 0, _len = query.length; _i < _len; _i++) {
+                  q = query[_i];
+
+                  attr = (function () {
+                     switch (itemType) {
+                        case 'elemMatch':
+                           return model[q.key];
+                        case 'computed':
+                           return model[q.key]();
+                        default:
+                           return model.get(q.key);
+                     }
+                  })();
+
+                  test = s_TEST_MODEL_ATTRIBUTE(q.type, attr);
+
+                  if (test) {
+                     test = s_PERFORM_QUERY(q.type, q.value, attr, model, q.key);
+                  }
+
+                  if (andOr === test) {
+                     return andOr;
+                  }
+               }
+               return !andOr;
+            });
+         };
+
+         /**
+          * @returns {{}|*}
+          */
+
+         s_MAKE_OBJ = function s_MAKE_OBJ() {
+            var args = undefined,
+                current = undefined,
+                key = undefined,
+                o = undefined,
+                val = undefined;
+            args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+            o = {};
+            current = o;
+
+            while (args.length) {
+               key = args.shift();
+               val = args.length === 1 ? args.shift() : {};
+               current = current[key] = val;
+            }
+
+            return o;
+         };
+
+         /**
+          * Pages models
+          *
+          * @param {Array<Model>}   models   - Array of models to page.
+          * @param {Object}         options  - Optional parameters
+          * @returns {*}
+          */
+
+         s_PAGE_MODELS = function s_PAGE_MODELS(models, options) {
+            var end = undefined,
+                sliced_models = undefined,
+                start = undefined,
+                total_pages = undefined;
+
+            if (options.offset) {
+               start = options.offset;
+            } else if (options.page) {
+               start = (options.page - 1) * options.limit;
+            } else {
+               start = 0;
+            }
+
+            end = start + options.limit;
+            sliced_models = models.slice(start, end);
+
+            if (options.pager && _.isFunction(options.pager)) {
+               total_pages = Math.ceil(models.length / options.limit);
+               options.pager(total_pages, sliced_models);
+            }
+
+            return sliced_models;
+         };
+
+         /**
+          * Function to parse raw queries
+          *
+          * Allows queries of the following forms:
+          * query
+          * name: "test"
+          * id: $gte: 10
+          *
+          * query [
+          *    {name:"test"}
+          *    {id:$gte:10}
+          * ]
+          *
+          * @param {*}  rawQuery - raw query
+          * @return {array} parsed query
+          */
+
+         s_PARSE_SUB_QUERY = function s_PARSE_SUB_QUERY(rawQuery) {
+            var _i = undefined,
+                _len = undefined,
+                _results = undefined,
+                key = undefined,
+                o = undefined,
+                paramType = undefined,
+                q = undefined,
+                query = undefined,
+                queryArray = undefined,
+                queryParam = undefined,
+                type = undefined,
+                val = undefined,
+                value = undefined;
+
+            if (_.isArray(rawQuery)) {
+               queryArray = rawQuery;
+            } else {
+               queryArray = (function () {
+                  var _results = undefined;
+                  _results = [];
+                  for (key in rawQuery) {
+                     if (!__hasProp.call(rawQuery, key)) {
+                        continue;
+                     }
+                     val = rawQuery[key];
+                     _results.push(s_MAKE_OBJ(key, val));
+                  }
+                  return _results;
+               })();
+            }
+
+            _results = [];
+
+            for (_i = 0, _len = queryArray.length; _i < _len; _i++) {
+               query = queryArray[_i];
+               for (key in query) {
+                  if (!__hasProp.call(query, key)) {
+                     continue;
+                  }
+
+                  queryParam = query[key];
+                  o = { key: key };
+
+                  paramType = s_GET_TYPE(queryParam);
+                  switch (paramType) {
+                     case '$regex':
+                     case '$date':
+                        o.type = paramType;
+                        o.value = queryParam;
+                        break;
+                     case 'object':
+                        if (key === '$and' || key === '$or' || key === '$nor' || key === '$not') {
+                           o.value = s_PARSE_SUB_QUERY(queryParam);
+                           o.type = key;
+                           o.key = null;
+                        } else {
+                           for (type in queryParam) {
+                              value = queryParam[type];
+                              if (s_TEST_QUERY_VALUE(type, value)) {
+                                 o.type = type;
+                                 switch (type) {
+                                    case '$elemMatch':
+                                    case '$relationMatch':
+                                       o.value = s_PARSE_QUERY(value);
+                                       break;
+                                    case '$computed':
+                                       q = s_MAKE_OBJ(key, value);
+                                       o.value = s_PARSE_SUB_QUERY(q);
+                                       break;
+                                    default:
+                                       o.value = value;
+                                 }
+                              }
+                           }
+                        }
+                        break;
+                     default:
+                        o.type = '$equal';
+                        o.value = queryParam;
+                  }
+
+                  if (o.type === '$equal' && (paramType === 'object' || paramType === 'array')) {
+                     o.type = '$oEqual';
+                  }
+               }
+               _results.push(o);
+            }
+
+            return _results;
+         };
+
+         /**
+          * Parses query string.
+          *
+          * @param {string}   query - A query
+          * @returns {*[]}
+          */
+
+         s_PARSE_QUERY = function s_PARSE_QUERY(query) {
+            var compoundKeys = undefined,
+                compoundQuery = undefined,
+                key = undefined,
+                queryKeys = undefined,
+                type = undefined,
+                val = undefined;
+            queryKeys = _(query).keys();
+            compoundKeys = ["$and", "$not", "$or", "$nor"];
+            compoundQuery = _.intersection(compoundKeys, queryKeys);
+
+            if (compoundQuery.length === 0) {
+               return [{
+                  type: "$and",
+                  parsedQuery: s_PARSE_SUB_QUERY(query)
+               }];
+            } else {
+               if (compoundQuery.length !== queryKeys.length) {
+                  if (__indexOf.call(compoundQuery, "$and") < 0) {
+                     query.$and = {};
+                     compoundQuery.unshift("$and");
+                  }
+                  for (key in query) {
+                     if (!__hasProp.call(query, key)) {
+                        continue;
+                     }
+                     val = query[key];
+
+                     if (!(__indexOf.call(compoundKeys, key) < 0)) {
+                        continue;
+                     }
+
+                     query.$and[key] = val;
+                     delete query[key];
+                  }
+               }
+
+               return (function () {
+                  var _i = undefined,
+                      _len = undefined,
+                      _results = undefined;
+                  _results = [];
+
+                  for (_i = 0, _len = compoundQuery.length; _i < _len; _i++) {
+                     type = compoundQuery[_i];
+                     _results.push({
+                        type: type,
+                        parsedQuery: s_PARSE_SUB_QUERY(query[type])
+                     });
+                  }
+                  return _results;
+               })();
+            }
+         };
+
+         /**
+          * Performs a query
+          *
+          * @param {string}   type  -
+          * @param {*}        value -
+          * @param {*}        attr  -
+          * @param {*}        model -
+          * @returns {*}
+          */
+
+         s_PERFORM_QUERY = function s_PERFORM_QUERY(type, value, attr, model) {
+            switch (type) {
+               case '$equal':
+                  if (_(attr).isArray()) {
+                     return __indexOf.call(attr, value) >= 0;
+                  } else {
+                     return attr === value;
+                  }
+                  break;
+               case '$oEqual':
+                  return _(attr).isEqual(value);
+               case '$contains':
+                  return __indexOf.call(attr, value) >= 0;
+               case '$ne':
+                  return attr !== value;
+               case '$lt':
+                  return attr < value;
+               case '$gt':
+                  return attr > value;
+               case '$lte':
+                  return attr <= value;
+               case '$gte':
+                  return attr >= value;
+               case '$between':
+                  return value[0] < attr && attr < value[1];
+               case '$in':
+                  return __indexOf.call(value, attr) >= 0;
+               case '$nin':
+                  return __indexOf.call(value, attr) < 0;
+               case '$all':
+                  return _(value).all(function (item) {
+                     return __indexOf.call(attr, item) >= 0;
+                  });
+               case '$any':
+                  return _(attr).any(function (item) {
+                     return __indexOf.call(value, item) >= 0;
+                  });
+               case '$size':
+                  return attr.length === value;
+               case '$exists':
+               case '$has':
+                  return attr !== null === value;
+               case '$like':
+                  return attr.includes(value);
+               case '$likeI':
+                  return attr.toLowerCase().includes(value.toLowerCase());
+               case '$regex':
+                  return value.test(attr);
+               case '$cb':
+                  return value.call(model, attr);
+               case '$elemMatch':
+                  return s_RUN_QUERY(attr, value, 'elemMatch').length > 0;
+               case '$relationMatch':
+                  return s_RUN_QUERY(attr.models, value, 'relationMatch').length > 0;
+               case '$computed':
+                  return s_ITERATOR([model], value, false, s_DETECT, 'computed');
+               case '$and':
+               case '$or':
+               case '$nor':
+               case '$not':
+                  return s_PROCESS_QUERY[type]([model], value).length === 1;
+               default:
+                  return false;
+            }
+         };
+
+         /**
+          * @type {{$and: Function, $or: Function, $nor: Function, $not: Function}}
+          */
+         s_PROCESS_QUERY = {
+            $and: function $and(models, query, itemType) {
+               return s_ITERATOR(models, query, false, s_FILTER, itemType);
+            },
+            $or: function $or(models, query, itemType) {
+               return s_ITERATOR(models, query, true, s_FILTER, itemType);
+            },
+            $nor: function $nor(models, query, itemType) {
+               return s_ITERATOR(models, query, true, s_REJECT, itemType);
+            },
+            $not: function $not(models, query, itemType) {
+               return s_ITERATOR(models, query, false, s_REJECT, itemType);
+            }
+         };
+
+         /**
+          * Creates an array of rejected values of an array that doesn't match a test function.
+          *
+          * @param {Array<*>} array - An array to reject.
+          * @param {function} test  - A test function.
+          * @returns {Array<*>}
+          */
+
+         s_REJECT = function s_REJECT(array, test) {
+            var _results = [];
+            var _i = undefined,
+                _len = undefined,
+                val = undefined;
+
+            for (_i = 0, _len = array.length; _i < _len; _i++) {
+               val = array[_i];
+               if (!test(val)) {
+                  _results.push(val);
+               }
+            }
+
+            return _results;
+         };
+
+         /**
+          * Runs a query.
+          *
+          * @param {*}        items    -
+          * @param {string}   query    - A query
+          * @param {*}        itemType -
+          * @returns {*}
+          */
+
+         s_RUN_QUERY = function s_RUN_QUERY(items, query, itemType) {
+            var reduceIterator = undefined;
+
+            if (!itemType) {
+               query = s_PARSE_QUERY(query);
+            }
+
+            reduceIterator = function (memo, queryItem) {
+               return s_PROCESS_QUERY[queryItem.type](memo, queryItem.parsedQuery, itemType);
+            };
+
+            return _.reduce(query, reduceIterator, items);
+         };
+
+         /**
+          * Sorts models.
+          *
+          * @param {Array<Model>}   models   -
+          * @param {string}         query    - A query
+          * @returns {*}
+          */
+
+         s_SORT_MODELS = function s_SORT_MODELS(models, query) {
+            if (_(query.sortBy).isString()) {
+               var first = _(models).first();
+               if (_.isUndefined(first) || first === null) {
+                  return [];
+               }
+
+               var firstValue = first.get(query.sortBy);
+
+               if (_.isString(firstValue)) {
+                  models = _(models).sortBy(function (model) {
+                     return model.get(query.sortBy).toLocaleLowerCase();
+                  });
+               } else {
+                  models = _(models).sortBy(function (model) {
+                     return model.get(query.sortBy);
+                  });
+               }
+            } else if (_(query.sortBy).isFunction()) {
+               models = _(models).sortBy(query.sortBy);
+            }
+
+            if (query.order === 'desc') {
+               models = models.reverse();
+            } else if (query.order === false) {
+               models = models.reverse();
+            }
+
+            return models;
+         };
+
+         /**
+          * Tests a model attribute based on the query type.
+          *
+          * @param {string}   type  - Query type
+          * @param {*}        value - A value
+          * @returns {*}
+          */
+
+         s_TEST_MODEL_ATTRIBUTE = function s_TEST_MODEL_ATTRIBUTE(type, value) {
+            switch (type) {
+               case '$like':
+               case '$likeI':
+               case '$regex':
+                  return _(value).isString();
+               case '$contains':
+               case '$all':
+               case '$any':
+               case '$elemMatch':
+                  return _(value).isArray();
+               case '$size':
+                  return _(value).isArray() || _(value).isString();
+               case '$in':
+               case '$nin':
+                  return value !== null;
+               case '$relationMatch':
+                  return value !== null && value.models;
+               default:
+                  return true;
+            }
+         };
+
+         /**
+          * Tests a value based on the query type.
+          *
+          * @param {string}   type  - Query type
+          * @param {*}        value - A value
+          * @returns {*}
+          */
+
+         s_TEST_QUERY_VALUE = function s_TEST_QUERY_VALUE(type, value) {
+            switch (type) {
+               case '$in':
+               case '$nin':
+               case '$all':
+               case '$any':
+                  return _(value).isArray();
+               case '$size':
+                  return _(value).isNumber();
+               case '$regex':
+                  return _(value).isRegExp();
+               case '$like':
+               case '$likeI':
+                  return _(value).isString();
+               case '$between':
+                  return _(value).isArray() && value.length === 2;
+               case '$cb':
+                  return _(value).isFunction();
+               default:
+                  return true;
+            }
+         };
+      }
+   };
+});
+
+$__System.register("18", ["17"], function (_export) {
+  "use strict";
+
+  return {
+    setters: [function (_) {
+      var _exportObj = {};
+
+      for (var _key in _) {
+        if (_key !== "default") _exportObj[_key] = _[_key];
+      }
+
+      _exportObj["default"] = _["default"];
+
+      _export(_exportObj);
+    }],
+    execute: function () {}
+  };
+});
+
+$__System.register('19', ['3', '9', '10', '14', 'c', 'd', 'e', 'f', '1a', 'a'], function (_export) {
+   var _, BackboneProxy, Events, Utils, _get, _inherits, _createClass, _classCallCheck, Model, Debug, s_ADD_OPTIONS, s_SET_OPTIONS, s_ADD_REFERENCE, s_ON_MODEL_EVENT, s_REMOVE_MODELS, s_REMOVE_REFERENCE, s_SPLICE, Collection, collectionMethods;
 
    return {
       setters: [function (_2) {
          _ = _2['default'];
       }, function (_3) {
          BackboneProxy = _3['default'];
-      }, function (_6) {
-         Debug = _6['default'];
+      }, function (_4) {
+         Events = _4['default'];
       }, function (_5) {
          Utils = _5['default'];
-      }, function (_4) {
-         Model = _4['default'];
-      }, function (_b) {
-         _get = _b['default'];
       }, function (_c) {
-         _inherits = _c['default'];
+         _get = _c['default'];
       }, function (_d) {
-         _createClass = _d['default'];
+         _inherits = _d['default'];
       }, function (_e) {
-         _classCallCheck = _e['default'];
+         _createClass = _e['default'];
       }, function (_f) {
-         Events = _f['default'];
+         _classCallCheck = _f['default'];
+      }, function (_a) {
+         Model = _a['default'];
+      }, function (_a2) {
+         Debug = _a2['default'];
       }],
       execute: function () {
 
@@ -3307,14 +5197,14 @@ $__System.register('14', ['4', '8', '9', '13', '15', 'b', 'c', 'd', 'e', 'f'], f
    };
 });
 
-$__System.register('9', ['d', 'e'], function (_export) {
+$__System.register('a', ['e', 'f'], function (_export) {
    var _createClass, _classCallCheck, s_DEBUG_LOG, s_DEBUG_TRACE, Debug;
 
    return {
-      setters: [function (_d) {
-         _createClass = _d['default'];
-      }, function (_e) {
-         _classCallCheck = _e['default'];
+      setters: [function (_e) {
+         _createClass = _e['default'];
+      }, function (_f) {
+         _classCallCheck = _f['default'];
       }],
       execute: function () {
          'use strict';
@@ -3365,12 +5255,12 @@ $__System.register('9', ['d', 'e'], function (_export) {
    };
 });
 
-$__System.registerDynamic("16", ["17"], true, function($__require, exports, module) {
+$__System.registerDynamic("1b", ["1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var defined = $__require('17');
+  var defined = $__require('1c');
   module.exports = function(it) {
     return Object(defined(it));
   };
@@ -3378,20 +5268,20 @@ $__System.registerDynamic("16", ["17"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("18", ["19", "1a", "16", "1b", "1c", "1d", "1e", "1f"], true, function($__require, exports, module) {
+$__System.registerDynamic("1d", ["1e", "1f", "1b", "20", "21", "22", "23", "24"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var ctx = $__require('19'),
-      $export = $__require('1a'),
-      toObject = $__require('16'),
-      call = $__require('1b'),
-      isArrayIter = $__require('1c'),
-      toLength = $__require('1d'),
-      getIterFn = $__require('1e');
-  $export($export.S + $export.F * !$__require('1f')(function(iter) {
+  var ctx = $__require('1e'),
+      $export = $__require('1f'),
+      toObject = $__require('1b'),
+      call = $__require('20'),
+      isArrayIter = $__require('21'),
+      toLength = $__require('22'),
+      getIterFn = $__require('23');
+  $export($export.S + $export.F * !$__require('24')(function(iter) {
     Array.from(iter);
   }), 'Array', {from: function from(arrayLike) {
       var O = toObject(arrayLike),
@@ -3425,38 +5315,38 @@ $__System.registerDynamic("18", ["19", "1a", "16", "1b", "1c", "1d", "1e", "1f"]
   return module.exports;
 });
 
-$__System.registerDynamic("20", ["21", "18", "22"], true, function($__require, exports, module) {
+$__System.registerDynamic("25", ["26", "1d", "27"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('21');
-  $__require('18');
-  module.exports = $__require('22').Array.from;
+  $__require('26');
+  $__require('1d');
+  module.exports = $__require('27').Array.from;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("23", ["20"], true, function($__require, exports, module) {
+$__System.registerDynamic("28", ["25"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('20'),
+    "default": $__require('25'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("11", ["23"], true, function($__require, exports, module) {
+$__System.registerDynamic("12", ["28"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _Array$from = $__require('23')["default"];
+  var _Array$from = $__require('28')["default"];
   exports["default"] = function(arr) {
     if (Array.isArray(arr)) {
       for (var i = 0,
@@ -3472,7 +5362,7 @@ $__System.registerDynamic("11", ["23"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.register('13', ['4', '8', '11', 'd', 'e'], function (_export) {
+$__System.register('14', ['3', '9', '12', 'e', 'f'], function (_export) {
    var _, BackboneProxy, _toConsumableArray, _createClass, _classCallCheck, s_ADD_METHOD, s_CB, s_MODEL_MATCHER, Utils;
 
    return {
@@ -3482,10 +5372,10 @@ $__System.register('13', ['4', '8', '11', 'd', 'e'], function (_export) {
          BackboneProxy = _4['default'];
       }, function (_2) {
          _toConsumableArray = _2['default'];
-      }, function (_d) {
-         _createClass = _d['default'];
       }, function (_e) {
-         _classCallCheck = _e['default'];
+         _createClass = _e['default'];
+      }, function (_f) {
+         _classCallCheck = _f['default'];
       }],
       execute: function () {
 
@@ -3662,16 +5552,16 @@ $__System.register('13', ['4', '8', '11', 'd', 'e'], function (_export) {
    };
 });
 
-$__System.register('f', ['4', 'd', 'e'], function (_export) {
+$__System.register('10', ['3', 'e', 'f'], function (_export) {
    var _, _createClass, _classCallCheck, s_EVENT_SPLITTER, s_EVENTS_API, s_INTERNAL_ON, s_OFF_API, s_ON_API, s_ONCE_MAP, s_TRIGGER_API, s_TRIGGER_EVENTS, Events;
 
    return {
       setters: [function (_2) {
          _ = _2['default'];
-      }, function (_d) {
-         _createClass = _d['default'];
       }, function (_e) {
-         _classCallCheck = _e['default'];
+         _createClass = _e['default'];
+      }, function (_f) {
+         _classCallCheck = _f['default'];
       }],
       execute: function () {
 
@@ -4263,8 +6153,8 @@ $__System.register('f', ['4', 'd', 'e'], function (_export) {
    };
 });
 
-$__System.register('15', ['4', '8', '13', 'b', 'c', 'd', 'e', 'f'], function (_export) {
-   var _, BackboneProxy, Utils, _get, _inherits, _createClass, _classCallCheck, Events, Model, modelMethods;
+$__System.register('1a', ['3', '9', '10', '14', 'c', 'd', 'e', 'f'], function (_export) {
+   var _, BackboneProxy, Events, Utils, _get, _inherits, _createClass, _classCallCheck, Model, modelMethods;
 
    return {
       setters: [function (_2) {
@@ -4272,17 +6162,17 @@ $__System.register('15', ['4', '8', '13', 'b', 'c', 'd', 'e', 'f'], function (_e
       }, function (_3) {
          BackboneProxy = _3['default'];
       }, function (_4) {
-         Utils = _4['default'];
-      }, function (_b) {
-         _get = _b['default'];
+         Events = _4['default'];
+      }, function (_5) {
+         Utils = _5['default'];
       }, function (_c) {
-         _inherits = _c['default'];
+         _get = _c['default'];
       }, function (_d) {
-         _createClass = _d['default'];
+         _inherits = _d['default'];
       }, function (_e) {
-         _classCallCheck = _e['default'];
+         _createClass = _e['default'];
       }, function (_f) {
-         Events = _f['default'];
+         _classCallCheck = _f['default'];
       }],
       execute: function () {
 
@@ -5271,12 +7161,12 @@ $__System.register('15', ['4', '8', '13', 'b', 'c', 'd', 'e', 'f'], function (_e
    };
 });
 
-$__System.registerDynamic("1f", ["24"], true, function($__require, exports, module) {
+$__System.registerDynamic("24", ["29"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var ITERATOR = $__require('24')('iterator'),
+  var ITERATOR = $__require('29')('iterator'),
       SAFE_CLOSING = false;
   try {
     var riter = [7][ITERATOR]();
@@ -5308,16 +7198,16 @@ $__System.registerDynamic("1f", ["24"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("25", ["22", "26", "27", "24"], true, function($__require, exports, module) {
+$__System.registerDynamic("2a", ["27", "2b", "2c", "29"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var core = $__require('22'),
-      $ = $__require('26'),
-      DESCRIPTORS = $__require('27'),
-      SPECIES = $__require('24')('species');
+  var core = $__require('27'),
+      $ = $__require('2b'),
+      DESCRIPTORS = $__require('2c'),
+      SPECIES = $__require('29')('species');
   module.exports = function(KEY) {
     var C = core[KEY];
     if (DESCRIPTORS && C && !C[SPECIES])
@@ -5332,12 +7222,12 @@ $__System.registerDynamic("25", ["22", "26", "27", "24"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("28", ["29"], true, function($__require, exports, module) {
+$__System.registerDynamic("2d", ["2e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var redefine = $__require('29');
+  var redefine = $__require('2e');
   module.exports = function(target, src) {
     for (var key in src)
       redefine(target, key, src[key]);
@@ -5347,7 +7237,7 @@ $__System.registerDynamic("28", ["29"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("2a", [], true, function($__require, exports, module) {
+$__System.registerDynamic("2f", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -5439,47 +7329,12 @@ $__System.registerDynamic("2a", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("2b", ["2a"], true, function($__require, exports, module) {
+$__System.registerDynamic("30", ["2f"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('2a');
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("2c", ["2b"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = $__System._nodeRequire ? process : $__require('2b');
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("2d", ["2c"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = $__require('2c');
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("2e", ["2f", "30"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var isObject = $__require('2f'),
-      document = $__require('30').document,
-      is = isObject(document) && isObject(document.createElement);
-  module.exports = function(it) {
-    return is ? document.createElement(it) : {};
-  };
+  module.exports = $__require('2f');
   global.define = __define;
   return module.exports;
 });
@@ -5489,12 +7344,47 @@ $__System.registerDynamic("31", ["30"], true, function($__require, exports, modu
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('30').document && document.documentElement;
+  module.exports = $__System._nodeRequire ? process : $__require('30');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("32", [], true, function($__require, exports, module) {
+$__System.registerDynamic("32", ["31"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = $__require('31');
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("33", ["34", "35"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var isObject = $__require('34'),
+      document = $__require('35').document,
+      is = isObject(document) && isObject(document.createElement);
+  module.exports = function(it) {
+    return is ? document.createElement(it) : {};
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("36", ["35"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = $__require('35').document && document.documentElement;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("37", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -5519,17 +7409,17 @@ $__System.registerDynamic("32", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("33", ["19", "32", "31", "2e", "30", "34", "2d"], true, function($__require, exports, module) {
+$__System.registerDynamic("38", ["1e", "37", "36", "33", "35", "39", "32"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   (function(process) {
-    var ctx = $__require('19'),
-        invoke = $__require('32'),
-        html = $__require('31'),
-        cel = $__require('2e'),
-        global = $__require('30'),
+    var ctx = $__require('1e'),
+        invoke = $__require('37'),
+        html = $__require('36'),
+        cel = $__require('33'),
+        global = $__require('35'),
         process = global.process,
         setTask = global.setImmediate,
         clearTask = global.clearImmediate,
@@ -5566,7 +7456,7 @@ $__System.registerDynamic("33", ["19", "32", "31", "2e", "30", "34", "2d"], true
       clearTask = function clearImmediate(id) {
         delete queue[id];
       };
-      if ($__require('34')(process) == 'process') {
+      if ($__require('39')(process) == 'process') {
         defer = function(id) {
           process.nextTick(ctx(run, id, 1));
         };
@@ -5597,23 +7487,23 @@ $__System.registerDynamic("33", ["19", "32", "31", "2e", "30", "34", "2d"], true
       set: setTask,
       clear: clearTask
     };
-  })($__require('2d'));
+  })($__require('32'));
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("35", ["30", "33", "34", "2d"], true, function($__require, exports, module) {
+$__System.registerDynamic("3a", ["35", "38", "39", "32"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   (function(process) {
-    var global = $__require('30'),
-        macrotask = $__require('33').set,
+    var global = $__require('35'),
+        macrotask = $__require('38').set,
         Observer = global.MutationObserver || global.WebKitMutationObserver,
         process = global.process,
         Promise = global.Promise,
-        isNode = $__require('34')(process) == 'process',
+        isNode = $__require('39')(process) == 'process',
         head,
         last,
         notify;
@@ -5673,19 +7563,19 @@ $__System.registerDynamic("35", ["30", "33", "34", "2d"], true, function($__requ
       }
       last = task;
     };
-  })($__require('2d'));
+  })($__require('32'));
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("36", ["37", "38", "24"], true, function($__require, exports, module) {
+$__System.registerDynamic("3b", ["3c", "3d", "29"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var anObject = $__require('37'),
-      aFunction = $__require('38'),
-      SPECIES = $__require('24')('species');
+  var anObject = $__require('3c'),
+      aFunction = $__require('3d'),
+      SPECIES = $__require('29')('species');
   module.exports = function(O, D) {
     var C = anObject(O).constructor,
         S;
@@ -5695,7 +7585,7 @@ $__System.registerDynamic("36", ["37", "38", "24"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("39", [], true, function($__require, exports, module) {
+$__System.registerDynamic("3e", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -5707,15 +7597,15 @@ $__System.registerDynamic("39", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("1e", ["3a", "24", "3b", "22"], true, function($__require, exports, module) {
+$__System.registerDynamic("23", ["3f", "29", "40", "27"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var classof = $__require('3a'),
-      ITERATOR = $__require('24')('iterator'),
-      Iterators = $__require('3b');
-  module.exports = $__require('22').getIteratorMethod = function(it) {
+  var classof = $__require('3f'),
+      ITERATOR = $__require('29')('iterator'),
+      Iterators = $__require('40');
+  module.exports = $__require('27').getIteratorMethod = function(it) {
     if (it != undefined)
       return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
   };
@@ -5723,12 +7613,12 @@ $__System.registerDynamic("1e", ["3a", "24", "3b", "22"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("1d", ["3c"], true, function($__require, exports, module) {
+$__System.registerDynamic("22", ["41"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toInteger = $__require('3c'),
+  var toInteger = $__require('41'),
       min = Math.min;
   module.exports = function(it) {
     return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0;
@@ -5737,13 +7627,13 @@ $__System.registerDynamic("1d", ["3c"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("1c", ["3b", "24"], true, function($__require, exports, module) {
+$__System.registerDynamic("21", ["40", "29"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var Iterators = $__require('3b'),
-      ITERATOR = $__require('24')('iterator'),
+  var Iterators = $__require('40'),
+      ITERATOR = $__require('29')('iterator'),
       ArrayProto = Array.prototype;
   module.exports = function(it) {
     return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
@@ -5752,12 +7642,12 @@ $__System.registerDynamic("1c", ["3b", "24"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("1b", ["37"], true, function($__require, exports, module) {
+$__System.registerDynamic("20", ["3c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var anObject = $__require('37');
+  var anObject = $__require('3c');
   module.exports = function(iterator, fn, value, entries) {
     try {
       return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -5772,17 +7662,17 @@ $__System.registerDynamic("1b", ["37"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("3d", ["19", "1b", "1c", "37", "1d", "1e"], true, function($__require, exports, module) {
+$__System.registerDynamic("42", ["1e", "20", "21", "3c", "22", "23"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var ctx = $__require('19'),
-      call = $__require('1b'),
-      isArrayIter = $__require('1c'),
-      anObject = $__require('37'),
-      toLength = $__require('1d'),
-      getIterFn = $__require('1e');
+  var ctx = $__require('1e'),
+      call = $__require('20'),
+      isArrayIter = $__require('21'),
+      anObject = $__require('3c'),
+      toLength = $__require('22'),
+      getIterFn = $__require('23');
   module.exports = function(iterable, entries, fn, that) {
     var iterFn = getIterFn(iterable),
         f = ctx(fn, that, entries ? 2 : 1),
@@ -5805,7 +7695,7 @@ $__System.registerDynamic("3d", ["19", "1b", "1c", "37", "1d", "1e"], true, func
   return module.exports;
 });
 
-$__System.registerDynamic("3e", [], true, function($__require, exports, module) {
+$__System.registerDynamic("43", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -5819,13 +7709,13 @@ $__System.registerDynamic("3e", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("3a", ["34", "24"], true, function($__require, exports, module) {
+$__System.registerDynamic("3f", ["39", "29"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var cof = $__require('34'),
-      TAG = $__require('24')('toStringTag'),
+  var cof = $__require('39'),
+      TAG = $__require('29')('toStringTag'),
       ARG = cof(function() {
         return arguments;
       }()) == 'Arguments';
@@ -5839,29 +7729,29 @@ $__System.registerDynamic("3a", ["34", "24"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("3f", ["26", "40", "30", "19", "3a", "1a", "2f", "37", "38", "3e", "3d", "41", "39", "24", "36", "35", "27", "28", "42", "25", "22", "1f", "2d"], true, function($__require, exports, module) {
+$__System.registerDynamic("44", ["2b", "45", "35", "1e", "3f", "1f", "34", "3c", "3d", "43", "42", "46", "3e", "29", "3b", "3a", "2c", "2d", "47", "2a", "27", "24", "32"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   (function(process) {
     'use strict';
-    var $ = $__require('26'),
-        LIBRARY = $__require('40'),
-        global = $__require('30'),
-        ctx = $__require('19'),
-        classof = $__require('3a'),
-        $export = $__require('1a'),
-        isObject = $__require('2f'),
-        anObject = $__require('37'),
-        aFunction = $__require('38'),
-        strictNew = $__require('3e'),
-        forOf = $__require('3d'),
-        setProto = $__require('41').set,
-        same = $__require('39'),
-        SPECIES = $__require('24')('species'),
-        speciesConstructor = $__require('36'),
-        asap = $__require('35'),
+    var $ = $__require('2b'),
+        LIBRARY = $__require('45'),
+        global = $__require('35'),
+        ctx = $__require('1e'),
+        classof = $__require('3f'),
+        $export = $__require('1f'),
+        isObject = $__require('34'),
+        anObject = $__require('3c'),
+        aFunction = $__require('3d'),
+        strictNew = $__require('43'),
+        forOf = $__require('42'),
+        setProto = $__require('46').set,
+        same = $__require('3e'),
+        SPECIES = $__require('29')('species'),
+        speciesConstructor = $__require('3b'),
+        asap = $__require('3a'),
         PROMISE = 'Promise',
         process = global.process,
         isNode = classof(process) == 'process',
@@ -5887,7 +7777,7 @@ $__System.registerDynamic("3f", ["26", "40", "30", "19", "3a", "1a", "2f", "37",
         if (!(P2.resolve(5).then(function() {}) instanceof P2)) {
           works = false;
         }
-        if (works && $__require('27')) {
+        if (works && $__require('2c')) {
           var thenableThenGotten = false;
           P.resolve($.setDesc({}, 'then', {get: function() {
               thenableThenGotten = true;
@@ -6065,7 +7955,7 @@ $__System.registerDynamic("3f", ["26", "40", "30", "19", "3a", "1a", "2f", "37",
           $reject.call(record, err);
         }
       };
-      $__require('28')(P.prototype, {
+      $__require('2d')(P.prototype, {
         then: function then(onFulfilled, onRejected) {
           var reaction = new PromiseCapability(speciesConstructor(this, P)),
               promise = reaction.promise,
@@ -6085,9 +7975,9 @@ $__System.registerDynamic("3f", ["26", "40", "30", "19", "3a", "1a", "2f", "37",
       });
     }
     $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: P});
-    $__require('42')(P, PROMISE);
-    $__require('25')(PROMISE);
-    Wrapper = $__require('22')[PROMISE];
+    $__require('47')(P, PROMISE);
+    $__require('2a')(PROMISE);
+    Wrapper = $__require('27')[PROMISE];
     $export($export.S + $export.F * !USE_NATIVE, PROMISE, {reject: function reject(r) {
         var capability = new PromiseCapability(this),
             $$reject = capability.reject;
@@ -6102,7 +7992,7 @@ $__System.registerDynamic("3f", ["26", "40", "30", "19", "3a", "1a", "2f", "37",
         $$resolve(x);
         return capability.promise;
       }});
-    $export($export.S + $export.F * !(USE_NATIVE && $__require('1f')(function(iter) {
+    $export($export.S + $export.F * !(USE_NATIVE && $__require('24')(function(iter) {
       P.all(iter)['catch'](function() {});
     })), PROMISE, {
       all: function all(iterable) {
@@ -6147,12 +8037,12 @@ $__System.registerDynamic("3f", ["26", "40", "30", "19", "3a", "1a", "2f", "37",
         return capability.promise;
       }
     });
-  })($__require('2d'));
+  })($__require('32'));
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("43", [], true, function($__require, exports, module) {
+$__System.registerDynamic("48", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6167,7 +8057,7 @@ $__System.registerDynamic("43", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("44", [], true, function($__require, exports, module) {
+$__System.registerDynamic("49", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6177,17 +8067,17 @@ $__System.registerDynamic("44", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("45", ["44", "43", "3b", "46", "47"], true, function($__require, exports, module) {
+$__System.registerDynamic("4a", ["49", "48", "40", "4b", "4c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var addToUnscopables = $__require('44'),
-      step = $__require('43'),
-      Iterators = $__require('3b'),
-      toIObject = $__require('46');
-  module.exports = $__require('47')(Array, 'Array', function(iterated, kind) {
+  var addToUnscopables = $__require('49'),
+      step = $__require('48'),
+      Iterators = $__require('40'),
+      toIObject = $__require('4b');
+  module.exports = $__require('4c')(Array, 'Array', function(iterated, kind) {
     this._t = toIObject(iterated);
     this._i = 0;
     this._k = kind;
@@ -6213,19 +8103,19 @@ $__System.registerDynamic("45", ["44", "43", "3b", "46", "47"], true, function($
   return module.exports;
 });
 
-$__System.registerDynamic("48", ["45", "3b"], true, function($__require, exports, module) {
+$__System.registerDynamic("4d", ["4a", "40"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('45');
-  var Iterators = $__require('3b');
+  $__require('4a');
+  var Iterators = $__require('40');
   Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("49", [], true, function($__require, exports, module) {
+$__System.registerDynamic("4e", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6239,12 +8129,12 @@ $__System.registerDynamic("49", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("4a", ["30"], true, function($__require, exports, module) {
+$__System.registerDynamic("4f", ["35"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var global = $__require('30'),
+  var global = $__require('35'),
       SHARED = '__core-js_shared__',
       store = global[SHARED] || (global[SHARED] = {});
   module.exports = function(key) {
@@ -6254,14 +8144,14 @@ $__System.registerDynamic("4a", ["30"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("24", ["4a", "49", "30"], true, function($__require, exports, module) {
+$__System.registerDynamic("29", ["4f", "4e", "35"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var store = $__require('4a')('wks'),
-      uid = $__require('49'),
-      Symbol = $__require('30').Symbol;
+  var store = $__require('4f')('wks'),
+      uid = $__require('4e'),
+      Symbol = $__require('35').Symbol;
   module.exports = function(name) {
     return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
   };
@@ -6269,14 +8159,14 @@ $__System.registerDynamic("24", ["4a", "49", "30"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("42", ["26", "4b", "24"], true, function($__require, exports, module) {
+$__System.registerDynamic("47", ["2b", "50", "29"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var def = $__require('26').setDesc,
-      has = $__require('4b'),
-      TAG = $__require('24')('toStringTag');
+  var def = $__require('2b').setDesc,
+      has = $__require('50'),
+      TAG = $__require('29')('toStringTag');
   module.exports = function(it, tag, stat) {
     if (it && !has(it = stat ? it : it.prototype, TAG))
       def(it, TAG, {
@@ -6288,17 +8178,17 @@ $__System.registerDynamic("42", ["26", "4b", "24"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("4c", ["26", "4d", "42", "4e", "24"], true, function($__require, exports, module) {
+$__System.registerDynamic("51", ["2b", "52", "47", "53", "29"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('26'),
-      descriptor = $__require('4d'),
-      setToStringTag = $__require('42'),
+  var $ = $__require('2b'),
+      descriptor = $__require('52'),
+      setToStringTag = $__require('47'),
       IteratorPrototype = {};
-  $__require('4e')(IteratorPrototype, $__require('24')('iterator'), function() {
+  $__require('53')(IteratorPrototype, $__require('29')('iterator'), function() {
     return this;
   });
   module.exports = function(Constructor, NAME, next) {
@@ -6309,7 +8199,7 @@ $__System.registerDynamic("4c", ["26", "4d", "42", "4e", "24"], true, function($
   return module.exports;
 });
 
-$__System.registerDynamic("3b", [], true, function($__require, exports, module) {
+$__System.registerDynamic("40", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6319,7 +8209,7 @@ $__System.registerDynamic("3b", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("4b", [], true, function($__require, exports, module) {
+$__System.registerDynamic("50", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6332,12 +8222,12 @@ $__System.registerDynamic("4b", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("27", ["4f"], true, function($__require, exports, module) {
+$__System.registerDynamic("2c", ["54"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = !$__require('4f')(function() {
+  module.exports = !$__require('54')(function() {
     return Object.defineProperty({}, 'a', {get: function() {
         return 7;
       }}).a != 7;
@@ -6346,7 +8236,7 @@ $__System.registerDynamic("27", ["4f"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("4d", [], true, function($__require, exports, module) {
+$__System.registerDynamic("52", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6363,14 +8253,14 @@ $__System.registerDynamic("4d", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("4e", ["26", "4d", "27"], true, function($__require, exports, module) {
+$__System.registerDynamic("53", ["2b", "52", "2c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('26'),
-      createDesc = $__require('4d');
-  module.exports = $__require('27') ? function(object, key, value) {
+  var $ = $__require('2b'),
+      createDesc = $__require('52');
+  module.exports = $__require('2c') ? function(object, key, value) {
     return $.setDesc(object, key, createDesc(1, value));
   } : function(object, key, value) {
     object[key] = value;
@@ -6380,17 +8270,17 @@ $__System.registerDynamic("4e", ["26", "4d", "27"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("29", ["4e"], true, function($__require, exports, module) {
+$__System.registerDynamic("2e", ["53"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('4e');
+  module.exports = $__require('53');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("40", [], true, function($__require, exports, module) {
+$__System.registerDynamic("45", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6400,22 +8290,22 @@ $__System.registerDynamic("40", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("47", ["40", "1a", "29", "4e", "4b", "3b", "4c", "42", "26", "24"], true, function($__require, exports, module) {
+$__System.registerDynamic("4c", ["45", "1f", "2e", "53", "50", "40", "51", "47", "2b", "29"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var LIBRARY = $__require('40'),
-      $export = $__require('1a'),
-      redefine = $__require('29'),
-      hide = $__require('4e'),
-      has = $__require('4b'),
-      Iterators = $__require('3b'),
-      $iterCreate = $__require('4c'),
-      setToStringTag = $__require('42'),
-      getProto = $__require('26').getProto,
-      ITERATOR = $__require('24')('iterator'),
+  var LIBRARY = $__require('45'),
+      $export = $__require('1f'),
+      redefine = $__require('2e'),
+      hide = $__require('53'),
+      has = $__require('50'),
+      Iterators = $__require('40'),
+      $iterCreate = $__require('51'),
+      setToStringTag = $__require('47'),
+      getProto = $__require('2b').getProto,
+      ITERATOR = $__require('29')('iterator'),
       BUGGY = !([].keys && 'next' in [].keys()),
       FF_ITERATOR = '@@iterator',
       KEYS = 'keys',
@@ -6487,7 +8377,7 @@ $__System.registerDynamic("47", ["40", "1a", "29", "4e", "4b", "3b", "4c", "42",
   return module.exports;
 });
 
-$__System.registerDynamic("3c", [], true, function($__require, exports, module) {
+$__System.registerDynamic("41", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6501,13 +8391,13 @@ $__System.registerDynamic("3c", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("50", ["3c", "17"], true, function($__require, exports, module) {
+$__System.registerDynamic("55", ["41", "1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toInteger = $__require('3c'),
-      defined = $__require('17');
+  var toInteger = $__require('41'),
+      defined = $__require('1c');
   module.exports = function(TO_STRING) {
     return function(that, pos) {
       var s = String(defined(that)),
@@ -6525,14 +8415,14 @@ $__System.registerDynamic("50", ["3c", "17"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("21", ["50", "47"], true, function($__require, exports, module) {
+$__System.registerDynamic("26", ["55", "4c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $at = $__require('50')(true);
-  $__require('47')(String, 'String', function(iterated) {
+  var $at = $__require('55')(true);
+  $__require('4c')(String, 'String', function(iterated) {
     this._t = String(iterated);
     this._i = 0;
   }, function() {
@@ -6555,7 +8445,7 @@ $__System.registerDynamic("21", ["50", "47"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("51", [], true, function($__require, exports, module) {
+$__System.registerDynamic("56", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6565,57 +8455,57 @@ $__System.registerDynamic("51", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("52", ["51", "21", "48", "3f", "22"], true, function($__require, exports, module) {
+$__System.registerDynamic("57", ["56", "26", "4d", "44", "27"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('51');
-  $__require('21');
-  $__require('48');
-  $__require('3f');
-  module.exports = $__require('22').Promise;
+  $__require('56');
+  $__require('26');
+  $__require('4d');
+  $__require('44');
+  module.exports = $__require('27').Promise;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("53", ["52"], true, function($__require, exports, module) {
+$__System.registerDynamic("16", ["57"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('52'),
+    "default": $__require('57'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.register('54', ['4', '6', '9', '13', '15', '53', 'b', 'c', 'd', 'e'], function (_export) {
-   var _, Parse, Debug, Utils, Model, _Promise, _get, _inherits, _createClass, _classCallCheck, ParseModel;
+$__System.register('58', ['3', '7', '14', '16', 'c', 'd', 'e', 'f', '1a', 'a'], function (_export) {
+   var _, Parse, Utils, _Promise, _get, _inherits, _createClass, _classCallCheck, Model, Debug, ParseModel;
 
    return {
       setters: [function (_3) {
          _ = _3['default'];
-      }, function (_6) {
-         Parse = _6['default'];
-      }, function (_7) {
-         Debug = _7['default'];
       }, function (_5) {
-         Utils = _5['default'];
+         Parse = _5['default'];
       }, function (_4) {
-         Model = _4['default'];
+         Utils = _4['default'];
       }, function (_2) {
          _Promise = _2['default'];
-      }, function (_b) {
-         _get = _b['default'];
       }, function (_c) {
-         _inherits = _c['default'];
+         _get = _c['default'];
       }, function (_d) {
-         _createClass = _d['default'];
+         _inherits = _d['default'];
       }, function (_e) {
-         _classCallCheck = _e['default'];
+         _createClass = _e['default'];
+      }, function (_f) {
+         _classCallCheck = _f['default'];
+      }, function (_a) {
+         Model = _a['default'];
+      }, function (_a2) {
+         Debug = _a2['default'];
       }],
       execute: function () {
 
@@ -7153,12 +9043,12 @@ $__System.register('54', ['4', '6', '9', '13', '15', '53', 'b', 'c', 'd', 'e'], 
    };
 });
 
-$__System.registerDynamic("55", ["26"], true, function($__require, exports, module) {
+$__System.registerDynamic("59", ["2b"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('26');
+  var $ = $__require('2b');
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
@@ -7166,26 +9056,26 @@ $__System.registerDynamic("55", ["26"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("56", ["55"], true, function($__require, exports, module) {
+$__System.registerDynamic("5a", ["59"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('55'),
+    "default": $__require('59'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("d", ["56"], true, function($__require, exports, module) {
+$__System.registerDynamic("e", ["5a"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _Object$defineProperty = $__require('56')["default"];
+  var _Object$defineProperty = $__require('5a')["default"];
   exports["default"] = (function() {
     function defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
@@ -7210,12 +9100,12 @@ $__System.registerDynamic("d", ["56"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("37", ["2f"], true, function($__require, exports, module) {
+$__System.registerDynamic("3c", ["34"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var isObject = $__require('2f');
+  var isObject = $__require('34');
   module.exports = function(it) {
     if (!isObject(it))
       throw TypeError(it + ' is not an object!');
@@ -7225,7 +9115,7 @@ $__System.registerDynamic("37", ["2f"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("2f", [], true, function($__require, exports, module) {
+$__System.registerDynamic("34", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7237,14 +9127,14 @@ $__System.registerDynamic("2f", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("41", ["26", "2f", "37", "19"], true, function($__require, exports, module) {
+$__System.registerDynamic("46", ["2b", "34", "3c", "1e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var getDesc = $__require('26').getDesc,
-      isObject = $__require('2f'),
-      anObject = $__require('37');
+  var getDesc = $__require('2b').getDesc,
+      isObject = $__require('34'),
+      anObject = $__require('3c');
   var check = function(O, proto) {
     anObject(O);
     if (!isObject(proto) && proto !== null)
@@ -7253,7 +9143,7 @@ $__System.registerDynamic("41", ["26", "2f", "37", "19"], true, function($__requ
   module.exports = {
     set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
       try {
-        set = $__require('19')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = $__require('1e')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) {
@@ -7274,47 +9164,47 @@ $__System.registerDynamic("41", ["26", "2f", "37", "19"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("57", ["1a", "41"], true, function($__require, exports, module) {
+$__System.registerDynamic("5b", ["1f", "46"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $export = $__require('1a');
-  $export($export.S, 'Object', {setPrototypeOf: $__require('41').set});
+  var $export = $__require('1f');
+  $export($export.S, 'Object', {setPrototypeOf: $__require('46').set});
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("58", ["57", "22"], true, function($__require, exports, module) {
+$__System.registerDynamic("5c", ["5b", "27"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('57');
-  module.exports = $__require('22').Object.setPrototypeOf;
+  $__require('5b');
+  module.exports = $__require('27').Object.setPrototypeOf;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("59", ["58"], true, function($__require, exports, module) {
+$__System.registerDynamic("5d", ["5c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('58'),
+    "default": $__require('5c'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("5a", ["26"], true, function($__require, exports, module) {
+$__System.registerDynamic("5e", ["2b"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('26');
+  var $ = $__require('2b');
   module.exports = function create(P, D) {
     return $.create(P, D);
   };
@@ -7322,27 +9212,27 @@ $__System.registerDynamic("5a", ["26"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("5b", ["5a"], true, function($__require, exports, module) {
+$__System.registerDynamic("5f", ["5e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('5a'),
+    "default": $__require('5e'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("c", ["5b", "59"], true, function($__require, exports, module) {
+$__System.registerDynamic("d", ["5f", "5d"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _Object$create = $__require('5b')["default"];
-  var _Object$setPrototypeOf = $__require('59')["default"];
+  var _Object$create = $__require('5f')["default"];
+  var _Object$setPrototypeOf = $__require('5d')["default"];
   exports["default"] = function(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -7361,7 +9251,7 @@ $__System.registerDynamic("c", ["5b", "59"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("4f", [], true, function($__require, exports, module) {
+$__System.registerDynamic("54", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7377,7 +9267,7 @@ $__System.registerDynamic("4f", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("38", [], true, function($__require, exports, module) {
+$__System.registerDynamic("3d", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7391,12 +9281,12 @@ $__System.registerDynamic("38", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("19", ["38"], true, function($__require, exports, module) {
+$__System.registerDynamic("1e", ["3d"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var aFunction = $__require('38');
+  var aFunction = $__require('3d');
   module.exports = function(fn, that, length) {
     aFunction(fn);
     if (that === undefined)
@@ -7423,7 +9313,7 @@ $__System.registerDynamic("19", ["38"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("22", [], true, function($__require, exports, module) {
+$__System.registerDynamic("27", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7435,7 +9325,7 @@ $__System.registerDynamic("22", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("30", [], true, function($__require, exports, module) {
+$__System.registerDynamic("35", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7447,14 +9337,14 @@ $__System.registerDynamic("30", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("1a", ["30", "22", "19"], true, function($__require, exports, module) {
+$__System.registerDynamic("1f", ["35", "27", "1e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var global = $__require('30'),
-      core = $__require('22'),
-      ctx = $__require('19'),
+  var global = $__require('35'),
+      core = $__require('27'),
+      ctx = $__require('1e'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -7497,14 +9387,14 @@ $__System.registerDynamic("1a", ["30", "22", "19"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("5c", ["1a", "22", "4f"], true, function($__require, exports, module) {
+$__System.registerDynamic("60", ["1f", "27", "54"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $export = $__require('1a'),
-      core = $__require('22'),
-      fails = $__require('4f');
+  var $export = $__require('1f'),
+      core = $__require('27'),
+      fails = $__require('54');
   module.exports = function(KEY, exec) {
     var fn = (core.Object || {})[KEY] || Object[KEY],
         exp = {};
@@ -7517,7 +9407,7 @@ $__System.registerDynamic("5c", ["1a", "22", "4f"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("17", [], true, function($__require, exports, module) {
+$__System.registerDynamic("1c", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7531,7 +9421,7 @@ $__System.registerDynamic("17", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("34", [], true, function($__require, exports, module) {
+$__System.registerDynamic("39", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7544,12 +9434,12 @@ $__System.registerDynamic("34", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("5d", ["34"], true, function($__require, exports, module) {
+$__System.registerDynamic("61", ["39"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var cof = $__require('34');
+  var cof = $__require('39');
   module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
@@ -7557,13 +9447,13 @@ $__System.registerDynamic("5d", ["34"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("46", ["5d", "17"], true, function($__require, exports, module) {
+$__System.registerDynamic("4b", ["61", "1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var IObject = $__require('5d'),
-      defined = $__require('17');
+  var IObject = $__require('61'),
+      defined = $__require('1c');
   module.exports = function(it) {
     return IObject(defined(it));
   };
@@ -7571,13 +9461,13 @@ $__System.registerDynamic("46", ["5d", "17"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("5e", ["46", "5c"], true, function($__require, exports, module) {
+$__System.registerDynamic("62", ["4b", "60"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toIObject = $__require('46');
-  $__require('5c')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
+  var toIObject = $__require('4b');
+  $__require('60')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
     return function getOwnPropertyDescriptor(it, key) {
       return $getOwnPropertyDescriptor(toIObject(it), key);
     };
@@ -7586,7 +9476,7 @@ $__System.registerDynamic("5e", ["46", "5c"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("26", [], true, function($__require, exports, module) {
+$__System.registerDynamic("2b", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -7608,13 +9498,13 @@ $__System.registerDynamic("26", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("5f", ["26", "5e"], true, function($__require, exports, module) {
+$__System.registerDynamic("63", ["2b", "62"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('26');
-  $__require('5e');
+  var $ = $__require('2b');
+  $__require('62');
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
   };
@@ -7622,26 +9512,26 @@ $__System.registerDynamic("5f", ["26", "5e"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("60", ["5f"], true, function($__require, exports, module) {
+$__System.registerDynamic("64", ["63"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('5f'),
+    "default": $__require('63'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("b", ["60"], true, function($__require, exports, module) {
+$__System.registerDynamic("c", ["64"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _Object$getOwnPropertyDescriptor = $__require('60')["default"];
+  var _Object$getOwnPropertyDescriptor = $__require('64')["default"];
   exports["default"] = function get(_x, _x2, _x3) {
     var _again = true;
     _function: while (_again) {
@@ -7680,26 +9570,28 @@ $__System.registerDynamic("b", ["60"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.register('61', ['4', '9', '14', '54', 'b', 'c', 'd', 'e'], function (_export) {
-   var _, Debug, Collection, Model, _get, _inherits, _createClass, _classCallCheck, ParseCollection;
+$__System.register('65', ['3', '18', '19', '58', 'c', 'd', 'e', 'f', 'a'], function (_export) {
+   var _, BackboneQuery, Collection, Model, _get, _inherits, _createClass, _classCallCheck, Debug, ParseCollection;
 
    return {
       setters: [function (_2) {
          _ = _2['default'];
       }, function (_5) {
-         Debug = _5['default'];
+         BackboneQuery = _5['default'];
       }, function (_4) {
          Collection = _4['default'];
       }, function (_3) {
          Model = _3['default'];
-      }, function (_b) {
-         _get = _b['default'];
       }, function (_c) {
-         _inherits = _c['default'];
+         _get = _c['default'];
       }, function (_d) {
-         _createClass = _d['default'];
+         _inherits = _d['default'];
       }, function (_e) {
-         _classCallCheck = _e['default'];
+         _createClass = _e['default'];
+      }, function (_f) {
+         _classCallCheck = _f['default'];
+      }, function (_a) {
+         Debug = _a['default'];
       }],
       execute: function () {
 
@@ -7711,6 +9603,9 @@ $__System.register('61', ['4', '9', '14', '54', 'b', 'c', 'd', 'e'], function (_
           * to ParseModels. One must set a Parse.Query instance as options.query or use a getter method such as "get query()".
           *
           * Please see the `Collection` documentation for relevant information about the parent class / implementation.
+          *
+          * In addition ParseCollection includes BackboneQuery support which supports local query / sorting of collections.
+          * Additional methods: `find, findOne, resetQueryCache, sortAll, whereBy`.
           *
           * @example
           *
@@ -7858,6 +9753,31 @@ $__System.register('61', ['4', '9', '14', '54', 'b', 'c', 'd', 'e'], function (_
                   });
                }
 
+               /**
+                * Delegates to `BackboneQuery.find` to return an array of models that match the sort query.
+                *
+                * @param {string}   query    - A query string.
+                * @param {Object}   options  - Optional parameters
+                * @returns {Array<Model>}
+                */
+            }, {
+               key: 'find',
+               value: function find(query, options) {
+                  return BackboneQuery.find(this, query, options);
+               }
+
+               /**
+                * Delegates to `BackboneQuery.findOne` to return the first model that matches the sort query.
+                *
+                * @param {string}   query    - A query string.
+                * @returns {Model}
+                */
+            }, {
+               key: 'findOne',
+               value: function findOne(query) {
+                  return BackboneQuery.findOne(this, query);
+               }
+
                /* eslint-disable no-unused-vars */
                /**
                 * `parse` is called by Backbone whenever a collection's models are returned by the server, in fetch. The function is
@@ -7900,6 +9820,44 @@ $__System.register('61', ['4', '9', '14', '54', 'b', 'c', 'd', 'e'], function (_
 
                   return output;
                }
+
+               /**
+                * Delegates to `BackboneQuery.resetQueryCache` to reset this collections query cache.
+                */
+            }, {
+               key: 'resetQueryCache',
+               value: function resetQueryCache() {
+                  BackboneQuery.resetQueryCache(this);
+               }
+
+               /**
+                * Delegates to `BackboneQuery.sortAll` to return all models that match the sort query.
+                *
+                * @param {string}   query    - A query string.
+                * @returns {Array<Model>}
+                */
+            }, {
+               key: 'sortAll',
+               value: function sortAll(query) {
+                  return BackboneQuery.sortAll(this, query);
+               }
+
+               /**
+                * Delegates to `BackboneQuery.whereBy` to return a new collection with the models that match the sort query.
+                *
+                * @param {string}   query    - A query string.
+                * @param {Object}   options  - Optional parameters
+                * @returns {Collection}
+                */
+            }, {
+               key: 'whereBy',
+               value: function whereBy(query, options) {
+                  return BackboneQuery.whereBy(this, query, options, {
+                     model: this.model,
+                     query: this.query,
+                     comparator: this.comparator
+                  });
+               }
             }]);
 
             return ParseCollection;
@@ -7910,7 +9868,7 @@ $__System.register('61', ['4', '9', '14', '54', 'b', 'c', 'd', 'e'], function (_
    };
 });
 
-$__System.register('8', [], function (_export) {
+$__System.register('9', [], function (_export) {
   /**
    * BackboneProxy -- Provides a proxy for the actual created Backbone instance. This is initialized in the constructor
    * for Backbone (backbone-es6/src/Backbone.js). Anywhere a reference is needed for the composed Backbone instance
@@ -7942,7 +9900,7 @@ $__System.register('8', [], function (_export) {
   };
 });
 
-$__System.registerDynamic("e", [], true, function($__require, exports, module) {
+$__System.registerDynamic("f", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -7958,7 +9916,7 @@ $__System.registerDynamic("e", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.register('62', ['4', '8', '63', 'e'], function (_export) {
+$__System.register('66', ['3', '9', '67', 'f'], function (_export) {
   var _, BackboneProxy, $, _classCallCheck, Backbone;
 
   return {
@@ -7968,8 +9926,8 @@ $__System.register('62', ['4', '8', '63', 'e'], function (_export) {
       BackboneProxy = _4['default'];
     }, function (_2) {
       $ = _2['default'];
-    }, function (_e) {
-      _classCallCheck = _e['default'];
+    }, function (_f) {
+      _classCallCheck = _f['default'];
     }],
     execute: function () {
 
@@ -8119,42 +10077,45 @@ $__System.register('62', ['4', '8', '63', 'e'], function (_export) {
   };
 });
 
-$__System.register('1', ['5', '7', '10', '12', '54', '61', '62', 'f', 'a'], function (_export) {
+$__System.register('1', ['2', '6', '8', '11', '13', '15', '58', '65', '66', 'b'], function (_export) {
   /**
    * ModuleRuntime.js (Parse) -- Provides the standard / default configuration that is the same as Backbone 1.2.3
    */
 
   'use strict';
 
-  var parseExtend, parseSync, Router, History, Model, Collection, Backbone, Events, View, options, backbone;
+  var typhonExtend, parseExtend, parseSync, Router, History, TyphonEvents, Model, ParseCollection, Backbone, View, options, backbone;
   return {
-    setters: [function (_7) {
-      parseExtend = _7['default'];
+    setters: [function (_9) {
+      typhonExtend = _9['default'];
+    }, function (_8) {
+      parseExtend = _8['default'];
+    }, function (_7) {
+      parseSync = _7['default'];
     }, function (_6) {
-      parseSync = _6['default'];
-    }, function (_5) {
-      Router = _5['default'];
-    }, function (_3) {
-      History = _3['default'];
+      Router = _6['default'];
     }, function (_4) {
-      Model = _4['default'];
+      History = _4['default'];
+    }, function (_3) {
+      TyphonEvents = _3['default'];
+    }, function (_5) {
+      Model = _5['default'];
     }, function (_2) {
-      Collection = _2['default'];
+      ParseCollection = _2['default'];
     }, function (_) {
       Backbone = _['default'];
-    }, function (_f) {
-      Events = _f['default'];
-    }, function (_a) {
-      View = _a['default'];
+    }, function (_b) {
+      View = _b['default'];
     }],
     execute: function () {
       options = {
         // Current version of the library. Keep in sync with Backbone version supported.
         VERSION: '1.2.3'
       };
-      backbone = new Backbone(Collection, Events, History, Model, Router, View, parseSync, options);
+      backbone = new Backbone(ParseCollection, TyphonEvents, History, Model, Router, View, parseSync, options);
 
       parseExtend(backbone);
+      typhonExtend(backbone);
 
       _export('default', backbone);
     }
@@ -8164,7 +10125,7 @@ $__System.register('1', ['5', '7', '10', '12', '54', '61', '62', 'f', 'a'], func
 })
 (function(factory) {
   if (typeof define == 'function' && define.amd)
-    define(["underscore","underscore","parse","underscore","parse","underscore","jquery","underscore","underscore","underscore","underscore","underscore","underscore","underscore","underscore","underscore"], factory);
+    define(["underscore","underscore","parse","underscore","parse","underscore","jquery","underscore","underscore","underscore","underscore","underscore","underscore","underscore","underscore","underscore","underscore","underscore","underscore"], factory);
   else
     factory();
 });
