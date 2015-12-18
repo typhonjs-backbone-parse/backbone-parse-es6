@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">backbone-parse-es6/src/GlobalRuntime.js | backbone-parse-es6 API Document</title>
+  <base data-ice="baseUrl" href="../../../../../../../">
+  <title data-ice="title">(typhonjs-core-backbone-common):<br>typhonjs-backbone-common/src/mainLoggedEventbus.js | backbone-parse-es6 API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -63,33 +63,28 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">backbone-parse-es6/src/GlobalRuntime.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
- * GlobalRuntime.js (Parse) -- Initializes Backbone and Parse setting them to &quot;root.Backbone&quot; and &quot;root.Parse&quot;
- * if root exists. &quot;root&quot; is defined as self in the browser or global if on the server.
+<div class="content" data-ice="content"><h1 data-ice="title">(typhonjs-core-backbone-common):<br>typhonjs-backbone-common/src/mainLoggedEventbus.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+import TyphonLoggedEvents  from &apos;./TyphonLoggedEvents.js&apos;;
+
+const eventbus = new TyphonLoggedEvents();
+
+eventbus.setEventbusName(&apos;mainEventbus&apos;);
+
+/**
+ * Exports an instance of `TyphonLoggedEvents` which adds asynchronous capabilities to `Backbone.Events` which is used
+ * as a main eventbus. Note that an instance of `TyphonLoggedEvents` is exported and is also associated to a mapped
+ * path, `mainEventbus` in the SystemJS extra configuration data loaded by all TyphonJS repos in
+ * `./config/config-app-paths.js`. By using a mapped path any other module may import the main eventbus via:
+ * `import eventbus from &apos;mainEventbus&apos;;`
+ *
+ * Note the above creation of `const eventbus` is a workaround for an ESDoc bug:
+ * https://github.com/esdoc/esdoc/issues/166
+ *
+ * Normally we can write `export default new TyphonLoggedEvents();`, but this currently breaks ESDoc.
  */
-
-&apos;use strict&apos;;
-
-import Backbone   from &apos;./ModuleRuntime.js&apos;;
-import Parse      from &apos;parse&apos;;
-
-// Establish the root object, `window` (`self`) in the browser, or `global` on the server.
-// We use `self` instead of `window` for `WebWorker` support.
-const root = (typeof self === &apos;object&apos; &amp;&amp; self.self === self &amp;&amp; self) ||
- (typeof global === &apos;object&apos; &amp;&amp; global.global === global &amp;&amp; global);
-
-if (typeof root !== &apos;undefined&apos; &amp;&amp; root !== null)
-{
-   root.Backbone = Backbone;
-   root.Parse = Parse;
-}
-else
-{
-   throw new Error(&apos;Could not find a valid global object.&apos;);
-}
-
-export default Backbone;</code></pre>
+export default eventbus;</code></pre>
 
 </div>
 

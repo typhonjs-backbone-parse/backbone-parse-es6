@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">backbone-parse-es6/src/GlobalRuntime.js | backbone-parse-es6 API Document</title>
+  <base data-ice="baseUrl" href="../../../../../../../">
+  <title data-ice="title">(typhonjs-core-backbone-common):<br>typhonjs-backbone-common/src/TyphonLoggedEvents.js | backbone-parse-es6 API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -63,33 +63,175 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">backbone-parse-es6/src/GlobalRuntime.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
- * GlobalRuntime.js (Parse) -- Initializes Backbone and Parse setting them to &quot;root.Backbone&quot; and &quot;root.Parse&quot;
- * if root exists. &quot;root&quot; is defined as self in the browser or global if on the server.
+<div class="content" data-ice="content"><h1 data-ice="title">(typhonjs-core-backbone-common):<br>typhonjs-backbone-common/src/TyphonLoggedEvents.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+import TyphonEvents  from &apos;./TyphonEvents.js&apos;;
+
+import logger        from &apos;logger&apos;;
+
+/**
+ * TyphonLoggedEvents posts a message to the `logger` before invoking the parent TyphonEvents method.
+ *
+ * Adds new functionality for trigger events. The following are new trigger mechanisms:
+ *
+ * Please refer to the Events documentation for all inherited functionality.
+ *
+ * `triggerDefer` - Defers invoking `trigger`.
+ *
+ * `triggerFirst` - Only invokes the first target matched and passes back any result to the callee.
+ *
+ * `triggerResults` - Invokes all targets matched and passes back an array of results in an array to the callee.
+ *
+ * `triggerThen` - Invokes all targets matched and adds any returned promises through Promise.all which returns
+ *  a single promise to the callee.
  */
-
-&apos;use strict&apos;;
-
-import Backbone   from &apos;./ModuleRuntime.js&apos;;
-import Parse      from &apos;parse&apos;;
-
-// Establish the root object, `window` (`self`) in the browser, or `global` on the server.
-// We use `self` instead of `window` for `WebWorker` support.
-const root = (typeof self === &apos;object&apos; &amp;&amp; self.self === self &amp;&amp; self) ||
- (typeof global === &apos;object&apos; &amp;&amp; global.global === global &amp;&amp; global);
-
-if (typeof root !== &apos;undefined&apos; &amp;&amp; root !== null)
+export default class TyphonLoggedEvents extends TyphonEvents
 {
-   root.Backbone = Backbone;
-   root.Parse = Parse;
-}
-else
-{
-   throw new Error(&apos;Could not find a valid global object.&apos;);
-}
+   /**
+    * Constructs TyphonLoggedEvents and sets the default log level to `debug` and the eventbusName to &apos;unknown`.
+    */
+   constructor()
+   {
+      super();
 
-export default Backbone;</code></pre>
+      this._logLevel = &apos;debug&apos;;
+      this._eventbusName = &apos;unknown&apos;;
+   }
+
+   /**
+    * Returns the current eventbusName.
+    *
+    * @returns {string|*}
+    */
+   getEventbusName()
+   {
+      return this._eventbusName;
+   }
+
+   /**
+    * Returns the current log level.
+    *
+    * @returns {string|*}
+    */
+   getLogLevel()
+   {
+      return this._logLevel;
+   }
+
+   /**
+    * Sets the eventbus name.
+    *
+    * @param {string}   name - The name for this eventbus.
+    */
+   setEventbusName(name)
+   {
+      this._eventbusName = name;
+   }
+
+   /**
+    * Sets the current log level.
+    *
+    * @param {string}   logLevel - The log level to set.
+    */
+   setLogLevel(logLevel)
+   {
+      this._logLevel = logLevel;
+   }
+
+   /**
+    * Defers invoking `trigger`.
+    *
+    * @returns {TyphonLoggedEvents}
+    */
+   triggerDefer()
+   {
+      setTimeout(() =&gt; { this.trigger(...arguments); }, 0);
+
+      return this;
+   }
+
+   /**
+    * Posts a log message given the current log level.
+    *
+    * Trigger callbacks for the given event, or space-delimited list of events. Subsequent arguments to trigger will be
+    * passed along to the event callbacks.
+    *
+    * @see http://backbonejs.org/#Events-trigger
+    *
+    * @param {string}   name  - Event name(s)
+    * @returns {TyphonLoggedEvents}
+    */
+   trigger(name)
+   {
+      const params = arguments.length &gt; 1 ? Array.prototype.slice.call(arguments, 1) : undefined;
+
+      logger.post(this._logLevel, { busName: this._eventbusName, triggerType: &apos;trigger&apos;, eventName: name, params });
+
+      return super.trigger(...arguments);
+   }
+
+   /**
+    * Posts a log message given the current log level.
+    *
+    * Provides `trigger` functionality that only invokes the first target matched and passes back any result to
+    * the callee.
+    *
+    * @param {string}   name  - Event name(s)
+    * @returns {*}
+    */
+   triggerFirst(name)
+   {
+      const params = arguments.length &gt; 1 ? Array.prototype.slice.call(arguments, 1) : undefined;
+
+      const results = super.triggerFirst(...arguments);
+
+      logger.post(this._logLevel,
+       { busName: this._eventbusName, triggerType: &apos;triggerFirst&apos;, eventName: name, params, results });
+
+      return results;
+   }
+
+   /**
+    * Posts a log message given the current log level.
+    *
+    * Provides `trigger` functionality, but collects any returned results from invoked targets in an array and passes
+    * back this array to the callee.
+    *
+    * @param {string}   name  - Event name(s)
+    * @returns {Array&lt;*&gt;}
+    */
+   triggerResults(name)
+   {
+      const params = arguments.length &gt; 1 ? Array.prototype.slice.call(arguments, 1) : undefined;
+
+      const results = super.triggerResults(...arguments);
+
+      logger.post(this._logLevel,
+       { busName: this._eventbusName, triggerType: &apos;triggerResults&apos;, eventName: name, params, results });
+
+      return results;
+   }
+
+   /**
+    * Posts a log message given the current log level.
+    *
+    * Provides `trigger` functionality, but collects any returned Promises from invoked targets and returns a
+    * single Promise generated by `Promise.all`. This is a very useful mechanism to invoke asynchronous operations
+    * over an eventbus.
+    *
+    * @param {string}   name  - Event name(s)
+    * @returns {Promise}
+    */
+   triggerThen(name)
+   {
+      const params = arguments.length &gt; 1 ? Array.prototype.slice.call(arguments, 1) : undefined;
+
+      logger.post(this._logLevel, { busName: this._eventbusName, triggerType: &apos;triggerThen&apos;, eventName: name, params });
+
+      return super.triggerThen(...arguments);
+   }
+}</code></pre>
 
 </div>
 

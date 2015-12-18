@@ -54,20 +54,23 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-collection">collection</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-model">model</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">(typhonjs-core-backbone-common):<br>typhonjs-backbone-common/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html">TyphonEvents</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonLoggedEvents.js~TyphonLoggedEvents.html">TyphonLoggedEvents</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-typhonExtend">typhonExtend</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">(typhonjs-core-backbone-query):<br>backbone-query/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html">BackboneQuery</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-logging/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-logging@master/src/ConsoleLogger.js~ConsoleLogger.html">ConsoleLogger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-logging@master/src/Logger.js~Logger.html">Logger</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import TyphonEvents from &apos;<span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber354">typhonjs-backbone-common/src/TyphonEvents.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import TyphonEvents from &apos;<span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber20">typhonjs-backbone-common/src/TyphonEvents.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber354">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber20">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -78,7 +81,7 @@
   
   
   <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Events.js~Events.html">Events</a></span> &#x2192; TyphonEvents</div></div>
-  
+  <div class="flat-list" data-ice="directSubclass"><h4>Direct Subclass:</h4><div><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonLoggedEvents.js~TyphonLoggedEvents.html">TyphonLoggedEvents</a></span></div></div>
   
   
   
@@ -89,6 +92,7 @@
   
   <div class="description" data-ice="description"><p>TyphonEvents adds new functionality for trigger events. The following are new trigger mechanisms:</p>
 <p>Please refer to the Events documentation for all inherited functionality.</p>
+<p><code>triggerDefer</code> - Defers invoking <code>trigger</code>.</p>
 <p><code>triggerFirst</code> - Only invokes the first target matched and passes back any result to the callee.</p>
 <p><code>triggerResults</code> - Invokes all targets matched and passes back an array of results in an array to the callee.</p>
 <p><code>triggerThen</code> - Invokes all targets matched and adds any returned promises through Promise.all which returns
@@ -113,6 +117,32 @@
   <tbody>
   
   <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html#instance-method-triggerDefer">triggerDefer</a></span></span><span data-ice="signature">(): <span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html">TyphonEvents</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Defers invoking <code>trigger</code>.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
     <td>
       <span class="access" data-ice="access">public</span>
       
@@ -446,6 +476,57 @@ single Promise generated by <code>Promise.all</code>.</p>
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-triggerDefer">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">triggerDefer</span><span data-ice="signature">(): <span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html">TyphonEvents</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber27">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Defers invoking <code>trigger</code>.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js~TyphonEvents.html">TyphonEvents</a></span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-triggerFirst">
     <span class="access" data-ice="access">public</span>
     
@@ -456,7 +537,7 @@ single Promise generated by <code>Promise.all</code>.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber363">source</a></span></span>
+      <span data-ice="source"><span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber41">source</a></span></span>
     </span>
   </h3>
 
@@ -525,7 +606,7 @@ the callee.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber381">source</a></span></span>
+      <span data-ice="source"><span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber59">source</a></span></span>
     </span>
   </h3>
 
@@ -594,7 +675,7 @@ back this array to the callee.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber400">source</a></span></span>
+      <span data-ice="source"><span><a href="file/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-common@master/src/TyphonEvents.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 

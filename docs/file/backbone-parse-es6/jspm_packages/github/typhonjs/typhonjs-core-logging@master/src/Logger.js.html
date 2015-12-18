@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">backbone-parse-es6/src/GlobalRuntime.js | backbone-parse-es6 API Document</title>
+  <base data-ice="baseUrl" href="../../../../../../../">
+  <title data-ice="title">typhonjs-core-logging/src/Logger.js | backbone-parse-es6 API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -63,33 +63,289 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">backbone-parse-es6/src/GlobalRuntime.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
- * GlobalRuntime.js (Parse) -- Initializes Backbone and Parse setting them to &quot;root.Backbone&quot; and &quot;root.Parse&quot;
- * if root exists. &quot;root&quot; is defined as self in the browser or global if on the server.
+<div class="content" data-ice="content"><h1 data-ice="title">typhonjs-core-logging/src/Logger.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+const s_ALL_LOGGING_ENABLED = true;
+
+const s_LOG_LEVELS =
+{
+   off: 7,
+   fatal: 6,
+   error: 5,
+   warn: 4,
+   info: 3,
+   debug: 2,
+   trace: 1,
+   all: 0
+};
+
+const s_IS_LEVEL_ENABLED = (currentLevel, requestedLevel) =&gt;
+{
+   return currentLevel &lt;= requestedLevel &amp;&amp; s_ALL_LOGGING_ENABLED;
+};
+
+/* eslint-disable no-console */
+
+/**
+ * Logger.js -- Provides dispatch to logging plugins. Logging can be turned off via invoking &quot;setLogLevel(&apos;off&apos;)&quot;.
+ * By default all logging is enabled and the context is set to `default`. Add one or more logger plugins by invoking
+ * the `setLogger` method. Change the logging context by invoking `setContext`.
+ *
+ * The following log levels are available in order of precedence: `off, fatal, error, warn, info, debug, trace, all`.
  */
-
-&apos;use strict&apos;;
-
-import Backbone   from &apos;./ModuleRuntime.js&apos;;
-import Parse      from &apos;parse&apos;;
-
-// Establish the root object, `window` (`self`) in the browser, or `global` on the server.
-// We use `self` instead of `window` for `WebWorker` support.
-const root = (typeof self === &apos;object&apos; &amp;&amp; self.self === self &amp;&amp; self) ||
- (typeof global === &apos;object&apos; &amp;&amp; global.global === global &amp;&amp; global);
-
-if (typeof root !== &apos;undefined&apos; &amp;&amp; root !== null)
+export default class Logger
 {
-   root.Backbone = Backbone;
-   root.Parse = Parse;
-}
-else
-{
-   throw new Error(&apos;Could not find a valid global object.&apos;);
-}
+   /**
+    * Create the Logger with default values and all logging enabled.
+    */
+   constructor()
+   {
+      this._context = &apos;default&apos;;
+      this._logLevel = s_LOG_LEVELS[&apos;all&apos;];
+      this._loggerMap = new Map();
+   }
 
-export default Backbone;</code></pre>
+   /**
+    * Dispatch to the `logger-&gt;debug` if it exists and the log level is enabled.
+    */
+   debug()
+   {
+      const enabled = s_IS_LEVEL_ENABLED(this._logLevel, s_LOG_LEVELS[&apos;debug&apos;]);
+      const logger = this._loggerMap.get(this._context);
+
+      if (enabled &amp;&amp; logger &amp;&amp; logger.debug)
+      {
+         logger.debug(...arguments);
+      }
+   }
+
+   /**
+    * Dispatch to the `logger-&gt;error` if it exists and the log level is enabled.
+    */
+   error()
+   {
+      const enabled = s_IS_LEVEL_ENABLED(this._logLevel, s_LOG_LEVELS[&apos;error&apos;]);
+      const logger = this._loggerMap.get(this._context);
+
+      if (enabled &amp;&amp; logger)
+      {
+         logger.error(...arguments);
+      }
+   }
+
+   /**
+    * Dispatch to the `logger-&gt;fatal` if it exists and the log level is enabled.
+    */
+   fatal()
+   {
+      const enabled = s_IS_LEVEL_ENABLED(this._logLevel, s_LOG_LEVELS[&apos;fatal&apos;]);
+      const logger = this._loggerMap.get(this._context);
+
+      if (enabled &amp;&amp; logger)
+      {
+         logger.fatal(...arguments);
+      }
+   }
+
+   /**
+    * Get the current context.
+    *
+    * @returns {string|*}
+    */
+   getContext()
+   {
+      return this._context;
+   }
+
+   /**
+    * Get the logger by the given context.
+    *
+    * @param {*}  context - the context to use for logger retrieval.
+    * @returns {*}
+    */
+   getLogger(context)
+   {
+      return this._loggerMap.get(context);
+   }
+
+   /**
+    * Returns whether a logger is defined by the given context.
+    *
+    * @param {*}  context - the context to check.
+    * @returns {*}
+    */
+   hasContext(context)
+   {
+      return this._loggerMap.get(context) !== undefined;
+   }
+
+   /**
+    * Returns whether the given log level is enabled.
+    *
+    * @param {string}   level - log level
+    * @returns {boolean}
+    */
+   isLevelEnabled(level)
+   {
+      const requestedLevel = s_LOG_LEVELS[level];
+
+      if (typeof requestedLevel === &apos;undefined&apos; || requestedLevel === null)
+      {
+         console.log(`isLevelEnabled - unknown log level: ${level}`);
+         return false;
+      }
+
+      return s_IS_LEVEL_ENABLED(this._logLevel, requestedLevel);
+   }
+
+   /**
+    * Dispatch to the `logger-&gt;info` if it exists and the log level is enabled.
+    */
+   info()
+   {
+      const enabled = s_IS_LEVEL_ENABLED(this._logLevel, s_LOG_LEVELS[&apos;info&apos;]);
+      const logger = this._loggerMap.get(this._context);
+
+      if (enabled &amp;&amp; logger)
+      {
+         logger.info(...arguments);
+      }
+   }
+
+   /**
+    * Posts a log message given a log level and parameters.
+    *
+    * @param {string}   level - log level
+    * @param {*}        params - log message parameters to forward onto dispatched method.
+    */
+   post(level, ...params)
+   {
+      if (typeof s_LOG_LEVELS[level] === &apos;undefined&apos;)
+      {
+         console.log(`post - unknown log level: ${level}`);
+         return;
+      }
+
+      const enabled = s_IS_LEVEL_ENABLED(this._logLevel, s_LOG_LEVELS[&apos;info&apos;]);
+      const logger = this._loggerMap.get(this._context);
+
+      if (enabled &amp;&amp; logger)
+      {
+         switch (level)
+         {
+            case &apos;fatal&apos;:
+               logger.fatal(...params);
+               break;
+
+            case &apos;error&apos;:
+               logger.error(...params);
+               break;
+
+            case &apos;warn&apos;:
+               logger.warn(...params);
+               break;
+
+            case &apos;info&apos;:
+               logger.info(...params);
+               break;
+
+            case &apos;debug&apos;:
+               logger.debug(...params);
+               break;
+
+            case &apos;trace&apos;:
+               logger.trace(...params);
+               break;
+         }
+      }
+   }
+
+   /**
+    * Removes the logger by the given context.
+    *
+    * @param {*}  context - The context to check.
+    */
+   removeLogger(context)
+   {
+      this._loggerMap.delete(context);
+   }
+
+   /**
+    * Sets the current context
+    *
+    * @param {*}  context - The context to set.
+    * @returns {boolean}
+    */
+   setContext(context)
+   {
+      if (typeof context === &apos;undefined&apos; || context === null)
+      {
+         console.log(`setContext - context is not defined or null: ${context}`);
+         return false;
+      }
+
+      this._context = context;
+   }
+
+   /**
+    * Sets the current log level.
+    *
+    * @param {string}   level - log level
+    * @returns {boolean}
+    */
+   setLogLevel(level)
+   {
+      const requestedLevel = s_LOG_LEVELS[level];
+
+      if (typeof requestedLevel === &apos;undefined&apos; || requestedLevel === null)
+      {
+         console.log(`setLogLevel - unknown log level: ${level}`);
+         return false;
+      }
+
+      this._logLevel = requestedLevel;
+   }
+
+   /**
+    * Sets the logger for the give context.
+    *
+    * @param {*}  context - The context to set.
+    * @param {*}  logger - The logger to set.
+    */
+   setLogger(context, logger)
+   {
+      this._loggerMap.set(context, logger);
+   }
+
+   /**
+    * Dispatch to the `logger-&gt;trace` if it exists and the log level is enabled.
+    */
+   trace()
+   {
+      const enabled = s_IS_LEVEL_ENABLED(this._logLevel, s_LOG_LEVELS[&apos;trace&apos;]);
+      const logger = this._loggerMap.get(this._context);
+
+      if (enabled &amp;&amp; logger)
+      {
+         logger.trace(...arguments);
+      }
+   }
+
+   /**
+    * Dispatch to the `logger-&gt;warn` if it exists and the log level is enabled.
+    */
+   warn()
+   {
+      const enabled = s_IS_LEVEL_ENABLED(this._logLevel, s_LOG_LEVELS[&apos;warn&apos;]);
+      const logger = this._loggerMap.get(this._context);
+
+      if (enabled &amp;&amp; logger)
+      {
+         logger.warn(...arguments);
+      }
+   }
+}</code></pre>
 
 </div>
 
