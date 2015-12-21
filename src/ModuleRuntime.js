@@ -6,7 +6,7 @@
 
 import Backbone         from 'backbone-es6/src/Backbone.js';
 import ParseCollection  from './ParseCollection.js';
-import TyphonEvents     from 'typhonjs-backbone-common/src/TyphonEvents.js';
+import TyphonEvents     from 'typhonjs-core-backbone-common/src/TyphonEvents.js';
 import History          from 'backbone-es6/src/History.js';
 import Model            from './ParseModel.js';
 import Router           from 'backbone-es6/src/Router.js';
@@ -15,7 +15,7 @@ import View             from 'backbone-es6/src/View.js';
 import parseSync        from './parseSync.js';
 
 import parseExtend      from './parseExtend.js';
-import typhonExtend     from 'typhonjs-backbone-common/src/typhonExtend.js';
+import typhonExtend     from 'typhonjs-core-backbone-common/src/typhonExtend.js';
 
 const options =
 {
