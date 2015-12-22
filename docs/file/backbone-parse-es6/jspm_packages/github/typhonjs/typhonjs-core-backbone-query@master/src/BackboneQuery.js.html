@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../../../">
+  <title data-ice="title">typhonjs-core-backbone-query/src/BackboneQuery.js | backbone-parse-es6 API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/typhonjs/backbone-parse-es6/" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html">ParseCollection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/src/ParseModel.js~ParseModel.html">ParseModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-modelExtend">modelExtend</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseExtend">parseExtend</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseSync">parseSync</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parseCollection">parseCollection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parseModel">parseModel</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">backbone-es6/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Backbone.js~Backbone.html">Backbone</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Collection.js~Collection.html">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Debug.js~Debug.html">Debug</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/History.js~History.html">History</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Router.js~Router.html">Router</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Utils.js~Utils.html">Utils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/View.js~View.html">View</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extend">extend</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sync">sync</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BackboneProxy">BackboneProxy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-collection">collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-model">model</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-backbone-common/src</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-typhonExtend">typhonExtend</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-backbone-events/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-events@master/src/Events.js~Events.html">Events</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-events@master/src/TyphonEvents.js~TyphonEvents.html">TyphonEvents</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-backbone-query/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html">BackboneQuery</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-utils/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-utils@master/src/MultiMap.js~MultiMap.html">MultiMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-utils@master/src/Utils.js~Utils.html">Utils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-btoa">btoa</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">typhonjs-core-backbone-query/src/BackboneQuery.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * A fork of Backbone Query...
+ *
+ * Backbone Query - A lightweight query API for Backbone Collections
+ * (c)2012 - Dave Tonge
+ * May be freely distributed according to MIT license.
+ * https://github.com/davidgtonge/backbone_query
+ *
+ *
+ * (c)2015-present Michael Leahy
+ * https://github.com/typhonjs/typhonjs-core-backbone-query
+ */
+
+&apos;use strict&apos;;
+
+import _ from &apos;underscore&apos;;
+
+/**
+ * BackboneQuery -- Provides client side sorting based on a query API.
+ * -------------
+ *
+ * Forked from https://github.com/davidgtonge/backbone_query
+ *
+ * A lightweight (3KB minified) utility for Backbone projects, that works in the Browser and on the Server. Adds the
+ * ability to search for models with a Query API similar to MongoDB.
+ *
+ * The huge benefit of using BackboneQuery is that queries can be stored as JSON.
+ *
+ * Usage
+ * -----
+ *
+ * The major difference of this implementation is that the API is not attached to a collection, but can be run against
+ * any collection by invoking the methods with a target collection.
+ *
+ * Find
+ * -----
+ * **_ $equal _**
+ *
+ * Performs a strict equality test using ===. If no operator is provided and the query value isn&apos;t a regex then `$equal`
+ * is assumed.
+ *
+ * If the attribute in the model is an array then the query value is searched for in the array in the same way as
+ * `$contains`.
+ *
+ * If the query value is an object (including array) then a deep comparison is performed using underscores `_.isEqual`.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { title: &quot;Test&quot; });
+ * // Returns all models which have a &quot;title&quot; attribute of &quot;Test&quot;
+ *
+ *
+ * BackboneQuery.find(collection, { title: { $equal: &quot;Test&quot; } }); // Same as above
+ * BackboneQuery.find(collection, { colors: &quot;red&quot; });
+ * // Returns models which contain the value &quot;red&quot; in a &quot;colors&quot; attribute that is an array.
+ *
+ *
+ * BackboneQuery.find(collection, { colors: [&quot;red&quot;, &quot;yellow&quot;] });
+ * // Returns models which contain a colors attribute with the array [&quot;red&quot;, &quot;yellow&quot;]
+ * ```
+ *
+ * **_ $contains _**
+ *
+ * Assumes that the model property is an array and searches for the query value in the array.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { colors: { $contains: &quot;red&quot; } });
+ * // Returns models which contain the value &quot;red&quot; in a &quot;colors&quot; attribute that is an array.
+ * e.g. a model with this attribute colors:[&quot;red&quot;, &quot;yellow&quot;, &quot;blue&quot;] would be returned.
+ * ```
+ *
+ *
+ * **_ $ne _**
+ *
+ * &quot;Not equal&quot;, the opposite of $equal, returns all models which don&apos;t have the query value
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { title: { $ne: &quot;Test&quot; } });
+ * // Returns all models which don&apos;t have a &quot;title&quot; attribute of &quot;Test&quot;
+ * ```
+ *
+ *
+ * **_ $lt, $lte, $gt, $gte _**
+ *
+ * These conditional operators can be used for greater than and less than comparisons in queries
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { likes: { $lt:10 } });
+ * // Returns all models which have a &quot;likes&quot; attribute of less than 10
+ *
+ *
+ * BackboneQuery.find(collection, { likes: { $lte:10 } });
+ * // Returns all models which have a &quot;likes&quot; attribute of less than or equal to 10
+ *
+ *
+ * BackboneQuery.find(collection, { likes: { $gt:10 } });
+ * // Returns all models which have a &quot;likes&quot; attribute of greater than 10
+ *
+ *
+ * BackboneQuery.find(collection, { likes: { $gte:10 } });
+ * // Returns all models which have a &quot;likes&quot; attribute of greater than or equal to 10
+ * ```
+ *
+ *
+ * **_ $between _**
+ *
+ * To check if a value is in-between 2 query values use the $between operator and supply an array with the min and max
+ * value.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { likes: { $between: [5, 15] } });
+ * // Returns all models which have a &quot;likes&quot; attribute of greater than 5 and less then 15
+ * ```
+ *
+ *
+ * **_ $in _**
+ *
+ * An array of possible values can be supplied using $in, a model will be returned if any of the supplied values is
+ * matched.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { title: { $in: [&quot;About&quot;, &quot;Home&quot;, &quot;Contact&quot;] } });
+ * // Returns all models which have a title attribute of either &quot;About&quot;, &quot;Home&quot;, or &quot;Contact&quot;
+ * ```
+ *
+ *
+ * **_ $nin _**
+ *
+ * &quot;Not in&quot;, the opposite of $in. A model will be returned if none of the supplied values is matched.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { title: { $nin: [&quot;About&quot;, &quot;Home&quot;, &quot;Contact&quot;] } });
+ * // Returns all models which don&apos;t have a title attribute of either &quot;About&quot;, &quot;Home&quot;, or &quot;Contact&quot;
+ * ```
+ *
+ *
+ * **_ $all _**
+ *
+ * Assumes the model property is an array and only returns models where all supplied values are matched.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { colors: { $all: [&quot;red&quot;, &quot;yellow&quot;] } });
+ * // Returns all models which have &quot;red&quot; and &quot;yellow&quot; in their colors attribute.
+ * // A model with the attribute colors:[&quot;red&quot;,&quot;yellow&quot;,&quot;blue&quot;] would be returned.
+ * // But a model with the attribute colors:[&quot;red&quot;,&quot;blue&quot;] would not be returned.
+ * ```
+ *
+ *
+ * **_ $any _**
+ *
+ * Assumes the model property is an array and returns models where any of the supplied values are matched.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { colors: { $any: [&quot;red&quot;, &quot;yellow&quot;] } });
+ * // Returns models which have either &quot;red&quot; or &quot;yellow&quot; in their colors attribute.
+ * ```
+ *
+ *
+ * **_ $size _**
+ *
+ * Assumes the model property has a length (i.e. is either an array or a string). Only returns models the model
+ * property&apos;s length matches the supplied values.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { colors: { $size:2 } });
+ * // Returns all models which 2 values in the colors attribute
+ * ```
+ *
+ *
+ * $exists or $has
+ *
+ * Checks for the existence of an attribute. Can be supplied either true or false.
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { title: { $exists: true } });
+ *
+ * // Returns all models which have a &quot;title&quot; attribute
+ *
+ * BackboneQuery.find(collection, { title: { $has: false } });
+ *
+ * // Returns all models which don&apos;t have a &quot;title&quot; attribute
+ *
+ *
+ *
+ * $like
+ *
+ * Assumes the model attribute is a string and checks if the supplied query value is a substring of the property.
+ * Uses indexOf rather than regex for performance reasons.
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { title: { $like: &quot;Test&quot; } });
+ *
+ * //Returns all models which have a &quot;title&quot; attribute that
+ *
+ * //contains the string &quot;Test&quot;, e.g. &quot;Testing&quot;, &quot;Tests&quot;, &quot;Test&quot;, etc.
+ *
+ *
+ *
+ * $likeI
+ *
+ * The same as above but performs a case insensitive search using indexOf and toLowerCase (still faster than Regex).
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { title: { $likeI: &quot;Test&quot; } });
+ *
+ * //Returns all models which have a &quot;title&quot; attribute that
+ *
+ * //contains the string &quot;Test&quot;, &quot;test&quot;, &quot;tEst&quot;,&quot;tesT&quot;, etc.
+ *
+ *
+ *
+ * $regex
+ *
+ * Checks if the model attribute matches the supplied regular expression. The regex query can be supplied without
+ * the `$regex` keyword.
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { content: { $regex: /coffeescript/gi } });
+ *
+ * // Checks for a regex match in the content attribute
+ *
+ * BackboneQuery.find(collection, { content: /coffeescript/gi });
+ *
+ * // Same as above
+ *
+ *
+ *
+ * $cb
+ *
+ * A callback function can be supplied as a test. The callback will receive the attribute and should return either
+ * true or false. `this` will be set to the current model, this can help with tests against computed properties.
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { title: { $cb: function(attr){ return attr.charAt(0) === &quot;c&quot;; } } });
+ *
+ * // Returns all models that have a title attribute that starts with &quot;c&quot;
+ *
+ * BackboneQuery.find(collection, { computed_test: { $cb: function(){ return this.computed_property() &gt; 10; } } });
+ *
+ * // Returns all models where the computed_property method returns a value greater than 10.
+ *
+ * For callbacks that use `this` rather than the model attribute, the key name supplied is arbitrary and has no
+ * effect on the results. If the only test you were performing was like the above test it would make more sense to
+ * simply use `Collection.filter`. However if you are performing other tests or are using the
+ * paging / sorting / caching options of backbone query, then this functionality is useful.
+ *
+ *
+ *
+ * $elemMatch
+ *
+ * This operator allows you to perform queries in nested arrays similar to MongoDB For example you may have a
+ * collection of models in with this kind of data structure:
+ *
+ * Example:
+ *
+ * let posts = new Collection([
+ *
+ *    {title: &quot;Home&quot;, comments:[
+ *
+ *       {text:&quot;I like this post&quot;},
+ *
+ *       {text:&quot;I love this post&quot;},
+ *
+ *       {text:&quot;I hate this post&quot;}
+ *
+ *    ]},
+ *
+ *    {title: &quot;About&quot;, comments:[
+ *
+ *       {text:&quot;I like this page&quot;},
+ *
+ *       {text:&quot;I love this page&quot;},
+ *
+ *       {text:&quot;I really like this page&quot;}
+ *
+ *    ]}
+ *
+ * ]);
+ *
+ *
+ * To search for posts which have the text &quot;really&quot; in any of the comments you could search like this:
+ *
+ * BackboneQuery.find(posts, {
+ *
+ *    comments: {
+ *
+ *       $elemMatch: {
+ *
+ *          text: /really/i
+ *
+ *       }
+ *
+ *    }
+ *
+ * });
+ *
+ *
+ * All of the operators above can be performed on `$elemMatch` queries, e.g. `$all`, `$size` or `$lt`. `$elemMatch`
+ * queries also accept compound operators, for example this query searches for all posts that have at least one
+ * comment without the word &quot;really&quot; and with the word &quot;totally&quot;.
+ *
+ * BackboneQuery.find(posts, {
+ *
+ *    comments: {
+ *
+ *       $elemMatch: {
+ *
+ *          $not: {
+ *
+ *             text: /really/i
+ *
+ *          },
+ *
+ *          $and: {
+ *
+ *             text: /totally/i
+ *
+ *          }
+ *       }
+ *
+ *    }
+ *
+ * });
+ *
+ *
+ *
+ * $computed
+ *
+ * This operator allows you to perform queries on computed properties. For example you may want to perform a query
+ * for a persons full name, even though the first and last name are stored separately in your db / model. For
+ * example:
+ *
+ * Example:
+ *
+ * class TestModel extends Backbone.Model {
+ *
+ *    full_name() {
+ *
+ *       return (this.get(&apos;first_name&apos;)) + &quot; &quot; + (this.get(&apos;last_name&apos;));
+ *
+ *    }
+ *
+ * });
+ *
+ * let a = new TestModel({
+ *
+ *    first_name: &quot;Dave&quot;,
+ *
+ *    last_name: &quot;Tonge&quot;
+ *
+ * });
+ *
+ * let b = new TestModel({
+ *
+ *    first_name: &quot;John&quot;,
+ *
+ *    last_name: &quot;Smith&quot;
+ *
+ * });
+ *
+ * let collection = new Collection([a, b]);
+ *
+ * BackboneQuery.find(collection, { full_name: { $computed: &quot;Dave Tonge&quot; } });
+ *
+ * // Returns the model with the computed `full_name` equal to Dave Tonge
+ *
+ * BackboneQuery.find(collection, { full_name: { $computed: { $likeI: &quot;john smi&quot; } } });
+ *
+ * // Any of the previous operators can be used (including elemMatch is required)
+ *
+ *
+ *
+ * Combined Queries
+ * ----------------
+ * Multiple queries can be combined together. By default all supplied queries use the `$and` operator. However it is
+ * possible to specify either `$or`, `$nor`, `$not` to implement alternate logic.
+ *
+ *
+ * $and
+ *
+ * BackboneQuery.find(collection, { $and: { title: { $like: &quot;News&quot; }, likes: { $gt: 10 }}});
+ *
+ * // Returns all models that contain &quot;News&quot; in the title and have more than 10 likes.
+ *
+ * BackboneQuery.find(collection, { title: { $like: &quot;News&quot; }, likes: { $gt: 10 } });
+ *
+ * // Same as above as $and is assumed if not supplied
+ *
+ *
+ *
+ * $or
+ *
+ * BackboneQuery.find(collection, { $or: { title: { $like: &quot;News&quot; }, likes: { $gt: 10 } } });
+ *
+ * // Returns all models that contain &quot;News&quot; in the title OR have more than 10 likes.
+ *
+ *
+ * $nor
+ *
+ * The opposite of `$or`
+ *
+ * BackboneQuery.find(collection, { $nor: { title: { $like: &quot;News&quot; }, likes: { $gt: 10 } } });
+ *
+ * // Returns all models that don&apos;t contain &quot;News&quot; in the title NOR have more than 10 likes.
+ *
+ *
+ * $not
+ *
+ * The opposite of `$and`
+ *
+ * BackboneQuery.find(collection, { $not: { title: { $like: &quot;News&quot; }, likes: { $gt: 10 } } });
+ *
+ * // Returns all models that don&apos;t contain &quot;News&quot; in the title AND DON&apos;T have more than 10 likes.
+ *
+ *
+ * If you need to perform multiple queries on the same key, then you can supply the query as an array:
+ *
+ * BackboneQuery.find(collection, {
+ *
+ *    $or:[
+ *
+ *       {title:&quot;News&quot;},
+ *
+ *       {title:&quot;About&quot;}
+ *
+ *    ]
+ *
+ * });
+ *
+ * // Returns all models with the title &quot;News&quot; or &quot;About&quot;.
+ *
+ *
+ * Compound Queries
+ * ----------------
+ * It is possible to use multiple combined queries, for example searching for models that have a specific title
+ * attribute, and either a category of &quot;abc&quot; or a tag of &quot;xyz&quot;.
+ *
+ * BackboneQuery.find(collection, {
+ *
+ *    $and: { title: { $like: &quot;News&quot; } },
+ *
+ *    $or: {likes: { $gt: 10 }, color: { $contains:&quot;red&quot; } }
+ *
+ * });
+ *
+ * //Returns models that have &quot;News&quot; in their title and either have more than 10 likes or contain the color red.
+ *
+ *
+ * Sorting
+ * -------
+ * Optional `sortBy` and `order` attributes can be supplied as part of an options object. `sortBy` can either be a
+ * model key or a callback function which will be called with each model in the array.
+ *
+ * BackboneQuery.find(collection, { title: { $like: &quot;News&quot; } }, { sortBy: &quot;likes&quot; });
+ *
+ * // Returns all models that contain &quot;News&quot; in the title, sorted according to their &quot;likes&quot; attribute (ascending)
+ *
+ * BackboneQuery.find(collection, { title: { $like: &quot;News&quot; } }, { sortBy: &quot;likes&quot;, order: &quot;desc&quot; });
+ *
+ * // Same as above, but &quot;descending&quot;
+ *
+ * BackboneQuery.find(collection,
+ *
+ *    { title: { $like: &quot;News&quot; } },
+ *
+ *    { sortBy: function(model){ return model.get(&quot;title&quot;).charAt(1); } }
+ *
+ * );
+ *
+ * // Results sorted according to 2nd character of the title attribute
+ *
+ *
+ *
+ * Paging
+ * ------
+ * To return only a subset of the results paging properties can be supplied as part of an options object. A limit
+ * property must be supplied and optionally a offset or a page property can be supplied.
+ *
+ * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10 });
+ *
+ * // Returns the first 10 models that have more than 10 likes.
+ *
+ * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10, offset: 5 });
+ *
+ * // Returns 10 models that have more than 10 likes starting at the 6th model in the results.
+ *
+ * BackboneQuery.find(collection, { likes: { $gt: 10 } }, { limit: 10, page: 2 });
+ *
+ * // Returns 10 models that have more than 10 likes starting at the 11th model in the results (page 2).
+ *
+ *
+ * When using the paging functionality, you will normally need to know the number of pages so that you can render
+ * the correct interface for the user. Backbone Query can send the number of pages of results to a supplied callback.
+ * The callback should be passed as a pager property on the options object. This callback will also receive the
+ * sliced models as a second variable.
+ *
+ * Here is an example of a simple paging setup using the pager callback option:
+ *
+ * TODO Provide example!
+ *
+ * Caching Results
+ * ---------------
+ * To enable caching set the cache flag to true in the options object. This can greatly improve performance when
+ * paging through results as the unpaged results will be saved. This options is not enabled by default as if models
+ * are changed, added to, or removed from the collection, then the query cache will be out of date. If you know that
+ * your data is static and won&apos;t change then caching can be enabled without any problems. If your data is dynamic
+ * (as in most Backbone Apps) then a helper cache reset method is provided: `reset_query_cache`. This method should
+ * be bound to your collections change, add and remove events (depending on how your data can be changed).
+ *
+ * Cache will be saved in a `_query_cache` property on each collection where a cache query is performed.
+ *
+ * @example
+ * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10, page: 1, cache: true });
+ * //The first query will operate as normal and return the first page of results
+ *
+ * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit:10, page: 2, cache: true });
+ * //The second query has an identical query object to the first query, so therefore the results will be retrieved
+ * //from the cache, before the paging parameters are applied.
+ *
+ * // Binding the reset_query_cache method
+ * MyCollection extends Backbone.Collection {
+ *    initialize() {
+ *       this.bind(&quot;change&quot;, () =&gt; { BackboneQuery.resetQueryCache(this) }, this);
+ *    }
+ * });
+ */
+export default class BackboneQuery
+{
+   /**
+    * Returns a sorted array of models from the collection that match the query.
+    *
+    * @param {Collection}  collection  - Target collection
+    * @param {string}      query       - Query string
+    * @param {Object}      options     - Optional parameters
+    * @returns {*}
+    */
+   static find(collection, query, options = {})
+   {
+      let models;
+
+      if (options.cache)
+      {
+         models = s_GET_CACHE(collection, query, options);
+      }
+      else
+      {
+         models = s_GET_SORTED_MODELS(collection, query, options);
+      }
+
+      if (options.limit)
+      {
+         models = s_PAGE_MODELS(models, options);
+      }
+
+      return models;
+   }
+
+   /**
+    * Returns the first model that matches the query.
+    *
+    * @param {Collection}  collection  - Target collection
+    * @param {string}      query       - Query string
+    * @returns {*}
+    */
+   static findOne(collection, query)
+   {
+      return BackboneQuery.find(collection, query)[0];
+   }
+
+   /**
+    * Resets the query cache of the target collection.
+    *
+    * @param {Collection}  collection  - Target collection
+    */
+   static resetQueryCache(collection)
+   {
+      collection._queryCache = {};
+   }
+
+   /**
+    * Returns a sorted array of all models from the collection that match the query.
+    *
+    * @param {Collection}  collection  - Target collection
+    * @param {string}      query       - Query string
+    * @returns {Array&lt;*&gt;}
+    */
+   static sortAll(collection, query)
+   {
+      return s_SORT_MODELS(collection.models, query);
+   }
+
+   /**
+    * Runs a query and returns a new collection with the results. Useful for chaining.
+    *
+    * @param {Collection}  collection     - Target collection
+    * @param {string}      query          - Query string
+    * @param {Object}      queryOptions   - Optional parameters for query.
+    * @param {Object}      options        - Optional parameters (used to construct the new collection).
+    * @returns {Collection}
+    */
+   static whereBy(collection, query, queryOptions = {}, options = {})
+   {
+      return new collection.constructor(BackboneQuery.find(collection, query, queryOptions), options);
+   }
+}
+
+// Private / internal methods ---------------------------------------------------------------------------------------
+
+const __slice = [].slice;
+const __hasProp = {}.hasOwnProperty;
+const __indexOf = [].indexOf || function(item)
+ {
+    for (let i = 0, l = this.length; i &lt; l; i++)
+    {
+       if (i in this &amp;&amp; this[i] === item) { return i; }
+    }
+
+    return -1;
+ };
+
+/**
+ * Detects if any value in the array matches a test.
+ *
+ * @param {Array&lt;*&gt;} array - An array to detect.
+ * @param {function} test  - A test function.
+ * @returns {boolean}
+ */
+const s_DETECT = function(array, test)
+{
+   let _i, _len, val;
+
+   for (_i = 0, _len = array.length; _i &lt; _len; _i++)
+   {
+      val = array[_i];
+      if (test(val))
+      {
+         return true;
+      }
+   }
+
+   return false;
+};
+
+/**
+ * Filters an array only adding results that `test` passes.
+ *
+ * @param {Array&lt;*&gt;} array - An array to filter.
+ * @param {function} test  - A test function.
+ * @returns {Array&lt;*&gt;}
+ */
+const s_FILTER = function(array, test)
+{
+   const _results = [];
+   let _i, _len, val;
+
+   for (_i = 0, _len = array.length; _i &lt; _len; _i++)
+   {
+      val = array[_i];
+      if (test(val))
+      {
+         _results.push(val);
+      }
+   }
+
+   return _results;
+};
+
+/**
+ * Gets the query cache from a collection.
+ *
+ * @param {Collection}  collection  - Target collection
+ * @param {string}      query       - A query
+ * @param {Object}      options     - Optional parameters
+ * @returns {*}
+ */
+const s_GET_CACHE = function(collection, query, options)
+{
+   let _ref, cache, models, queryString;
+   queryString = JSON.stringify(query);
+   cache = (_ref = collection._queryCache) !== null ? _ref : collection._queryCache = {};
+   models = cache[queryString];
+
+   if (!models)
+   {
+      models = s_GET_SORTED_MODELS(collection, query, options);
+      cache[queryString] = models;
+   }
+
+   return models;
+};
+
+/**
+ * Runs a query then sorts the models.
+ *
+ * @param {Collection}  collection  - Target collection
+ * @param {string}      query       - A query
+ * @param {Object}      options     - Optional parameters
+ * @returns {*}
+ */
+const s_GET_SORTED_MODELS = function(collection, query, options)
+{
+   let models;
+   models = s_RUN_QUERY(collection.models, query);
+
+   if (options.sortBy)
+   {
+      models = s_SORT_MODELS(models, options);
+   }
+
+   return models;
+};
+
+/**
+ * Tests an item and returns a string representation of the type or `false` if no type matched.
+ *
+ * @param {*}  item  - Item to test.
+ * @returns {string|boolean}
+ */
+const s_GET_TYPE = function(item)
+{
+   if (_.isRegExp(item))
+   {
+      return &apos;$regex&apos;;
+   }
+
+   if (_.isDate(item))
+   {
+      return &apos;$date&apos;;
+   }
+
+   if (_.isObject(item) &amp;&amp; !_.isArray(item))
+   {
+      return &apos;object&apos;;
+   }
+
+   if (_.isArray(item))
+   {
+      return &apos;array&apos;;
+   }
+
+   if (_.isString(item))
+   {
+      return &apos;string&apos;;
+   }
+
+   if (_.isNumber(item))
+   {
+      return &apos;number&apos;;
+   }
+
+   if (_.isBoolean(item))
+   {
+      return &apos;boolean&apos;;
+   }
+
+   if (_.isFunction(item))
+   {
+      return &apos;function&apos;;
+   }
+
+   return false;
+};
+
+/**
+ *
+ * @param {Array&lt;Model&gt;}   models         -
+ * @param {Array&lt;*&gt;}       query          - An array of sub-queries.
+ * @param {boolean}        andOr          -
+ * @param {function}       filterFunction -
+ * @param {string}         itemType       -
+ * @returns {*}
+ */
+const s_ITERATOR = function(models, query, andOr, filterFunction, itemType)
+{
+   if (itemType === null)
+   {
+      itemType = false;
+   }
+
+   return filterFunction(models, (model) =&gt;
+   {
+      let _i, _len, attr, q, test;
+
+      for (_i = 0, _len = query.length; _i &lt; _len; _i++)
+      {
+         q = query[_i];
+
+         attr = (function()
+         {
+            switch (itemType)
+            {
+               case &apos;elemMatch&apos;:
+                  return model[q.key];
+               case &apos;computed&apos;:
+                  return model[q.key]();
+               default:
+                  return model.get(q.key);
+            }
+         })();
+
+         test = s_TEST_MODEL_ATTRIBUTE(q.type, attr);
+
+         if (test)
+         {
+            test = s_PERFORM_QUERY(q.type, q.value, attr, model, q.key);
+         }
+
+         if (andOr === test)
+         {
+            return andOr;
+         }
+      }
+      return !andOr;
+   });
+};
+
+/**
+ * @returns {{}|*}
+ */
+const s_MAKE_OBJ = function()
+{
+   let args, current, key, o, val;
+   args = 1 &lt;= arguments.length ? __slice.call(arguments, 0) : [];
+   o = {};
+   current = o;
+
+   while (args.length)
+   {
+      key = args.shift();
+      val = (args.length === 1 ? args.shift() : {});
+      current = current[key] = val;
+   }
+
+   return o;
+};
+
+/**
+ * Pages models
+ *
+ * @param {Array&lt;Model&gt;}   models   - Array of models to page.
+ * @param {Object}         options  - Optional parameters
+ * @returns {*}
+ */
+const s_PAGE_MODELS = function(models, options)
+{
+   let end, sliced_models, start, total_pages;
+
+   if (options.offset)
+   {
+      start = options.offset;
+   }
+   else if (options.page)
+   {
+      start = (options.page - 1) * options.limit;
+   }
+   else
+   {
+      start = 0;
+   }
+
+   end = start + options.limit;
+   sliced_models = models.slice(start, end);
+
+   if (options.pager &amp;&amp; _.isFunction(options.pager))
+   {
+      total_pages = Math.ceil(models.length / options.limit);
+      options.pager(total_pages, sliced_models);
+   }
+
+   return sliced_models;
+};
+
+/**
+ * Function to parse raw queries
+ *
+ * Allows queries of the following forms:
+ * query
+ * name: &quot;test&quot;
+ * id: $gte: 10
+ *
+ * query [
+ *    {name:&quot;test&quot;}
+ *    {id:$gte:10}
+ * ]
+ *
+ * @param {*}  rawQuery - raw query
+ * @return {array} parsed query
+ */
+const s_PARSE_SUB_QUERY = function(rawQuery)
+{
+   let _i, _len, _results, key, o, paramType, q, query, queryArray, queryParam, type, val, value;
+
+   if (_.isArray(rawQuery))
+   {
+      queryArray = rawQuery;
+   }
+   else
+   {
+      queryArray = (function()
+      {
+         let _results;
+         _results = [];
+         for (key in rawQuery)
+         {
+            if (!__hasProp.call(rawQuery, key)) { continue; }
+            val = rawQuery[key];
+            _results.push(s_MAKE_OBJ(key, val));
+         }
+         return _results;
+      })();
+   }
+
+   _results = [];
+
+   for (_i = 0, _len = queryArray.length; _i &lt; _len; _i++)
+   {
+      query = queryArray[_i];
+      for (key in query)
+      {
+         if (!__hasProp.call(query, key)) { continue; }
+
+         queryParam = query[key];
+         o = { key };
+
+         paramType = s_GET_TYPE(queryParam);
+         switch (paramType)
+         {
+            case &apos;$regex&apos;:
+            case &apos;$date&apos;:
+               o.type = paramType;
+               o.value = queryParam;
+               break;
+            case &apos;object&apos;:
+               if (key === &apos;$and&apos; || key === &apos;$or&apos; || key === &apos;$nor&apos; || key === &apos;$not&apos;)
+               {
+                  o.value = s_PARSE_SUB_QUERY(queryParam);
+                  o.type = key;
+                  o.key = null;
+               }
+               else
+               {
+                  for (type in queryParam)
+                  {
+                     value = queryParam[type];
+                     if (s_TEST_QUERY_VALUE(type, value))
+                     {
+                        o.type = type;
+                        switch (type)
+                        {
+                           case &apos;$elemMatch&apos;:
+                           case &apos;$relationMatch&apos;:
+                              o.value = s_PARSE_QUERY(value);
+                              break;
+                           case &apos;$computed&apos;:
+                              q = s_MAKE_OBJ(key, value);
+                              o.value = s_PARSE_SUB_QUERY(q);
+                              break;
+                           default:
+                              o.value = value;
+                        }
+                     }
+                  }
+               }
+               break;
+            default:
+               o.type = &apos;$equal&apos;;
+               o.value = queryParam;
+         }
+
+         if ((o.type === &apos;$equal&apos;) &amp;&amp; (paramType === &apos;object&apos; || paramType === &apos;array&apos;))
+         {
+            o.type = &apos;$oEqual&apos;;
+         }
+      }
+      _results.push(o);
+   }
+
+   return _results;
+};
+
+/**
+ * Parses query string.
+ *
+ * @param {string}   query - A query
+ * @returns {*[]}
+ */
+const s_PARSE_QUERY = function(query)
+{
+   let compoundKeys, compoundQuery, key, queryKeys, type, val;
+   queryKeys = _(query).keys();
+   compoundKeys = [&quot;$and&quot;, &quot;$not&quot;, &quot;$or&quot;, &quot;$nor&quot;];
+   compoundQuery = _.intersection(compoundKeys, queryKeys);
+
+   if (compoundQuery.length === 0)
+   {
+      return [
+         {
+            type: &quot;$and&quot;,
+            parsedQuery: s_PARSE_SUB_QUERY(query)
+         }
+      ];
+   }
+   else
+   {
+      if (compoundQuery.length !== queryKeys.length)
+      {
+         if (__indexOf.call(compoundQuery, &quot;$and&quot;) &lt; 0)
+         {
+            query.$and = {};
+            compoundQuery.unshift(&quot;$and&quot;);
+         }
+         for (key in query)
+         {
+            if (!__hasProp.call(query, key)) { continue; }
+            val = query[key];
+
+            if (!(__indexOf.call(compoundKeys, key) &lt; 0)) { continue; }
+
+            query.$and[key] = val;
+            delete query[key];
+         }
+      }
+
+      return (function()
+      {
+         let _i, _len, _results;
+         _results = [];
+
+         for (_i = 0, _len = compoundQuery.length; _i &lt; _len; _i++)
+         {
+            type = compoundQuery[_i];
+            _results.push({
+               type,
+               parsedQuery: s_PARSE_SUB_QUERY(query[type])
+            });
+         }
+         return _results;
+      })();
+   }
+};
+
+/**
+ * Performs a query
+ *
+ * @param {string}   type  -
+ * @param {*}        value -
+ * @param {*}        attr  -
+ * @param {*}        model -
+ * @returns {*}
+ */
+const s_PERFORM_QUERY = function(type, value, attr, model)
+{
+   switch (type)
+   {
+      case &apos;$equal&apos;:
+         if (_(attr).isArray())
+         {
+            return __indexOf.call(attr, value) &gt;= 0;
+         }
+         else
+         {
+            return attr === value;
+         }
+         break;
+      case &apos;$oEqual&apos;:
+         return _(attr).isEqual(value);
+      case &apos;$contains&apos;:
+         return __indexOf.call(attr, value) &gt;= 0;
+      case &apos;$ne&apos;:
+         return attr !== value;
+      case &apos;$lt&apos;:
+         return attr &lt; value;
+      case &apos;$gt&apos;:
+         return attr &gt; value;
+      case &apos;$lte&apos;:
+         return attr &lt;= value;
+      case &apos;$gte&apos;:
+         return attr &gt;= value;
+      case &apos;$between&apos;:
+         return (value[0] &lt; attr &amp;&amp; attr &lt; value[1]);
+      case &apos;$in&apos;:
+         return __indexOf.call(value, attr) &gt;= 0;
+      case &apos;$nin&apos;:
+         return __indexOf.call(value, attr) &lt; 0;
+      case &apos;$all&apos;:
+         return _(value).all((item) =&gt;
+         {
+            return __indexOf.call(attr, item) &gt;= 0;
+         });
+      case &apos;$any&apos;:
+         return _(attr).any((item) =&gt;
+         {
+            return __indexOf.call(value, item) &gt;= 0;
+         });
+      case &apos;$size&apos;:
+         return attr.length === value;
+      case &apos;$exists&apos;:
+      case &apos;$has&apos;:
+         return (attr !== null) === value;
+      case &apos;$like&apos;:
+         return attr.includes(value);
+      case &apos;$likeI&apos;:
+         return attr.toLowerCase().includes(value.toLowerCase());
+      case &apos;$regex&apos;:
+         return value.test(attr);
+      case &apos;$cb&apos;:
+         return value.call(model, attr);
+      case &apos;$elemMatch&apos;:
+         return (s_RUN_QUERY(attr, value, &apos;elemMatch&apos;)).length &gt; 0;
+      case &apos;$relationMatch&apos;:
+         return (s_RUN_QUERY(attr.models, value, &apos;relationMatch&apos;)).length &gt; 0;
+      case &apos;$computed&apos;:
+         return s_ITERATOR([model], value, false, s_DETECT, &apos;computed&apos;);
+      case &apos;$and&apos;:
+      case &apos;$or&apos;:
+      case &apos;$nor&apos;:
+      case &apos;$not&apos;:
+         return (s_PROCESS_QUERY[type]([model], value)).length === 1;
+      default:
+         return false;
+   }
+};
+
+/**
+ * @type {{$and: Function, $or: Function, $nor: Function, $not: Function}}
+ */
+const s_PROCESS_QUERY =
+{
+   $and: function(models, query, itemType)
+   {
+      return s_ITERATOR(models, query, false, s_FILTER, itemType);
+   },
+   $or: function(models, query, itemType)
+   {
+      return s_ITERATOR(models, query, true, s_FILTER, itemType);
+   },
+   $nor: function(models, query, itemType)
+   {
+      return s_ITERATOR(models, query, true, s_REJECT, itemType);
+   },
+   $not: function(models, query, itemType)
+   {
+      return s_ITERATOR(models, query, false, s_REJECT, itemType);
+   }
+};
+
+/**
+ * Creates an array of rejected values of an array that doesn&apos;t match a test function.
+ *
+ * @param {Array&lt;*&gt;} array - An array to reject.
+ * @param {function} test  - A test function.
+ * @returns {Array&lt;*&gt;}
+ */
+const s_REJECT = function(array, test)
+{
+   const _results = [];
+   let _i, _len, val;
+
+   for (_i = 0, _len = array.length; _i &lt; _len; _i++)
+   {
+      val = array[_i];
+      if (!test(val))
+      {
+         _results.push(val);
+      }
+   }
+
+   return _results;
+};
+
+/**
+ * Runs a query.
+ *
+ * @param {*}        items    -
+ * @param {string}   query    - A query
+ * @param {*}        itemType -
+ * @returns {*}
+ */
+const s_RUN_QUERY = function(items, query, itemType)
+{
+   let reduceIterator;
+
+   if (!itemType)
+   {
+      query = s_PARSE_QUERY(query);
+   }
+
+   reduceIterator = function(memo, queryItem)
+   {
+      return s_PROCESS_QUERY[queryItem.type](memo, queryItem.parsedQuery, itemType);
+   };
+
+   return _.reduce(query, reduceIterator, items);
+};
+
+/**
+ * Sorts models.
+ *
+ * @param {Array&lt;Model&gt;}   models   -
+ * @param {string}         query    - A query
+ * @returns {*}
+ */
+const s_SORT_MODELS = function(models, query)
+{
+   if (_(query.sortBy).isString())
+   {
+      const first = _(models).first();
+      if (_.isUndefined(first) || first === null) { return []; }
+
+      const firstValue = first.get(query.sortBy);
+
+      if (_.isString(firstValue))
+      {
+         models = _(models).sortBy((model) =&gt;
+         {
+            return model.get(query.sortBy).toLocaleLowerCase();
+         });
+      }
+      else
+      {
+         models = _(models).sortBy((model) =&gt;
+         {
+            return model.get(query.sortBy);
+         });
+      }
+   }
+   else if (_(query.sortBy).isFunction())
+   {
+      models = _(models).sortBy(query.sortBy);
+   }
+
+   if (query.order === &apos;desc&apos;)
+   {
+      models = models.reverse();
+   }
+   else if (query.order === false)
+   {
+      models = models.reverse();
+   }
+
+   return models;
+};
+
+/**
+ * Tests a model attribute based on the query type.
+ *
+ * @param {string}   type  - Query type
+ * @param {*}        value - A value
+ * @returns {*}
+ */
+const s_TEST_MODEL_ATTRIBUTE = function(type, value)
+{
+   switch (type)
+   {
+      case &apos;$like&apos;:
+      case &apos;$likeI&apos;:
+      case &apos;$regex&apos;:
+         return _(value).isString();
+      case &apos;$contains&apos;:
+      case &apos;$all&apos;:
+      case &apos;$any&apos;:
+      case &apos;$elemMatch&apos;:
+         return _(value).isArray();
+      case &apos;$size&apos;:
+         return _(value).isArray() || _(value).isString();
+      case &apos;$in&apos;:
+      case &apos;$nin&apos;:
+         return value !== null;
+      case &apos;$relationMatch&apos;:
+         return (value !== null) &amp;&amp; value.models;
+      default:
+         return true;
+   }
+};
+
+/**
+ * Tests a value based on the query type.
+ *
+ * @param {string}   type  - Query type
+ * @param {*}        value - A value
+ * @returns {*}
+ */
+const s_TEST_QUERY_VALUE = function(type, value)
+{
+   switch (type)
+   {
+      case &apos;$in&apos;:
+      case &apos;$nin&apos;:
+      case &apos;$all&apos;:
+      case &apos;$any&apos;:
+         return _(value).isArray();
+      case &apos;$size&apos;:
+         return _(value).isNumber();
+      case &apos;$regex&apos;:
+         return _(value).isRegExp();
+      case &apos;$like&apos;:
+      case &apos;$likeI&apos;:
+         return _(value).isString();
+      case &apos;$between&apos;:
+         return _(value).isArray() &amp;&amp; (value.length === 2);
+      case &apos;$cb&apos;:
+         return _(value).isFunction();
+      default:
+         return true;
+   }
+};</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
