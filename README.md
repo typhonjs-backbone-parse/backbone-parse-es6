@@ -2,7 +2,7 @@
 
 [![Backbone](https://img.shields.io/badge/backbone-1.2.3-yellowgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
 [![Parse](https://img.shields.io/badge/parse-1.6.12-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
-[![Documentation](http://js.typhonrt.org/docs/backbone-parse-es6/badge.svg)](http://js.docs.typhonrt.org/backbone-parse-es6/)
+[![Documentation](http://js.docs.typhonrt.org/backbone-parse-es6/badge.svg)](http://js.docs.typhonrt.org/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 [![License](https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat)](https://github.com/typhonjs/backbone-parse-es6/blob/master/LICENSE)
 
@@ -21,7 +21,7 @@ backbone-parse-es6 uses [JSPM](http://www.jspm.io) / [SystemJS](https://github.c
 
 When a new Backbone release is made (next 1.2.4) backbone-es6 will be updated. Tests from Backbone will be ported to backbone-es6 with the upcoming 1.2.4 release. Forthcoming tests for Parse integration will be added to this repo. 
 
-This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.6.9), jQuery (2.1.4) and Underscore (1.8.3) libraries.
+This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.6.12), jQuery (2.1.4) and Underscore (1.8.3) libraries.
 
 Please view the wiki for build instructions and other pertinent usage info:
 https://github.com/typhonjs/backbone-parse-es6/wiki
