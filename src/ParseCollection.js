@@ -4,7 +4,7 @@ import _                from 'underscore';
 import Model            from './ParseModel.js';
 import Collection       from 'backbone-es6/src/Collection.js';
 
-import BackboneQuery    from 'backbone-query';
+import BackboneQuery    from 'typhonjs-core-backbone-query';
 
 import Debug            from 'backbone-es6/src/Debug.js';
 
