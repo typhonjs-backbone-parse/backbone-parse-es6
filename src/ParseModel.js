@@ -1,12 +1,16 @@
 'use strict';
 
-import _             from 'underscore';
-import Model         from 'backbone-es6/src/Model.js';
-import Utils         from 'backbone-es6/src/Utils.js';
+import _                   from 'underscore';
+import Parse               from 'parse';
 
-import Parse         from 'parse';
+import Model               from 'backbone-es6/src/Model.js';
+import BBUtils             from 'backbone-es6/src/Utils.js';
 
-import Debug         from 'backbone-es6/src/Debug.js';
+import BackboneParseObject from './BackboneParseObject.js';
+
+import Utils               from 'typhonjs-core-utils/src/Utils.js';
+
+import Debug               from 'backbone-es6/src/Debug.js';
 
 /**
  * ParseModel - Models are the heart of any JavaScript application. (http://backbonejs.org/#Model)
@@ -86,12 +90,21 @@ class ParseModel extends Model
 
       const hasClassNameGetter = !_.isUndefined(this.className);
       const hasCollectionGetter = !_.isUndefined(this.collection);
+      const hasSubclassGetter = !_.isUndefined(this.subClass);
 
       if (hasClassNameGetter)
       {
          if (!_.isString(this.className))
          {
-            throw new TypeError('Model - ctor - getter for className is not a string.');
+            throw new TypeError('ctor - getter for className is not a string.');
+         }
+      }
+
+      if (hasSubclassGetter)
+      {
+         if (!Utils.isTypeOf(this.subClass, ParseModel))
+         {
+            throw new TypeError('ctor - getter for subClass is not a sub class of ParseModel.');
          }
       }
 
@@ -106,15 +119,15 @@ class ParseModel extends Model
          // Insure that any getter for className is the same as the Parse.Object
          if (hasClassNameGetter && this.className !== parseObject.className)
          {
-            throw new Error(`Model - ctor - getter className '${this.className}
-             ' does not equal Parse.Object className '${parseObject.className}'.`);
+            throw new Error(`ctor - getter className '${this.className}
+             ' does not equal 'parseObject' className '${parseObject.className}'.`);
          }
 
          /**
-          * Parse class name string or proxy ParseObject
-          * @type {string|ParseObject}
+          * Parse proxy ParseObject
+          * @type {BackboneParseObject}
           */
-         this.parseObject = classNameOrParseObject;
+         this.parseObject = new BackboneParseObject(parseObject.className, parseObject.attributes);
 
          adjustedClassName = this.parseObject.className;
       }
@@ -123,24 +136,24 @@ class ParseModel extends Model
          if (_.isString(classNameOrParseObject))
          {
             adjustedClassName = classNameOrParseObject;
-            this.parseObject = new Parse.Object(adjustedClassName, attributes);
+            this.parseObject = new BackboneParseObject(adjustedClassName, attributes);
          }
          // Check for getter "get className()" usage.
          else if (hasClassNameGetter)
          {
-            this.parseObject = new Parse.Object(this.className, attributes);
+            this.parseObject = new BackboneParseObject(this.className, attributes);
          }
          // Check for className via "extend" usage.
          else if (!_.isUndefined(this.__proto__ && _.isString(this.__proto__.constructor.className)))
          {
             adjustedClassName = this.__proto__.constructor.className;
-            this.parseObject = new Parse.Object(adjustedClassName, attributes);
+            this.parseObject = new BackboneParseObject(adjustedClassName, attributes);
          }
       }
 
       if (_.isUndefined(this.parseObject))
       {
-         throw new TypeError('ctor - classNameOrParseObject is not a string or Parse.Object.');
+         throw new TypeError('ctor - classNameOrParseObject is not a string or BackboneParseObject.');
       }
 
       if (!hasClassNameGetter)
@@ -152,10 +165,33 @@ class ParseModel extends Model
          this.className = adjustedClassName;
       }
 
+      if (options.subClass && !hasSubclassGetter)
+      {
+         /**
+          * Parse class name
+          * @type {string}
+          */
+         this.subClass = options.subClass;
+      }
+
+      // Register the given subClass if it exists by the className.
+      if (this.className && this.subClass)
+      {
+         Parse.Object.registerSubclass(this.className, this.subClass);
+      }
+
       let attrs = attributes || {};
 
       options.parse = true;
       options.updateParseObject = _.isBoolean(options.updateParseObject) ? options.updateParseObject : true;
+
+      /**
+       * The prefix is used to create the client id which is used to identify models locally.
+       * You may want to override this if you're experiencing name clashes with model ids.
+       *
+       * @type {string}
+       */
+      this.cidPrefix = 'c';
 
       /**
        * Client side ID
@@ -189,14 +225,6 @@ class ParseModel extends Model
        * @type {*}
        */
       this.validationError = null;
-
-      /**
-       * The prefix is used to create the client id which is used to identify models locally.
-       * You may want to override this if you're experiencing name clashes with model ids.
-       *
-       * @type {string}
-       */
-      this.cidPrefix = 'c';
 
       // Allows child classes to postpone initialization.
       if (_.isBoolean(options.abortCtorInit) && options.abortCtorInit) { return; }
@@ -271,13 +299,31 @@ class ParseModel extends Model
       }
       else
       {
-         Utils.wrapError(this, options);
+         BBUtils.wrapError(this, options);
          xhr = this.sync('delete', this, options);
       }
 
       if (!wait) { destroy(); }
 
       return xhr;
+   }
+
+   /**
+    * In order to deserialize Classes associated with `Parse.Object.registerSubclass()` this method is called and
+    * the data must be forwarded onto the backing Parse.Object of ParseModel.
+    *
+    * @param {object}   serverData - server data attributes.
+    * @private
+    */
+   _finishFetch(serverData)
+   {
+      this.parseObject._finishFetch(serverData);
+
+      const options = { updateParseObject: false };
+
+      const attrs = this.parse(this.parseObject, options) || {};
+
+      this.set(attrs, options);
    }
 
    /**
@@ -309,8 +355,9 @@ class ParseModel extends Model
    {
       /* eslint-enable no-unused-vars */
 
-Debug.log(`ParseModel - parse - 0 - resp instanceof Parse.Object: ${resp instanceof Parse.Object}`, true);
-Debug.log(`ParseModel - parse - 1 - ParseModel.prototype.idAttribute: ${ParseModel.prototype.idAttribute}`);
+      Debug.log(`ParseModel - parse - 0 - resp instanceof Parse.Object: ${resp instanceof Parse.Object}`, true);
+
+      Debug.log(`ParseModel - parse - 1 - ParseModel.prototype.idAttribute: ${ParseModel.prototype.idAttribute}`);
 
       let merged;
 
@@ -320,27 +367,27 @@ Debug.log(`ParseModel - parse - 1 - ParseModel.prototype.idAttribute: ${ParseMod
           * Update the `id`.
           * @type {*}
           */
-         this.id = resp.id;
+         this.id = resp._getId();
 
          // Store the parse ID in local attributes; Note that it won't be propagated in "set()"
          const mergeId = {};
-         mergeId[ParseModel.prototype.idAttribute] = resp.id;
+         mergeId[ParseModel.prototype.idAttribute] = this.id;
 
-Debug.log(`ParseModel - parse - 2 - mergeId: ${mergeId[ParseModel.prototype.idAttribute]}`);
+         Debug.log(`ParseModel - parse - 2 - mergeId: ${mergeId[ParseModel.prototype.idAttribute]}`);
 
          merged = _.extend(mergeId, resp.attributes);
 
-Debug.log(`ParseModel - parse - 3 - merged: ${JSON.stringify(merged)}`);
+         Debug.log(`ParseModel - parse - 3 - merged: ${JSON.stringify(merged)}`);
       }
       else if (_.isObject(resp))
       {
          const parseObjectId = resp[ParseModel.prototype.idAttribute];
 
-Debug.log(`ParseModel - parse - 4 - resp is an Object / existing model - parseObjectId: ${parseObjectId}; resp: ${JSON.stringify(resp)}`);
+         Debug.log(`ParseModel - parse - 4 - resp is an Object / existing model - parseObjectId: ${parseObjectId}; resp: ${JSON.stringify(resp)}`);
 
          if (!_.isUndefined(parseObjectId) && this.id !== parseObjectId)
          {
-Debug.log(`ParseModel - parse - 5 - this.id !== parseObjectId; this.id: ${this.id}; parseObjectId: ${parseObjectId}`);
+            Debug.log(`ParseModel - parse - 5 - this.id !== parseObjectId; this.id: ${this.id}; parseObjectId: ${parseObjectId}`);
 
             this.id = parseObjectId;
          }
@@ -349,6 +396,97 @@ Debug.log(`ParseModel - parse - 5 - this.id !== parseObjectId; this.id: ${this.i
       }
 
       return merged;
+   }
+
+   /**
+    * Save a model to your database (or alternative persistence layer), by delegating to Backbone.sync. Returns a
+    * Promise. The attributes hash (as in set) should contain the attributes you'd like to change — keys that aren't
+    * mentioned won't be altered — but, a complete representation of the resource will be sent to the server. As with
+    * set, you may pass individual keys and values instead of a hash. If the model has a validate method, and validation
+    * fails, the model will not be saved. If the model isNew, the save will be a "create" (HTTP POST), if the model
+    * already exists on the server, the save will be an "update" (HTTP PUT).
+    *
+    * If instead, you'd only like the changed attributes to be sent to the server, call model.save(attrs,
+    * {patch: true}). You'll get an HTTP PATCH request to the server with just the passed-in attributes.
+    *
+    * Calling save with new attributes will cause a "change" event immediately, a "request" event as the Ajax request
+    * begins to go to the server, and a "sync" event after the server has acknowledged the successful change. Pass
+    * {wait: true} if you'd like to wait for the server before setting the new attributes on the model.
+    *
+    * In particular this method is overridden to be able to support resolving Parse.Pointer deserializing which
+    * requires the deserialized data to be parsed by the associated models.
+    *
+    * @example
+    * const book = new Backbone.Model({
+    *    title: 'The Rough Riders',
+    *    author: 'Theodore Roosevelt'
+    *    className: 'Book'
+    * });
+    *
+    * book.save();
+    *
+    * book.save({author: "Teddy"});
+    *
+    * or use full ES6 syntax:
+    *
+    * class Book extends Backbone.Model
+    * {
+    *    get className() { return 'Book'; }
+    *    get subClass() { return Book; }     // If subClass is set this class will be registered with Parse.
+    * }                                      // Object.registerSubclass()
+    *
+    * const book = new Book({
+    *    title: 'The Rough Riders',
+    *    author: 'Theodore Roosevelt'
+    * });
+    *
+    * @see http://backbonejs.org/#Model-save
+    *
+    * @param {key|object}  key - Either a key defining the attribute to store or a hash of keys / values to store.
+    * @param {*}           val - Any type to store in model.
+    * @param {object}      options - Optional parameters.
+    * @returns {Promise}
+    */
+   save(key, val, options)
+   {
+      let attrs;
+
+      if (Utils.isNullOrUndef(key) || typeof key === 'object')
+      {
+         attrs = key;
+         options = val;
+      }
+      else
+      {
+         (attrs = {})[key] = val;
+      }
+
+      // Save any previous options.success function.
+      const success = !Utils.isNullOrUndef(options) ? options.success : undefined;
+
+      options = _.extend(
+      {
+         success: (model, resp, options) =>
+         {
+            const modelAttrs = this.attributes;
+            for (const attr in modelAttrs)
+            {
+               const field = modelAttrs[attr];
+
+               // Here is the key part as if the associated Parse.Object id is different than the model id it
+               // needs to be parsed and data set to the Backbone.Model.
+               if (field.parseObject && field.parseObject.id !== field.id)
+               {
+                  field.set(field.parse(field.parseObject), options);
+               }
+            }
+
+            // Execute previously cached success function.
+            if (success) { success.call(options.context, this, resp, options); }
+         }
+      }, options);
+
+      return super.save(attrs, options);
    }
 
    /**
@@ -398,7 +536,7 @@ Debug.log(`ParseModel - parse - 5 - this.id !== parseObjectId; this.id: ${this.i
       const changing = this._changing;
       this._changing = true;
 
-Debug.log(`ParseModel - set - 0 - changing: ${changing}; attrs: ${JSON.stringify(attrs)}; options: ${JSON.stringify(options)}`, true);
+      Debug.log(`ParseModel - set - 0 - changing: ${changing}; attrs: ${JSON.stringify(attrs)}; options: ${JSON.stringify(options)}`, true);
 
       if (!changing)
       {
@@ -417,7 +555,7 @@ Debug.log(`ParseModel - set - 0 - changing: ${changing}; attrs: ${JSON.stringify
 
          if (!_.isEqual(current[attr], val))
          {
-Debug.log(`ParseModel - set - 1 - current[attr] != val for key: ${attr}`);
+            Debug.log(`ParseModel - set - 1 - current[attr] != val for key: ${attr}`);
             changes.push(attr);
          }
 
@@ -425,14 +563,14 @@ Debug.log(`ParseModel - set - 1 - current[attr] != val for key: ${attr}`);
 
          if (!_.isEqual(prev[attr], val))
          {
-Debug.log(`ParseModel - set - 2 - prev[attr] != val for key: ${attr}`);
+            Debug.log(`ParseModel - set - 2 - prev[attr] != val for key: ${attr}`);
 
             changed[attr] = val;
             actuallyChanged = true;
          }
          else
          {
-Debug.log(`ParseModel - set - 3 - prev[attr] == val delete changed for key: ${attr}`);
+            Debug.log(`ParseModel - set - 3 - prev[attr] == val delete changed for key: ${attr}`);
             delete changed[attr];
          }
 
@@ -451,7 +589,7 @@ Debug.log(`ParseModel - set - 3 - prev[attr] == val delete changed for key: ${at
                // Parse.Object returns itself on success
                unsetSuccess = this.parseObject === this.parseObject.unset(attr);
 
-Debug.log(`ParseModel - set - 4 - unset Parse.Object - attr: ${attr}; unsetSuccess: ${unsetSuccess}`);
+               Debug.log(`ParseModel - set - 4 - unset Parse.Object - attr: ${attr}; unsetSuccess: ${unsetSuccess}`);
             }
 
             if (unsetSuccess)
@@ -469,7 +607,7 @@ Debug.log(`ParseModel - set - 4 - unset Parse.Object - attr: ${attr}; unsetSucce
                // Parse.Object returns itself on success
                setSuccess = this.parseObject === this.parseObject.set(attr, val, options);
 
-Debug.log(`ParseModel - set - 5 - set Parse.Object - attr: ${attr}; setSuccess: ${setSuccess}`);
+               Debug.log(`ParseModel - set - 5 - set Parse.Object - attr: ${attr}; setSuccess: ${setSuccess}`);
             }
 
             if (actuallyChanged && setSuccess)
@@ -486,7 +624,7 @@ Debug.log(`ParseModel - set - 5 - set Parse.Object - attr: ${attr}; setSuccess: 
          for (let i = 0; i < changes.length; i++)
          {
             this.trigger(`change:${changes[i]}`, this, current[changes[i]], options);
-Debug.log(`ParseModel - set - 6 - trigger - changeKey: ${changes[i]}`);
+            Debug.log(`ParseModel - set - 6 - trigger - changeKey: ${changes[i]}`);
          }
       }
 
@@ -500,12 +638,24 @@ Debug.log(`ParseModel - set - 6 - trigger - changeKey: ${changes[i]}`);
             options = this._pending;
             this._pending = false;
             this.trigger('change', this, options);
-Debug.log(`ParseModel - set - 7 - trigger - change`);
+            Debug.log(`ParseModel - set - 7 - trigger - change`);
          }
       }
       this._pending = false;
       this._changing = false;
       return this;
+   }
+
+   /**
+    * In order to deserialize Classes associated with `Parse.Object.registerSubclass()` this method is called and
+    * the data must be forwarded onto the backing Parse.Object of ParseModel.
+    *
+    * @param {boolean}  existed - Sets the existed state.
+    * @private
+    */
+   _setExisted(existed)
+   {
+      this.parseObject._setExisted(existed);
    }
 
    /**

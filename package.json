@@ -19,6 +19,7 @@
       "typhonjs-core-backbone-common": "github:typhonjs/typhonjs-core-backbone-common@master",
       "typhonjs-core-backbone-events": "github:typhonjs/typhonjs-core-backbone-events@master",
       "typhonjs-core-backbone-query": "github:typhonjs/typhonjs-core-backbone-query@master",
+      "typhonjs-core-utils": "github:typhonjs/typhonjs-core-utils@master",
       "underscore": "npm:underscore@^1.8.3"
     },
     "devDependencies": {
