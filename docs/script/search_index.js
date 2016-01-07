@@ -6,6 +6,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "backbone-parse-es6/src/backboneparseobject.js~backboneparseobject",
+    "class/backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject.html",
+    "<span>BackboneParseObject</span> <span class=\"search-result-import-path\">backbone-parse-es6/src/BackboneParseObject.js</span>",
+    "class"
+  ],
+  [
     "backbone-es6/src/backboneproxy.js~backboneproxy",
     "variable/index.html#static-variable-BackboneProxy",
     "<span>BackboneProxy</span> <span class=\"search-result-import-path\">backbone-es6/src/BackboneProxy.js</span>",
@@ -1596,6 +1602,24 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "backbone-parse-es6/src/backboneparseobject.js",
+    "file/backbone-parse-es6/src/BackboneParseObject.js.html",
+    "backbone-parse-es6/src/BackboneParseObject.js",
+    "file"
+  ],
+  [
+    "backbone-parse-es6/src/backboneparseobject.js~backboneparseobject#clone",
+    "class/backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject.html#instance-method-clone",
+    "backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject#clone",
+    "method"
+  ],
+  [
+    "backbone-parse-es6/src/backboneparseobject.js~backboneparseobject#tojson",
+    "class/backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject.html#instance-method-toJSON",
+    "backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject#toJSON",
+    "method"
+  ],
+  [
     "backbone-parse-es6/src/globalinclusiveruntime.js",
     "file/backbone-parse-es6/src/GlobalInclusiveRuntime.js.html",
     "backbone-parse-es6/src/GlobalInclusiveRuntime.js",
@@ -1770,10 +1794,22 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "backbone-parse-es6/src/parsemodel.js~parsemodel#save",
+    "class/backbone-parse-es6/src/ParseModel.js~ParseModel.html#instance-method-save",
+    "backbone-parse-es6/src/ParseModel.js~ParseModel#save",
+    "method"
+  ],
+  [
     "backbone-parse-es6/src/parsemodel.js~parsemodel#set",
     "class/backbone-parse-es6/src/ParseModel.js~ParseModel.html#instance-method-set",
     "backbone-parse-es6/src/ParseModel.js~ParseModel#set",
     "method"
+  ],
+  [
+    "backbone-parse-es6/src/parsemodel.js~parsemodel#subclass",
+    "class/backbone-parse-es6/src/ParseModel.js~ParseModel.html#instance-member-subClass",
+    "backbone-parse-es6/src/ParseModel.js~ParseModel#subClass",
+    "member"
   ],
   [
     "backbone-parse-es6/src/parsemodel.js~parsemodel#tojson",
