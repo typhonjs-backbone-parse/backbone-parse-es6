@@ -15,7 +15,7 @@
     "main": "src/ModuleRuntime.js",
     "dependencies": {
       "backbone-es6": "github:typhonjs/backbone-es6@master",
-      "parse": "npm:parse@^1.6.13",
+      "parse": "npm:parse@^1.6.14",
       "typhonjs-core-backbone-common": "github:typhonjs/typhonjs-core-backbone-common@master",
       "typhonjs-core-backbone-events": "github:typhonjs/typhonjs-core-backbone-events@master",
       "typhonjs-core-backbone-query": "github:typhonjs/typhonjs-core-backbone-query@master",
