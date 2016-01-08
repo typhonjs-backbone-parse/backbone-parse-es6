@@ -9,6 +9,18 @@ import encode  from 'parse/lib/browser/encode.js';
 export default class BackboneParseObject extends Parse.Object
 {
    /**
+    * Provides a constructor for clone.
+    *
+    * @param {string | object}   className - class name of object that has className field.
+    * @param {object}            attributes - attributes hash.
+    * @param {object}            options - Optional parameters
+    */
+   constructor(className, attributes, options)
+   {
+      super(className, attributes, options);
+   }
+
+   /**
     * Creates a new BackboneParseObject with identical attributes to this one.
     * @method clone
     * @return {BackboneParseObject}
