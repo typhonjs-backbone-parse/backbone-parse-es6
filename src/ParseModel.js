@@ -112,6 +112,9 @@ class ParseModel extends Model
 
       const classNameOrParseObject = options.parseObject || options.className;
 
+Debug.log(`ParseModel - ctor - 0 - options.parseObject: ${options.parseObject}`, true);
+Debug.log(`ParseModel - ctor - 0 - options.className: ${options.className}`);
+
       if (classNameOrParseObject instanceof Parse.Object)
       {
          const parseObject = classNameOrParseObject;
@@ -128,6 +131,8 @@ class ParseModel extends Model
           * @type {BackboneParseObject}
           */
          this.parseObject = new BackboneParseObject(parseObject.className, parseObject.attributes);
+         this.parseObject.id = parseObject.id;
+         this.parseObject._localId = parseObject._localId;
 
          adjustedClassName = this.parseObject.className;
       }
@@ -309,24 +314,6 @@ class ParseModel extends Model
    }
 
    /**
-    * In order to deserialize Classes associated with `Parse.Object.registerSubclass()` this method is called and
-    * the data must be forwarded onto the backing Parse.Object of ParseModel.
-    *
-    * @param {object}   serverData - server data attributes.
-    * @private
-    */
-   _finishFetch(serverData)
-   {
-      this.parseObject._finishFetch(serverData);
-
-      const options = { updateParseObject: false };
-
-      const attrs = this.parse(this.parseObject, options) || {};
-
-      this.set(attrs, options);
-   }
-
-   /**
     * Has this model been saved to the server yet? If the model does not yet have an id, it is considered to be new.
     *
     * @see http://backbonejs.org/#Model-isNew
@@ -355,9 +342,8 @@ class ParseModel extends Model
    {
       /* eslint-enable no-unused-vars */
 
-      Debug.log(`ParseModel - parse - 0 - resp instanceof Parse.Object: ${resp instanceof Parse.Object}`, true);
-
-      Debug.log(`ParseModel - parse - 1 - ParseModel.prototype.idAttribute: ${ParseModel.prototype.idAttribute}`);
+Debug.log(`ParseModel - parse - 0 - resp instanceof Parse.Object: ${resp instanceof Parse.Object}`, true);
+Debug.log(`ParseModel - parse - 1 - ParseModel.prototype.idAttribute: ${ParseModel.prototype.idAttribute}`);
 
       let merged;
 
@@ -373,21 +359,21 @@ class ParseModel extends Model
          const mergeId = {};
          mergeId[ParseModel.prototype.idAttribute] = this.id;
 
-         Debug.log(`ParseModel - parse - 2 - mergeId: ${mergeId[ParseModel.prototype.idAttribute]}`);
+Debug.log(`ParseModel - parse - 2 - mergeId: ${mergeId[ParseModel.prototype.idAttribute]}`);
 
          merged = _.extend(mergeId, resp.attributes);
 
-         Debug.log(`ParseModel - parse - 3 - merged: ${JSON.stringify(merged)}`);
+Debug.log(`ParseModel - parse - 3 - merged: ${JSON.stringify(merged)}`);
       }
       else if (_.isObject(resp))
       {
          const parseObjectId = resp[ParseModel.prototype.idAttribute];
 
-         Debug.log(`ParseModel - parse - 4 - resp is an Object / existing model - parseObjectId: ${parseObjectId}; resp: ${JSON.stringify(resp)}`);
+Debug.log(`ParseModel - parse - 4 - resp is an Object / existing model - parseObjectId: ${parseObjectId}; resp: ${JSON.stringify(resp)}`);
 
          if (!_.isUndefined(parseObjectId) && this.id !== parseObjectId)
          {
-            Debug.log(`ParseModel - parse - 5 - this.id !== parseObjectId; this.id: ${this.id}; parseObjectId: ${parseObjectId}`);
+Debug.log(`ParseModel - parse - 5 - this.id !== parseObjectId; this.id: ${this.id}; parseObjectId: ${parseObjectId}`);
 
             this.id = parseObjectId;
          }
@@ -453,38 +439,50 @@ class ParseModel extends Model
 
       if (Utils.isNullOrUndef(key) || typeof key === 'object')
       {
+Debug.log(`ParseModel - save - 0`);
+
          attrs = key;
          options = val;
       }
       else
       {
+Debug.log(`ParseModel - save - 1`);
+
          (attrs = {})[key] = val;
       }
 
       // Save any previous options.success function.
       const success = !Utils.isNullOrUndef(options) ? options.success : undefined;
 
-      options = _.extend(
+Debug.log(`ParseModel - save - 2 - options.success defined: ${success !== undefined}`);
+
+      options = options || {};
+
+      options.success = (model, resp, options) =>
       {
-         success: (model, resp, options) =>
+         // Execute previously cached success function. Must do this first before resolving any potential
+         // child object changes.
+         if (success)
          {
-            const modelAttrs = this.attributes;
-            for (const attr in modelAttrs)
-            {
-               const field = modelAttrs[attr];
-
-               // Here is the key part as if the associated Parse.Object id is different than the model id it
-               // needs to be parsed and data set to the Backbone.Model.
-               if (field.parseObject && field.parseObject.id !== field.id)
-               {
-                  field.set(field.parse(field.parseObject), options);
-               }
-            }
-
-            // Execute previously cached success function.
-            if (success) { success.call(options.context, this, resp, options); }
+Debug.log('ParseModel - save - 3 - invoking original options.success.');
+            success.call(options.context, this, resp, options);
          }
-      }, options);
+
+Debug.log('ParseModel - save - 4 - invoking ParseModel success.');
+
+         const modelAttrs = this.attributes;
+         for (const attr in modelAttrs)
+         {
+            const field = modelAttrs[attr];
+
+            // Here is the key part as if the associated Parse.Object id is different than the model id it
+            // needs to be parsed and data set to the Backbone.Model.
+            if (field.parseObject && field.parseObject.id !== field.id)
+            {
+               field.set(field.parse(field.parseObject), options);
+            }
+         }
+      };
 
       return super.save(attrs, options);
    }
@@ -536,7 +534,7 @@ class ParseModel extends Model
       const changing = this._changing;
       this._changing = true;
 
-      Debug.log(`ParseModel - set - 0 - changing: ${changing}; attrs: ${JSON.stringify(attrs)}; options: ${JSON.stringify(options)}`, true);
+Debug.log(`ParseModel - set - 0 - changing: ${changing}; attrs: ${JSON.stringify(attrs)}; options: ${JSON.stringify(options)}`, true);
 
       if (!changing)
       {
@@ -555,7 +553,7 @@ class ParseModel extends Model
 
          if (!_.isEqual(current[attr], val))
          {
-            Debug.log(`ParseModel - set - 1 - current[attr] != val for key: ${attr}`);
+Debug.log(`ParseModel - set - 1 - current[attr] != val for key: ${attr}`);
             changes.push(attr);
          }
 
@@ -563,14 +561,14 @@ class ParseModel extends Model
 
          if (!_.isEqual(prev[attr], val))
          {
-            Debug.log(`ParseModel - set - 2 - prev[attr] != val for key: ${attr}`);
+Debug.log(`ParseModel - set - 2 - prev[attr] != val for key: ${attr}`);
 
             changed[attr] = val;
             actuallyChanged = true;
          }
          else
          {
-            Debug.log(`ParseModel - set - 3 - prev[attr] == val delete changed for key: ${attr}`);
+Debug.log(`ParseModel - set - 3 - prev[attr] == val delete changed for key: ${attr}`);
             delete changed[attr];
          }
 
@@ -589,7 +587,7 @@ class ParseModel extends Model
                // Parse.Object returns itself on success
                unsetSuccess = this.parseObject === this.parseObject.unset(attr);
 
-               Debug.log(`ParseModel - set - 4 - unset Parse.Object - attr: ${attr}; unsetSuccess: ${unsetSuccess}`);
+Debug.log(`ParseModel - set - 4 - unset Parse.Object - attr: ${attr}; unsetSuccess: ${unsetSuccess}`);
             }
 
             if (unsetSuccess)
@@ -599,7 +597,7 @@ class ParseModel extends Model
          }
          else
          {
-            let setSuccess = !updateParseObject;
+            let setSuccess = !updateParseObject || attr === ParseModel.prototype.idAttribute;
 
             if (actuallyChanged && updateParseObject && this.parseObject !== null &&
              attr !== ParseModel.prototype.idAttribute)
@@ -607,7 +605,7 @@ class ParseModel extends Model
                // Parse.Object returns itself on success
                setSuccess = this.parseObject === this.parseObject.set(attr, val, options);
 
-               Debug.log(`ParseModel - set - 5 - set Parse.Object - attr: ${attr}; setSuccess: ${setSuccess}`);
+Debug.log(`ParseModel - set - 5 - set Parse.Object - attr: ${attr}; setSuccess: ${setSuccess}`);
             }
 
             if (actuallyChanged && setSuccess)
@@ -624,7 +622,7 @@ class ParseModel extends Model
          for (let i = 0; i < changes.length; i++)
          {
             this.trigger(`change:${changes[i]}`, this, current[changes[i]], options);
-            Debug.log(`ParseModel - set - 6 - trigger - changeKey: ${changes[i]}`);
+Debug.log(`ParseModel - set - 6 - trigger - changeKey: ${changes[i]}`);
          }
       }
 
@@ -638,24 +636,12 @@ class ParseModel extends Model
             options = this._pending;
             this._pending = false;
             this.trigger('change', this, options);
-            Debug.log(`ParseModel - set - 7 - trigger - change`);
+Debug.log(`ParseModel - set - 7 - trigger - change`);
          }
       }
       this._pending = false;
       this._changing = false;
       return this;
-   }
-
-   /**
-    * In order to deserialize Classes associated with `Parse.Object.registerSubclass()` this method is called and
-    * the data must be forwarded onto the backing Parse.Object of ParseModel.
-    *
-    * @param {boolean}  existed - Sets the existed state.
-    * @private
-    */
-   _setExisted(existed)
-   {
-      this.parseObject._setExisted(existed);
    }
 
    /**
