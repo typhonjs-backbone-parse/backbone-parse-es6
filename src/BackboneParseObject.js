@@ -1,12 +1,12 @@
 'use strict';
 
-import Parse   from 'parse';
-import encode  from 'parse/lib/browser/encode.js';
+import ParseObject   from 'parse/lib/browser/ParseObject.js';
+import encode        from 'parse/lib/browser/encode.js';
 
 /**
  * Provides overrides necessary to integrate Parse serialization / deserialization with Backbone.
  */
-export default class BackboneParseObject extends Parse.Object
+export default class BackboneParseObject extends ParseObject
 {
    /**
     * Provides a constructor for clone.
