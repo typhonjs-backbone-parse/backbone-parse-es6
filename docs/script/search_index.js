@@ -1614,6 +1614,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "backbone-parse-es6/src/backboneparseobject.js~backboneparseobject#constructor",
+    "class/backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject.html#instance-constructor-constructor",
+    "backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject#constructor",
+    "method"
+  ],
+  [
     "backbone-parse-es6/src/backboneparseobject.js~backboneparseobject#tojson",
     "class/backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject.html#instance-method-toJSON",
     "backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject#toJSON",

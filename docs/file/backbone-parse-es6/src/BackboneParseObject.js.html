@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl">
-  <title data-ice="title">backbone-parse-es6 API Document</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">backbone-parse-es6/src/BackboneParseObject.js | backbone-parse-es6 API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -64,38 +64,114 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p><img src="http://i.imgur.com/VNuAXXX.png" alt="Backbone-Parse-ES6"></p>
-<p><a href="https://github.com/jashkenas/backbone"><img src="https://img.shields.io/badge/backbone-1.2.3-yellowgreen.svg?style=flat" alt="Backbone"></a>
-<a href="https://github.com/ParsePlatform/Parse-SDK-JS"><img src="https://img.shields.io/badge/parse-1.6.14-yellowgreen.svg?style=flat" alt="Parse"></a>
-<a href="http://js.docs.typhonrt.org/backbone-parse-es6/"><img src="http://js.docs.typhonrt.org/backbone-parse-es6/badge.svg" alt="Documentation"></a>
-<a href="https://en.wikipedia.org/wiki/Indent_style#Allman_style"><img src="https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat" alt="Code Style"></a>
-<a href="https://github.com/typhonjs/backbone-parse-es6/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat" alt="License"></a></p>
-<p><a href="https://travis-ci.org/typhonjs-parse/backbone-parse-es6"><img src="https://travis-ci.org/typhonjs-parse/backbone-parse-es6.svg?branch=master" alt="Build Status"></a>
-<a href="https://www.versioneye.com/user/projects/568e367d9c1b9802c5000019"><img src="https://www.versioneye.com/user/projects/568e367d9c1b9802c5000019/badge.svg?style=flat" alt="Dependency Status"></a></p>
-<p>Backbone supplies structure to JavaScript-heavy applications by providing models with key-value binding and custom events, collections with a rich API of enumerable functions, views with declarative event handling.</p>
-<p>backbone-parse-es6 is an extension to <a href="https://github.com/typhonjs/backbone-es6">backbone-es6</a> which is a fork of <a href="https://github.com/jashkenas/backbone">Backbone</a> converting and modularizing it into idiomatic ES6. The impetus for this fork is to experiment with modernizing and making Backbone easier to modify in a granular fashion. In particular the Parse JS SDK (<a href="http://www.parse.com">http://www.parse.com</a>) previously also was a fork of Backbone, but with the 1.6+ SDK release the Backbone API was unceremoniously removed. backbone-es6 provides the base for backbone-parse-es6  which provides a solution for Backbone dependent Parse users. </p>
-<p>Another reason for backbone-parse-es6 is supporting end to end documentation via ESDoc for ES6 frameworks and apps built on top of backbone-parse-es6. Two ESDoc plugins, <a href="https://github.com/typhonjs/esdoc-plugin-jspm">esdoc-plugin-jspm</a> &amp; <a href="https://github.com/typhonjs/esdoc-plugin-extends-replace">esdoc-plugin-extends-replace</a> along with a complete integrated set of Gulp tasks, <a href="https://github.com/typhonjs/typhonjs-core-gulptasks">typhonjs-core-gulptasks</a> provide documentation generation across multiple modules / source roots via JSPM along with ESLint and several JSPM &amp; NPM tasks.</p>
-<p>backbone-parse-es6 uses <a href="http://www.jspm.io">JSPM</a> / <a href="https://github.com/systemjs/systemjs">SystemJS</a> for dependency management and bundling distributions. For an example of using JSPM / SystemJS directly with backbone-parse-es6 including typhonjs-core-gulptasks support please see these demo repos:</p>
-<ul>
-<li><a href="https://github.com/typhonjs-demos/backbone-parse-es6-todos">https://github.com/typhonjs-demos/backbone-parse-es6-todos</a></li>
-<li><a href="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved">https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved</a></li>
-</ul>
-<p>When a new Backbone release is made (next 1.2.4) backbone-es6 will be updated. Tests from Backbone will be ported to backbone-es6 with the upcoming 1.2.4 release. Forthcoming tests for Parse integration will be added to this repo. </p>
-<p>This repository contains several pre-packed downloads in the <code>dist/</code> directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The &quot;global-inclusive&quot; bundle includes the latest Parse (1.6.14), jQuery (2.1.4) and Underscore (1.8.3) libraries.</p>
-<p>Please view the wiki for build instructions and other pertinent usage info:
-<a href="https://github.com/typhonjs-parse/backbone-parse-es6/wiki">https://github.com/typhonjs-parse/backbone-parse-es6/wiki</a></p>
-<p>API documentation can be found in the <code>docs/</code> directory and online here:
-<a href="http://js.docs.typhonrt.org/backbone-parse-es6/">http://js.docs.typhonrt.org/backbone-parse-es6/</a></p>
-<p>For original Backbone Docs, License, Tests, pre-packed downloads, see:
-<a href="http://backbonejs.org">http://backbonejs.org</a></p>
-<p>To suggest a feature or report a bug:
-<a href="https://github.com/typhonjs-parse/backbone-parse-es6/issues">https://github.com/typhonjs-parse/backbone-parse-es6/issues</a></p>
-<p>Many thanks to DocumentCloud &amp; all Backbone contributors.</p>
-<p>Backbone (c) 2010-present Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors</p>
-<p>backbone-parse-es6 (c) 2015-present Michael Leahy, TyphonRT Inc. </p>
-<p>Parse JS SDK (c) 2015-present Parse / Facebook </p>
-<p>backbone-parse-es6 may be freely distributed under the MIT license.</p>
-</div>
+<div class="content" data-ice="content"><h1 data-ice="title">backbone-parse-es6/src/BackboneParseObject.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+import ParseObject   from &apos;parse/lib/browser/ParseObject.js&apos;;
+import encode        from &apos;parse/lib/browser/encode.js&apos;;
+
+/**
+ * Provides overrides necessary to integrate Parse serialization / deserialization with Backbone.
+ */
+export default class BackboneParseObject extends ParseObject
+{
+   /**
+    * Provides a constructor for clone.
+    *
+    * @param {string | object}   className - class name of object that has className field.
+    * @param {object}            attributes - attributes hash.
+    * @param {object}            options - Optional parameters
+    */
+   constructor(className, attributes, options)
+   {
+      super(className, attributes, options);
+   }
+
+   /**
+    * Creates a new BackboneParseObject with identical attributes to this one.
+    * @method clone
+    * @return {BackboneParseObject}
+    */
+   clone()
+   {
+      const clone = new this.constructor();
+
+      if (!clone.className) { clone.className = this.className; }
+      if (clone.set) { clone.set(this.attributes); }
+
+      return clone;
+   }
+
+   /**
+    * Defers to Parse.Object _getSaveJSON for serializing and then filters all results assigning associated
+    * `parseObject` entries which indicate a serialized Backbone.Model (ParseModel) to the entry itself which is
+    * what Parse expects to receive.
+    *
+    * @returns {*}
+    * @private
+    */
+   _getSaveJSON()
+   {
+      const json = super._getSaveJSON();
+
+      for (const attr in json)
+      {
+         if (typeof json[attr].parseObject === &apos;object&apos;)
+         {
+            json[attr] = json[attr].parseObject;
+         }
+      }
+
+      return json;
+   }
+
+   /**
+    * Returns a JSON version of the object suitable for saving to Parse.
+    *
+    * There is a subtle difference in this version which is if `attrs[attr].parseObject === &apos;object&apos;` then the
+    * associated `parseObject` is encoded directly.
+    *
+    * @param {*}  seen - Provides an array of previously seen entries.
+    * @return {Object}
+    * @override
+    * */
+   toJSON(seen)
+   {
+      const seenEntry = this.id ? `${this.className}:${this.id}` : this;
+      seen = seen || [seenEntry];
+
+      const json = {};
+      const attrs = this.attributes;
+
+      for (const attr in attrs)
+      {
+         if ((attr === &apos;createdAt&apos; || attr === &apos;updatedAt&apos;) &amp;&amp; attrs[attr].toJSON)
+         {
+            json[attr] = attrs[attr].toJSON();
+         }
+         else if (typeof attrs[attr].parseObject === &apos;object&apos;)
+         {
+            json[attr] = encode(attrs[attr].parseObject, false, false, seen);
+         }
+         else
+         {
+            json[attr] = encode(attrs[attr], false, false, seen);
+         }
+      }
+      const pending = this._getPendingOps();
+      for (const attr in pending[0])
+      {
+         json[attr] = pending[0][attr].toJSON();
+      }
+
+      if (this.id)
+      {
+         json.objectId = this.id;
+      }
+      return json;
+   }
+}</code></pre>
+
 </div>
 
 <footer class="footer">
