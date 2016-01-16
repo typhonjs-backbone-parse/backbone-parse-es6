@@ -67,13 +67,13 @@
 <div class="content" data-ice="content"><h1 data-ice="title">backbone-parse-es6/src/BackboneParseObject.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
 
-import ParseObject   from &apos;parse/lib/browser/ParseObject.js&apos;;
-import encode        from &apos;parse/lib/browser/encode.js&apos;;
+import Parse   from &apos;parse&apos;;
+import encode  from &apos;parse/lib/browser/encode.js&apos;;
 
 /**
  * Provides overrides necessary to integrate Parse serialization / deserialization with Backbone.
  */
-export default class BackboneParseObject extends ParseObject
+export default class BackboneParseObject extends Parse.Object
 {
    /**
     * Provides a constructor for clone.
