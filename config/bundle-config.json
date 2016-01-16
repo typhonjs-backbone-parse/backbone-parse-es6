@@ -4,17 +4,18 @@
       {
          "destBaseDir": "./dist",
          "destFilename": "backbone-parse.js",
-         "formats": ["amd", "cjs"],
+         "formats": ["amd", "cjs", "umd"],
          "mangle": false,
          "minify": false,
-         "src": "src/ModuleRuntime.js - [jquery] - [underscore] - [parse]",
+         "src": "src/ModuleRuntime.js",
          "extraConfig":
          {
             "meta":
             {
                "jquery": { "build": false },
                "underscore": { "build": false },
-               "parse": { "build": false }
+               "parse": { "build": false },
+               "parse/lib/browser/*": { "build": false }
             }
          }
       },
@@ -22,17 +23,18 @@
       {
          "destBaseDir": "./dist",
          "destFilename": "backbone-parse.min.js",
-         "formats": ["amd", "cjs"],
+         "formats": ["amd", "cjs", "umd"],
          "mangle": true,
          "minify": true,
-         "src": "src/ModuleRuntime.js - [jquery] - [underscore] - [parse]",
+         "src": "src/ModuleRuntime.js",
          "extraConfig":
          {
             "meta":
             {
                "jquery": { "build": false },
                "underscore": { "build": false },
-               "parse": { "build": false }
+               "parse": { "build": false },
+               "parse/lib/browser/*": { "build": false }
             }
          }
       },
