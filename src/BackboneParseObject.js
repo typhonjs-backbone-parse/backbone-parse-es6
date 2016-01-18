@@ -67,7 +67,7 @@ export default class BackboneParseObject extends Parse.Object
     * @param {*}  seen - Provides an array of previously seen entries.
     * @return {Object}
     * @override
-    * */
+    */
    toJSON(seen)
    {
       const seenEntry = this.id ? `${this.className}:${this.id}` : this;
