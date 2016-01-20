@@ -90,7 +90,7 @@ class ParseModel extends Model
 
       const hasClassNameGetter = !_.isUndefined(this.className);
       const hasCollectionGetter = !_.isUndefined(this.collection);
-      const hasSubclassGetter = !_.isUndefined(this.subClass);
+      const hasSubclassGetter = !_.isUndefined(this.subClasses);
 
       if (hasClassNameGetter)
       {
@@ -100,12 +100,35 @@ class ParseModel extends Model
          }
       }
 
-      if (hasSubclassGetter)
+      if (options.subClasses && !hasSubclassGetter)
       {
-         if (!Utils.isTypeOf(this.subClass, ParseModel))
+         /**
+          * Object hash of name / class to register as sub classes.
+          * @type {object}
+          */
+         this.subClasses = options.subClasses;
+      }
+
+      // Verify any sub class data.
+      if (this.subClasses)
+      {
+         if (!_.isObject(this.subClasses))
          {
-            throw new TypeError('ctor - getter for subClass is not a sub class of ParseModel.');
+            throw new TypeError('ctor - subClasses is not an object hash.');
          }
+
+         _.each(this.subClasses, (value, key) =>
+         {
+            if (!_.isString(key))
+            {
+               throw new TypeError('ctor - subClass key is not a string.');
+            }
+
+            if (!Utils.isTypeOf(value, ParseModel))
+            {
+               throw new TypeError(`ctor - subClass is not a sub class of ParseModel for key: ${key}`);
+            }
+         });
       }
 
       let adjustedClassName;
@@ -113,7 +136,6 @@ class ParseModel extends Model
       const classNameOrParseObject = options.parseObject || options.className;
 
 Debug.log(`ParseModel - ctor - 0 - options.parseObject: ${options.parseObject}`, true);
-Debug.log(`ParseModel - ctor - 0 - options.className: ${options.className}`);
 
       if (classNameOrParseObject instanceof Parse.Object)
       {
@@ -130,9 +152,16 @@ Debug.log(`ParseModel - ctor - 0 - options.className: ${options.className}`);
           * Parse proxy ParseObject
           * @type {BackboneParseObject}
           */
-         this.parseObject = new BackboneParseObject(parseObject.className, parseObject.attributes);
-         this.parseObject.id = parseObject.id;
-         this.parseObject._localId = parseObject._localId;
+         if (!(parseObject instanceof BackboneParseObject))
+         {
+            this.parseObject = new BackboneParseObject(parseObject.className, parseObject.attributes);
+            this.parseObject.id = parseObject.id;
+            this.parseObject._localId = parseObject._localId;
+         }
+         else
+         {
+            this.parseObject = parseObject;
+         }
 
          adjustedClassName = this.parseObject.className;
       }
@@ -170,19 +199,13 @@ Debug.log(`ParseModel - ctor - 0 - options.className: ${options.className}`);
          this.className = adjustedClassName;
       }
 
-      if (options.subClass && !hasSubclassGetter)
+      // Register the given subClasses if an object hash exists.
+      if (this.subClasses)
       {
-         /**
-          * Parse class name
-          * @type {string}
-          */
-         this.subClass = options.subClass;
-      }
-
-      // Register the given subClass if it exists by the className.
-      if (this.className && this.subClass)
-      {
-         Parse.Object.registerSubclass(this.className, this.subClass);
+         _.each(this.subClasses, (value, key) =>
+         {
+            Parse.Object.registerSubclass(key, value);
+         });
       }
 
       let attrs = attributes || {};
