@@ -148,12 +148,12 @@ Debug.log(`ParseModel - ctor - 0 - options.parseObject: ${options.parseObject}`,
              ' does not equal 'parseObject' className '${parseObject.className}'.`);
          }
 
-         /**
-          * Parse proxy ParseObject
-          * @type {BackboneParseObject}
-          */
          if (!(parseObject instanceof BackboneParseObject))
          {
+            /**
+             * Parse proxy ParseObject
+             * @type {BackboneParseObject}
+             */
             this.parseObject = new BackboneParseObject(parseObject.className, parseObject.attributes);
             this.parseObject.id = parseObject.id;
             this.parseObject._localId = parseObject._localId;
