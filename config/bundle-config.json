@@ -48,10 +48,18 @@
          "src": "src/GlobalRuntime.js",
          "extraConfig":
          {
-            "map":
+            "meta":
             {
-               "jquery": "backbone-es6/src/delegateGlobalJQuery.js",
-               "underscore": "backbone-es6/src/delegateGlobalUnderscore.js"
+               "jquery": { "build": false },
+               "underscore": { "build": false }
+            }
+         },
+         "builderOptions":
+         {
+            "globalDeps":
+            {
+               "jquery": "$",
+               "underscore": "_"
             }
          }
       },
@@ -65,10 +73,18 @@
          "src": "src/GlobalRuntime.js",
          "extraConfig":
          {
-            "map":
+            "meta":
             {
-               "jquery": "backbone-es6/src/delegateGlobalJQuery.js",
-               "underscore": "backbone-es6/src/delegateGlobalUnderscore.js"
+               "jquery": { "build": false },
+               "underscore": { "build": false }
+            }
+         },
+         "builderOptions":
+         {
+            "globalDeps":
+            {
+               "jquery": "$",
+               "underscore": "_"
             }
          }
       },
