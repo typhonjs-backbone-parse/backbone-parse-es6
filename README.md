@@ -1,7 +1,7 @@
 ![Backbone-Parse-ES6](http://i.imgur.com/VNuAXXX.png)
 
 [![Backbone](https://img.shields.io/badge/backbone-1.2.3-yellowgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
-[![Parse](https://img.shields.io/badge/parse-1.6.14-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
+[![Parse](https://img.shields.io/badge/parse-1.7.0-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
 [![Documentation](http://js.docs.typhonrt.org/backbone-parse-es6/badge.svg)](http://js.docs.typhonrt.org/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 [![License](https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat)](https://github.com/typhonjs/backbone-parse-es6/blob/master/LICENSE)
