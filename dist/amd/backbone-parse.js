@@ -6371,11 +6371,11 @@ $__System.register('12', ['4', '6', '8', '9', '14', '46', '47', '49', 'a', 'b', 
                      throw new Error('ctor - getter className \'' + this.className + '\n             \' does not equal \'parseObject\' className \'' + parseObject.className + '\'.');
                   }
 
-                  /**
-                   * Parse proxy ParseObject
-                   * @type {BackboneParseObject}
-                   */
                   if (!(parseObject instanceof BackboneParseObject)) {
+                     /**
+                      * Parse proxy ParseObject
+                      * @type {BackboneParseObject}
+                      */
                      this.parseObject = new BackboneParseObject(parseObject.className, parseObject.attributes);
                      this.parseObject.id = parseObject.id;
                      this.parseObject._localId = parseObject._localId;
