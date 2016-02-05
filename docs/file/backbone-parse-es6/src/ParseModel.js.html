@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">backbone-parse-es6/src/ParseModel.js | backbone-parse-es6 API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/typhonjs-parse/backbone-parse-es6/" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/src/BackboneParseObject.js~BackboneParseObject.html">BackboneParseObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/src/ParseCollection.js~ParseCollection.html">ParseCollection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/src/ParseModel.js~ParseModel.html">ParseModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-modelExtend">modelExtend</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseExtend">parseExtend</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parseSync">parseSync</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parseCollection">parseCollection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parseModel">parseModel</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">backbone-es6/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Backbone.js~Backbone.html">Backbone</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Collection.js~Collection.html">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Debug.js~Debug.html">Debug</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/History.js~History.html">History</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Router.js~Router.html">Router</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/Utils.js~Utils.html">Utils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/backbone-es6@master/src/View.js~View.html">View</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extend">extend</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sync">sync</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BackboneProxy">BackboneProxy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-collection">collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-model">model</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-backbone-common/src</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-typhonExtend">typhonExtend</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-backbone-events/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-events@master/src/Events.js~Events.html">Events</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-events@master/src/TyphonEvents.js~TyphonEvents.html">TyphonEvents</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-backbone-query/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html">BackboneQuery</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">typhonjs-core-utils/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/backbone-parse-es6/jspm_packages/github/typhonjs/typhonjs-core-utils@master/src/Utils.js~Utils.html">Utils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-btoa">btoa</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">backbone-parse-es6/src/ParseModel.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+import _                   from &apos;underscore&apos;;
+import Parse               from &apos;parse&apos;;
+
+import Model               from &apos;backbone-es6/src/Model.js&apos;;
+import BBUtils             from &apos;backbone-es6/src/Utils.js&apos;;
+
+import BackboneParseObject from &apos;./BackboneParseObject.js&apos;;
+
+import Utils               from &apos;typhonjs-core-utils/src/Utils.js&apos;;
+
+import Debug               from &apos;backbone-es6/src/Debug.js&apos;;
+
+/**
+ * ParseModel - Models are the heart of any JavaScript application. (http://backbonejs.org/#Model)
+ * --------------
+ *
+ * This implementation of Backbone.Model is backed by a ParseObject. If a ParseObject is not provided in `options`
+ * then a `className` for the associated table must be defined as options.className or a getter method such as
+ * `get className() { return &apos;&lt;CLASSNAME&gt;&apos;; }`. All methods that trigger synchronization return an ES6 Promise or a
+ * ParsePromise. This includes the following methods: destroy, fetch, save. Rather than passing in a error or success
+ * callback one can use promises to post a follow up chain of actions to complete.
+ *
+ * Models are the heart of any JavaScript application, containing the interactive data as well as a large part of the
+ * logic surrounding it: conversions, validations, computed properties, and access control.
+ *
+ * Backbone-Parse-ES6 supports the older &quot;extend&quot; functionality of the Parse SDK. You can still use &quot;extend&quot; to extend
+ * Backbone.Model with your domain-specific methods, and Model provides a basic set of functionality for managing
+ * changes. Refer to `modelExtend` which provides the &quot;extend&quot; functionality for ParseModel. It differs from the
+ * standard Backbone extend functionality such that the first parameter requires a class name string for the
+ * associated table.
+ *
+ * It is recommended though to use ES6 syntax for working with Backbone-Parse-ES6 foregoing the older &quot;extend&quot;
+ * mechanism.
+ *
+ * Create a new model with the specified attributes. A client id (`cid`) is automatically generated &amp; assigned for you.
+ *
+ * If you pass a {collection: ...} as the options, the model gains a collection property that will be used to indicate
+ * which collection the model belongs to, and is used to help compute the model&apos;s url. The model.collection property is
+ * normally created automatically when you first add a model to a collection. Note that the reverse is not true, as
+ * passing this option to the constructor will not automatically add the model to the collection. Useful, sometimes.
+ *
+ * If {parse: true} is passed as an option, the attributes will first be converted by parse before being set on the
+ * model.
+ *
+ * Please see the `Model` documentation for relevant information about the parent class / implementation.
+ *
+ * @example
+ * import Backbone from &apos;backbone&apos;;
+ *
+ * export default class MyModel extends Backbone.Model
+ * {
+ *    initialize() { alert(&apos;initialized!); }
+ * }
+ *
+ * older extend example:
+ * export default Backbone.Model.extend(&apos;&lt;CLASSNAME&gt;&apos;,
+ * {
+ *    initialize: { alert(&apos;initialized!); }
+ * });
+ *
+ * @example
+ * The following methods return a promise - destroy, fetch, save. An example on using promises for save:
+ *
+ * model.save().then(() =&gt;
+ * {
+ *    // success
+ * },
+ * (error) =&gt;
+ * {
+ *    // error
+ * });
+ */
+class ParseModel extends Model
+{
+   /**
+    * When creating an instance of a model, you can pass in the initial values of the attributes, which will be set on
+    * the model. If you define an initialize function, it will be invoked when the model is created.
+    *
+    * @param {object}   attributes - Optional attribute hash of original values to set.
+    * @param {object}   options    - Optional parameters
+    */
+   constructor(attributes = {}, options = {})
+   {
+      super(attributes, _.extend({ abortCtor: true }, options));
+
+      // Allows child classes to abort constructor execution.
+      if (_.isBoolean(options.abortCtor) &amp;&amp; options.abortCtor) { return; }
+
+      const hasClassNameGetter = !_.isUndefined(this.className);
+      const hasCollectionGetter = !_.isUndefined(this.collection);
+      const hasSubclassGetter = !_.isUndefined(this.subClasses);
+
+      if (hasClassNameGetter)
+      {
+         if (!_.isString(this.className))
+         {
+            throw new TypeError(&apos;ctor - getter for className is not a string.&apos;);
+         }
+      }
+
+      if (options.subClasses &amp;&amp; !hasSubclassGetter)
+      {
+         /**
+          * Object hash of name / class to register as sub classes.
+          * @type {object}
+          */
+         this.subClasses = options.subClasses;
+      }
+
+      // Verify any sub class data.
+      if (this.subClasses)
+      {
+         if (!_.isObject(this.subClasses))
+         {
+            throw new TypeError(&apos;ctor - subClasses is not an object hash.&apos;);
+         }
+
+         _.each(this.subClasses, (value, key) =&gt;
+         {
+            if (!_.isString(key))
+            {
+               throw new TypeError(&apos;ctor - subClass key is not a string.&apos;);
+            }
+
+            if (!Utils.isTypeOf(value, ParseModel))
+            {
+               throw new TypeError(`ctor - subClass is not a sub class of ParseModel for key: ${key}`);
+            }
+         });
+      }
+
+      let adjustedClassName;
+
+      const classNameOrParseObject = options.parseObject || options.className;
+
+Debug.log(`ParseModel - ctor - 0 - options.parseObject: ${options.parseObject}`, true);
+
+      if (classNameOrParseObject instanceof Parse.Object)
+      {
+         const parseObject = classNameOrParseObject;
+
+         // Insure that any getter for className is the same as the Parse.Object
+         if (hasClassNameGetter &amp;&amp; this.className !== parseObject.className)
+         {
+            throw new Error(`ctor - getter className &apos;${this.className}
+             &apos; does not equal &apos;parseObject&apos; className &apos;${parseObject.className}&apos;.`);
+         }
+
+         if (!(parseObject instanceof BackboneParseObject))
+         {
+            /**
+             * Parse proxy ParseObject
+             * @type {BackboneParseObject}
+             */
+            this.parseObject = new BackboneParseObject(parseObject.className, parseObject.attributes);
+            this.parseObject.id = parseObject.id;
+            this.parseObject._localId = parseObject._localId;
+         }
+         else
+         {
+            this.parseObject = parseObject;
+         }
+
+         adjustedClassName = this.parseObject.className;
+      }
+      else  // Attempt to create Parse.Object from classNameOrParseObject, getter, or from &quot;extend&quot; construction.
+      {
+         if (_.isString(classNameOrParseObject))
+         {
+            adjustedClassName = classNameOrParseObject;
+            this.parseObject = new BackboneParseObject(adjustedClassName, attributes);
+         }
+         // Check for getter &quot;get className()&quot; usage.
+         else if (hasClassNameGetter)
+         {
+            this.parseObject = new BackboneParseObject(this.className, attributes);
+         }
+         // Check for className via &quot;extend&quot; usage.
+         else if (!_.isUndefined(this.__proto__ &amp;&amp; _.isString(this.__proto__.constructor.className)))
+         {
+            adjustedClassName = this.__proto__.constructor.className;
+            this.parseObject = new BackboneParseObject(adjustedClassName, attributes);
+         }
+      }
+
+      if (_.isUndefined(this.parseObject))
+      {
+         throw new TypeError(&apos;ctor - classNameOrParseObject is not a string or BackboneParseObject.&apos;);
+      }
+
+      if (!hasClassNameGetter)
+      {
+         /**
+          * Parse class name
+          * @type {string}
+          */
+         this.className = adjustedClassName;
+      }
+
+      // Register the given subClasses if an object hash exists.
+      if (this.subClasses)
+      {
+         _.each(this.subClasses, (value, key) =&gt;
+         {
+            Parse.Object.registerSubclass(key, value);
+         });
+      }
+
+      let attrs = attributes || {};
+
+      options.parse = true;
+      options.updateParseObject = _.isBoolean(options.updateParseObject) ? options.updateParseObject : true;
+
+      /**
+       * The prefix is used to create the client id which is used to identify models locally.
+       * You may want to override this if you&apos;re experiencing name clashes with model ids.
+       *
+       * @type {string}
+       */
+      this.cidPrefix = &apos;c&apos;;
+
+      /**
+       * Client side ID
+       * @type {number}
+       */
+      this.cid = _.uniqueId(this.cidPrefix);
+
+      /**
+       * The hash of attributes for this model.
+       * @type {object}
+       */
+      this.attributes = {};
+
+      if (options.collection &amp;&amp; !hasCollectionGetter)
+      {
+         /**
+          * A potentially associated collection.
+          * @type {Collection}
+          */
+         this.collection = options.collection;
+      }
+
+      /**
+       * A hash of attributes whose current and previous value differ.
+       * @type {object}
+       */
+      this.changed = {};
+
+      /**
+       * The value returned during the last failed validation.
+       * @type {*}
+       */
+      this.validationError = null;
+
+      // Allows child classes to postpone initialization.
+      if (_.isBoolean(options.abortCtorInit) &amp;&amp; options.abortCtorInit) { return; }
+
+      if (options.parse) { attrs = this.parse(this.parseObject, options) || {}; }
+
+      attrs = _.defaults({}, attrs, _.result(this, &apos;defaults&apos;));
+
+      this.set(attrs, options);
+
+      this.initialize(this, arguments);
+   }
+
+   /**
+    * Returns a new instance of the model with identical attributes.
+    *
+    * @see http://backbonejs.org/#Model-clone
+    *
+    * @returns {*}
+    */
+   clone()
+   {
+      return new this.constructor({}, { parseObject: this.parseObject.clone() });
+   }
+
+   /**
+    * Destroys the model on the server by delegating delete request to Backbone.sync and the associated ParseObject.
+    * Returns ParsePromise or ES6 Promise if the model isNew. Accepts success and error callbacks in the options hash,
+    * which will be passed (model, response, options). Triggers a &quot;destroy&quot; event on the model, which will bubble up
+    * through any collections that contain it, and a &quot;sync&quot; event, after the server has successfully acknowledged the
+    * model&apos;s deletion. Pass {wait: true} if you&apos;d like to wait for the server to respond before removing the model
+    * from the collection.
+    *
+    * @example
+    * book.destroy().then(() =&gt; {
+    *    // do something
+    * };
+    *
+    * @see http://backbonejs.org/#Model-destroy
+    *
+    * @param {object}   options - Provides optional properties used in destroying a model.
+    * @returns {Promise|ParsePromise}
+    */
+   destroy(options)
+   {
+      options = options ? _.clone(options) : {};
+      const success = options.success;
+      const wait = options.wait;
+
+      const destroy = () =&gt;
+      {
+         this.stopListening();
+         this.trigger(&apos;destroy&apos;, this, this.collection, options);
+      };
+
+      options.success = (resp) =&gt;
+      {
+         if (wait) { destroy(); }
+         if (success) { success.call(options.context, this, resp, options); }
+         if (!this.isNew()) { this.trigger(&apos;sync&apos;, this, resp, options); }
+      };
+
+      let xhr;
+
+      if (this.isNew())
+      {
+         xhr = new Promise((resolve) =&gt;
+         {
+            _.defer(options.success);
+            resolve();
+         });
+      }
+      else
+      {
+         BBUtils.wrapError(this, options);
+         xhr = this.sync(&apos;delete&apos;, this, options);
+      }
+
+      if (!wait) { destroy(); }
+
+      return xhr;
+   }
+
+   /**
+    * Has this model been saved to the server yet? If the model does not yet have an id, it is considered to be new.
+    *
+    * @see http://backbonejs.org/#Model-isNew
+    *
+    * @returns {boolean}
+    */
+   isNew()
+   {
+      return _.isUndefined(this.id);
+   }
+
+   /* eslint-disable no-unused-vars */
+   /**
+    * parse is called whenever a model&apos;s data is returned by the server, in fetch, and save. The function is passed the
+    * raw response object, and should return the attributes hash to be set on the model. This implementation
+    * requires a ParseObject and the attributes are directly taken from the attributes of the ParseObject. To keep
+    * parity with the Parse SDK the ID of the ParseObject is set as `this.id`.
+    *
+    * @see http://backbonejs.org/#Model-parse
+    *
+    * @param {object}   resp - ParseObject
+    * @param {object}   options - May include options.parseObject.
+    * @returns {object} Attributes from the ParseObject.
+    */
+   parse(resp, options)
+   {
+      /* eslint-enable no-unused-vars */
+
+Debug.log(`ParseModel - parse - 0 - resp instanceof Parse.Object: ${resp instanceof Parse.Object}`, true);
+Debug.log(`ParseModel - parse - 1 - ParseModel.prototype.idAttribute: ${ParseModel.prototype.idAttribute}`);
+
+      let merged;
+
+      if (resp instanceof Parse.Object)
+      {
+         /**
+          * Update the `id`.
+          * @type {*}
+          */
+         this.id = resp._getId();
+
+         // Store the parse ID in local attributes; Note that it won&apos;t be propagated in &quot;set()&quot;
+         const mergeId = {};
+         mergeId[ParseModel.prototype.idAttribute] = this.id;
+
+Debug.log(`ParseModel - parse - 2 - mergeId: ${mergeId[ParseModel.prototype.idAttribute]}`);
+
+         merged = _.extend(mergeId, resp.attributes);
+
+Debug.log(`ParseModel - parse - 3 - merged: ${JSON.stringify(merged)}`);
+      }
+      else if (_.isObject(resp))
+      {
+         const parseObjectId = resp[ParseModel.prototype.idAttribute];
+
+Debug.log(`ParseModel - parse - 4 - resp is an Object / existing model - parseObjectId: ${parseObjectId}; resp: ${JSON.stringify(resp)}`);
+
+         if (!_.isUndefined(parseObjectId) &amp;&amp; this.id !== parseObjectId)
+         {
+Debug.log(`ParseModel - parse - 5 - this.id !== parseObjectId; this.id: ${this.id}; parseObjectId: ${parseObjectId}`);
+
+            this.id = parseObjectId;
+         }
+
+         merged = resp;
+      }
+
+      return merged;
+   }
+
+   /**
+    * Save a model to your database (or alternative persistence layer), by delegating to Backbone.sync. Returns a
+    * Promise. The attributes hash (as in set) should contain the attributes you&apos;d like to change &#x2014; keys that aren&apos;t
+    * mentioned won&apos;t be altered &#x2014; but, a complete representation of the resource will be sent to the server. As with
+    * set, you may pass individual keys and values instead of a hash. If the model has a validate method, and validation
+    * fails, the model will not be saved. If the model isNew, the save will be a &quot;create&quot; (HTTP POST), if the model
+    * already exists on the server, the save will be an &quot;update&quot; (HTTP PUT).
+    *
+    * If instead, you&apos;d only like the changed attributes to be sent to the server, call model.save(attrs,
+    * {patch: true}). You&apos;ll get an HTTP PATCH request to the server with just the passed-in attributes.
+    *
+    * Calling save with new attributes will cause a &quot;change&quot; event immediately, a &quot;request&quot; event as the Ajax request
+    * begins to go to the server, and a &quot;sync&quot; event after the server has acknowledged the successful change. Pass
+    * {wait: true} if you&apos;d like to wait for the server before setting the new attributes on the model.
+    *
+    * In particular this method is overridden to be able to support resolving Parse.Pointer deserializing which
+    * requires the deserialized data to be parsed by the associated models.
+    *
+    * @example
+    * const book = new Backbone.Model({
+    *    title: &apos;The Rough Riders&apos;,
+    *    author: &apos;Theodore Roosevelt&apos;
+    *    className: &apos;Book&apos;
+    * });
+    *
+    * book.save();
+    *
+    * book.save({author: &quot;Teddy&quot;});
+    *
+    * or use full ES6 syntax:
+    *
+    * class Book extends Backbone.Model
+    * {
+    *    get className() { return &apos;Book&apos;; }
+    *    get subClass() { return Book; }     // If subClass is set this class will be registered with Parse.
+    * }                                      // Object.registerSubclass()
+    *
+    * const book = new Book({
+    *    title: &apos;The Rough Riders&apos;,
+    *    author: &apos;Theodore Roosevelt&apos;
+    * });
+    *
+    * @see http://backbonejs.org/#Model-save
+    *
+    * @param {key|object}  key - Either a key defining the attribute to store or a hash of keys / values to store.
+    * @param {*}           val - Any type to store in model.
+    * @param {object}      options - Optional parameters.
+    * @returns {Promise}
+    */
+   save(key, val, options)
+   {
+      let attrs;
+
+      if (Utils.isNullOrUndef(key) || typeof key === &apos;object&apos;)
+      {
+Debug.log(`ParseModel - save - 0`);
+
+         attrs = key;
+         options = val;
+      }
+      else
+      {
+Debug.log(`ParseModel - save - 1`);
+
+         (attrs = {})[key] = val;
+      }
+
+      // Save any previous options.success function.
+      const success = !Utils.isNullOrUndef(options) ? options.success : undefined;
+
+Debug.log(`ParseModel - save - 2 - options.success defined: ${success !== undefined}`);
+
+      options = options || {};
+
+      options.success = (model, resp, options) =&gt;
+      {
+         // Execute previously cached success function. Must do this first before resolving any potential
+         // child object changes.
+         if (success)
+         {
+Debug.log(&apos;ParseModel - save - 3 - invoking original options.success.&apos;);
+            success.call(options.context, this, resp, options);
+         }
+
+Debug.log(&apos;ParseModel - save - 4 - invoking ParseModel success.&apos;);
+
+         const modelAttrs = this.attributes;
+         for (const attr in modelAttrs)
+         {
+            const field = modelAttrs[attr];
+
+            // Here is the key part as if the associated Parse.Object id is different than the model id it
+            // needs to be parsed and data set to the Backbone.Model.
+            if (field.parseObject &amp;&amp; field.parseObject.id !== field.id)
+            {
+               field.set(field.parse(field.parseObject), options);
+            }
+         }
+      };
+
+      return super.save(attrs, options);
+   }
+
+   /**
+    * Set a hash of attributes (one or many) on the model and potentially on the associated ParseObject. If any of the
+    * attributes change the model&apos;s state, a &quot;change&quot; event will be triggered on the model. Change events for specific
+    * attributes are also triggered, and you can bind to those as well, for example: change:title, and change:content.
+    * You may also pass individual keys and values. In addition option.updateParseObject may contain a boolean to
+    * indicate whether the associated ParseObject should be updated.
+    *
+    * @example
+    * note.set({ title: &quot;March 20&quot;, content: &quot;In his eyes she eclipses...&quot; });
+    *
+    * book.set(&quot;title&quot;, &quot;A Scandal in Bohemia&quot;);
+    *
+    * @see http://backbonejs.org/#Model-set
+    *
+    * @param {object|string}  key      - Either a string defining a key or a key / value hash.
+    * @param {*|object}       val      - Either any type to store or the shifted options hash.
+    * @param {object}         options  - Optional parameters.
+    * @returns {*}
+    */
+   set(key, val, options = {})
+   {
+      if (Utils.isNullOrUndef(key)) { return this; }
+
+      // Handle both `&quot;key&quot;, value` and `{key: value}` -style arguments.
+      let attrs;
+      if (typeof key === &apos;object&apos;)
+      {
+         attrs = key;
+         options = val || {};
+      }
+      else
+      {
+         (attrs = {})[key] = val;
+      }
+
+      // Run validation.
+      if (!this._validate(attrs, options)) { return false; }
+
+      // Extract attributes and options.
+      const unset = options.unset;
+      const silent = options.silent;
+      const updateParseObject = !_.isUndefined(options.updateParseObject) ? options.updateParseObject : true;
+
+      const changes = [];
+      const changing = this._changing;
+      this._changing = true;
+
+Debug.log(`ParseModel - set - 0 - changing: ${changing}; attrs: ${JSON.stringify(attrs)}; options: ${JSON.stringify(options)}`, true);
+
+      if (!changing)
+      {
+         this._previousAttributes = _.clone(this.attributes);
+         this.changed = {};
+      }
+
+      const current = this.attributes;
+      const changed = this.changed;
+      const prev = this._previousAttributes;
+
+      // For each `set` attribute, update or delete the current value.
+      for (const attr in attrs)
+      {
+         val = attrs[attr];
+
+         if (!_.isEqual(current[attr], val))
+         {
+Debug.log(`ParseModel - set - 1 - current[attr] != val for key: ${attr}`);
+            changes.push(attr);
+         }
+
+         let actuallyChanged = false;
+
+         if (!_.isEqual(prev[attr], val))
+         {
+Debug.log(`ParseModel - set - 2 - prev[attr] != val for key: ${attr}`);
+
+            changed[attr] = val;
+            actuallyChanged = true;
+         }
+         else
+         {
+Debug.log(`ParseModel - set - 3 - prev[attr] == val delete changed for key: ${attr}`);
+            delete changed[attr];
+         }
+
+         if (unset)
+         {
+            let unsetSuccess = !updateParseObject;
+
+            // Ignore any change to the Parse.Object id
+            if (attr === ParseModel.prototype.idAttribute)
+            {
+               continue;
+            }
+
+            if (updateParseObject &amp;&amp; this.parseObject !== null &amp;&amp; attr !== ParseModel.prototype.idAttribute)
+            {
+               // Parse.Object returns itself on success
+               unsetSuccess = this.parseObject === this.parseObject.unset(attr);
+
+Debug.log(`ParseModel - set - 4 - unset Parse.Object - attr: ${attr}; unsetSuccess: ${unsetSuccess}`);
+            }
+
+            if (unsetSuccess)
+            {
+               delete current[attr];
+            }
+         }
+         else
+         {
+            let setSuccess = !updateParseObject || attr === ParseModel.prototype.idAttribute;
+
+            if (actuallyChanged &amp;&amp; updateParseObject &amp;&amp; this.parseObject !== null &amp;&amp;
+             attr !== ParseModel.prototype.idAttribute)
+            {
+               // Parse.Object returns itself on success
+               setSuccess = this.parseObject === this.parseObject.set(attr, val, options);
+
+Debug.log(`ParseModel - set - 5 - set Parse.Object - attr: ${attr}; setSuccess: ${setSuccess}`);
+            }
+
+            if (actuallyChanged &amp;&amp; setSuccess)
+            {
+               current[attr] = val;
+            }
+         }
+      }
+
+      // Trigger all relevant attribute changes.
+      if (!silent)
+      {
+         if (changes.length) { this._pending = options; }
+         for (let i = 0; i &lt; changes.length; i++)
+         {
+            this.trigger(`change:${changes[i]}`, this, current[changes[i]], options);
+Debug.log(`ParseModel - set - 6 - trigger - changeKey: ${changes[i]}`);
+         }
+      }
+
+      // You might be wondering why there&apos;s a `while` loop here. Changes can
+      // be recursively nested within `&quot;change&quot;` events.
+      if (changing) { return this; }
+      if (!silent)
+      {
+         while (this._pending)
+         {
+            options = this._pending;
+            this._pending = false;
+            this.trigger(&apos;change&apos;, this, options);
+Debug.log(`ParseModel - set - 7 - trigger - change`);
+         }
+      }
+      this._pending = false;
+      this._changing = false;
+      return this;
+   }
+
+   /**
+    * Return a copy of the model&apos;s `attributes` object.
+    *
+    * @returns {object} JSON representation of this model.
+    */
+   toJSON()
+   {
+      return this.parseObject.toJSON();
+   }
+
+   /**
+    * This is an unsupported operation for backbone-parse-es6.
+    */
+   url()
+   {
+      throw new Error(&apos;ParseModel - url() - Unsupported Operation.&apos;);
+   }
+}
+
+// The Parse.Object id is set in Backbone.Model attributes to _parseObjectId. In set any change to _parseObjectId is not
+// propagated to the associated Parse.Object. Note that the Parse.Object id is also set to this.id in &quot;parse()&quot;.
+ParseModel.prototype.idAttribute = &apos;_parseObjectId&apos;;
+
+/**
+ * Exports the ParseModel class.
+ */
+export default ParseModel;</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
