@@ -14,12 +14,12 @@
   "jspm": {
     "main": "src/ModuleRuntime.js",
     "dependencies": {
-      "backbone-es6": "github:typhonjs/backbone-es6@master",
-      "parse": "npm:parse@^1.7.0",
-      "typhonjs-core-backbone-common": "github:typhonjs/typhonjs-core-backbone-common@master",
-      "typhonjs-core-backbone-events": "github:typhonjs/typhonjs-core-backbone-events@master",
-      "typhonjs-core-backbone-query": "github:typhonjs/typhonjs-core-backbone-query@master",
-      "typhonjs-core-utils": "github:typhonjs/typhonjs-core-utils@master",
+      "backbone-es6": "github:typhonjs-backbone/backbone-es6@master",
+      "parse": "npm:parse@^1.7.1",
+      "typhonjs-core-backbone-common": "github:typhonjs-backbone/typhonjs-core-backbone-common@master",
+      "typhonjs-core-backbone-events": "github:typhonjs-backbone/typhonjs-core-backbone-events@master",
+      "typhonjs-core-backbone-query": "github:typhonjs-backbone/typhonjs-core-backbone-query@master",
+      "typhonjs-core-utils": "github:typhonjs-common/typhonjs-core-utils@master",
       "underscore": "npm:underscore@^1.8.3"
     },
     "devDependencies": {
