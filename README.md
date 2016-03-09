@@ -1,7 +1,7 @@
 ![Backbone-Parse-ES6](http://i.imgur.com/VNuAXXX.png)
 
 [![Backbone](https://img.shields.io/badge/backbone-1.2.3-yellowgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
-[![Parse](https://img.shields.io/badge/parse-1.7.0-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
+[![Parse](https://img.shields.io/badge/parse-1.7.1-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
 [![Documentation](http://js.docs.typhonrt.org/typhonjs-parse/backbone-parse-es6/badge.svg)](http://js.docs.typhonrt.org/typhonjs-parse/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 [![License](https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat)](https://github.com/typhonjs/backbone-parse-es6/blob/master/LICENSE)
@@ -22,9 +22,9 @@ backbone-parse-es6 uses [JSPM](http://www.jspm.io) / [SystemJS](https://github.c
 - https://github.com/typhonjs-demos/backbone-parse-es6-todos
 - https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved
 
-When a new Backbone release is made (next 1.2.4) backbone-es6 will be updated. Tests from Backbone will be ported to backbone-es6 with the upcoming 1.2.4 release. Forthcoming tests for Parse integration will be added to this repo. 
+When a new Backbone release is made (next 1.3.2) backbone-es6 will be updated. Tests from Backbone will be ported to backbone-es6 with the upcoming 1.3.2 release. Forthcoming tests for Parse integration will be added to this repo. 
 
-This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.6.14), jQuery (2.2.0) and Underscore (1.8.3) libraries.
+This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.7.1), jQuery (2.2.1) and Underscore (1.8.3) libraries.
 
 Please view the wiki for build instructions and other pertinent usage info:
 https://github.com/typhonjs-parse/backbone-parse-es6/wiki
