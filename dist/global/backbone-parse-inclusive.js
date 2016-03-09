@@ -14715,16 +14715,14 @@ $__System.register('4e', ['7', '3a', '4c', '4d', '3c'], function (_export) {
             };
 
             Parse.Object.fromJSON = function (json) {
-               console.log('!! ParseObject.MY-fromJSON');
-
                if (!json.className) {
                   throw new Error('Cannot create an object without a className');
                }
 
                var constructor = Parse.Object.getSubclass(json.className);
                var parseObject = new Parse.Object(json.className);
-
                var otherAttributes = {};
+
                for (var attr in json) {
                   if (attr !== 'className' && attr !== '__type') {
                      otherAttributes[attr] = json[attr];
