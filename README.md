@@ -25,7 +25,7 @@ When a new Backbone release is made (next 1.3.2) backbone-es6 will be updated. T
 
 This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.7.1), jQuery (2.2.1) and Underscore (1.8.3) libraries.
 
-API documentation can be found in the `docs/` directory and online here:
+API documentation can be found online here:
 http://js.docs.typhonrt.org/typhonjs-parse/backbone-parse-es6/
 
 For original Backbone Docs, License, Tests, pre-packed downloads, see:
