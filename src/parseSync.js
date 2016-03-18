@@ -17,7 +17,7 @@ const syncCollection = (method, collection, options) =>
 {
 Debug.log(`sync - syncCollection - 0 - method: ${method}; collection.query: ${collection.query.toJSON()}`, true);
 
-   switch(method)
+   switch (method)
    {
       case 'create':
       case 'delete':
@@ -54,7 +54,7 @@ Debug.log(`sync - syncModel - 0 - method: ${method}`, true);
       throw new Error('syncModel - model.parseObject is undefined or null.');
    }
 
-   switch(method)
+   switch (method)
    {
       case 'create':
          return model.parseObject.save(null, options);
