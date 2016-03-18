@@ -2,9 +2,9 @@
 
 [![Backbone](https://img.shields.io/badge/backbone-1.2.3-yellowgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
 [![Parse](https://img.shields.io/badge/parse-1.7.1-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
-[![Documentation](http://js.docs.typhonrt.org/typhonjs-backbone-parse/backbone-parse-es6/badge.svg)](http://js.docs.typhonrt.org/typhonjs-backbone-parse/backbone-parse-es6/)
+[![Documentation](http://js.docs.typhonrt.org/typhonjs-parse/backbone-parse-es6/badge.svg)](http://js.docs.typhonrt.org/typhonjs-parse/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
-[![License](https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat)](https://github.com/typhonjs-backbone-parse/backbone-parse-es6/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MPLv2-yellowgreen.svg?style=flat)](https://github.com/typhonjs-backbone-parse/backbone-parse-es6/blob/master/LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/typhonjs/TyphonJS.svg)](https://gitter.im/typhonjs/TyphonJS)
 
 [![Build Status](https://travis-ci.org/typhonjs-backbone-parse/backbone-parse-es6.svg?branch=master)](https://travis-ci.org/typhonjs-backbone-parse/backbone-parse-es6)
