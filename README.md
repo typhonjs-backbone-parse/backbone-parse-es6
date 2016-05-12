@@ -1,8 +1,8 @@
 ![Backbone-Parse-ES6](http://i.imgur.com/VNuAXXX.png)
 
-[![Backbone](https://img.shields.io/badge/backbone-1.2.3-yellowgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
-[![Parse](https://img.shields.io/badge/parse-1.7.1-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
-[![Documentation](http://js.docs.typhonrt.org/typhonjs-parse/backbone-parse-es6/badge.svg)](http://js.docs.typhonrt.org/typhonjs-parse/backbone-parse-es6/)
+[![Backbone](https://img.shields.io/badge/backbone-1.3.3-yellowgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
+[![Parse](https://img.shields.io/badge/parse-1.8.4-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
+[![Documentation](http://docs.typhonjs.io/typhonjs-backbone-parse/backbone-parse-es6/badge.svg)](http://docs.typhonjs.io/typhonjs-backbone-parse/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 [![License](https://img.shields.io/badge/license-MPLv2-yellowgreen.svg?style=flat)](https://github.com/typhonjs-backbone-parse/backbone-parse-es6/blob/master/LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/typhonjs/TyphonJS.svg)](https://gitter.im/typhonjs/TyphonJS)
@@ -17,18 +17,14 @@ backbone-parse-es6 is an extension to [backbone-es6](https://github.com/typhonjs
 
 Another reason for backbone-parse-es6 is supporting end to end documentation via ESDoc for ES6 frameworks and apps built on top of backbone-parse-es6. Two ESDoc plugins, [esdoc-plugin-jspm](https://github.com/typhonjs-node-esdoc/esdoc-plugin-jspm) & [esdoc-plugin-extends-replace](https://github.com/typhonjs-node-esdoc/esdoc-plugin-extends-replace) along with a complete integrated set of Gulp tasks, [typhonjs-core-gulptasks](https://github.com/typhonjs-node-gulp/typhonjs-core-gulptasks) provide documentation generation across multiple modules / source roots via JSPM along with ESLint and several JSPM & NPM tasks.
 
-Update (03/21/16): In the coming weeks backbone-es6 and subsequently backbone-parse-es6 is going to be updated with the latest Backbone 1.3.2 changes. A full test suite will also be created including Nightmare JS / browser testing. The final planned upgrade is to then modify backbone-es6 / backbone-parse-es6 completing full modularization by splitting it into several separate repos which will still be collected and exposed through this repo. This final separation will allow each component of backbone-parse-es6 to potentially be used independently with minimal dependencies including server side usage.
-
 backbone-parse-es6 uses [JSPM](http://www.jspm.io) / [SystemJS](https://github.com/systemjs/systemjs) for dependency management and bundling distributions. For an example of using JSPM / SystemJS directly with backbone-parse-es6 including typhonjs-core-gulptasks support please see these demo repos:
 - https://github.com/typhonjs-demos/backbone-parse-es6-todos
 - https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved
 
-When a new Backbone release is made (next 1.3.2) backbone-es6 will be updated. Tests from Backbone will be ported to backbone-es6 with the upcoming 1.3.2 release. Forthcoming tests for Parse integration will be added to this repo. 
-
-This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, and Global distributions that contain the Backbone and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.7.1), jQuery (2.2.1) and Underscore (1.8.3) libraries.
+This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, UMD and Global distributions that contain the backbone-parse-es6 and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.8.4), jQuery (2.2.3) and Underscore (1.8.3) libraries.
 
 API documentation can be found online here:
-http://js.docs.typhonrt.org/typhonjs-parse/backbone-parse-es6/
+http://docs.typhonjs.io/typhonjs-backbone-parse/backbone-parse-es6/
 
 For original Backbone Docs, License, Tests, pre-packed downloads, see:
 http://backbonejs.org
@@ -44,4 +40,4 @@ backbone-parse-es6 (c) 2015-present Michael Leahy, TyphonRT Inc.
 
 Parse JS SDK (c) 2015-present Parse / Facebook 
 
-backbone-parse-es6 may be freely distributed under the MIT license.
+backbone-parse-es6 may be freely distributed under the MPL v2.0 license.
