@@ -20,7 +20,7 @@ import typhonExtend     from 'typhonjs-core-backbone-common/src/typhonExtend.js'
 const options =
 {
    // Current version of the library. Keep in sync with Backbone version supported.
-   VERSION: '1.2.3'
+   VERSION: '1.3.3'
 };
 
 const backbone = new Backbone(ParseCollection, TyphonEvents, History, Model, Router, View, parseSync, options);
