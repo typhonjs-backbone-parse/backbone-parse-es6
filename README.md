@@ -17,6 +17,8 @@ backbone-parse-es6 is an extension to [backbone-es6](https://github.com/typhonjs
 
 Another reason for backbone-parse-es6 is supporting end to end documentation via ESDoc for ES6 frameworks and apps built on top of backbone-parse-es6. Two ESDoc plugins, [esdoc-plugin-jspm](https://github.com/typhonjs-node-esdoc/esdoc-plugin-jspm) & [esdoc-plugin-extends-replace](https://github.com/typhonjs-node-esdoc/esdoc-plugin-extends-replace) along with a complete integrated set of Gulp tasks, [typhonjs-core-gulptasks](https://github.com/typhonjs-node-gulp/typhonjs-core-gulptasks) provide documentation generation across multiple modules / source roots via JSPM along with ESLint and several JSPM & NPM tasks.
 
+Update (03/21/16): In the coming weeks backbone-es6 and subsequently backbone-parse-es6 is going to be updated with the latest Backbone 1.3.2 changes. A full test suite will also be created including Nightmare JS / browser testing. The final planned upgrade is to then modify backbone-es6 / backbone-parse-es6 completing full modularization by splitting it into several separate repos which will still be collected and exposed through this repo. This final separation will allow each component of backbone-parse-es6 to potentially be used independently with minimal dependencies including server side usage.
+
 backbone-parse-es6 uses [JSPM](http://www.jspm.io) / [SystemJS](https://github.com/systemjs/systemjs) for dependency management and bundling distributions. For an example of using JSPM / SystemJS directly with backbone-parse-es6 including typhonjs-core-gulptasks support please see these demo repos:
 - https://github.com/typhonjs-demos/backbone-parse-es6-todos
 - https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved
