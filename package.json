@@ -15,18 +15,18 @@
     "main": "src/ModuleRuntime.js",
     "dependencies": {
       "backbone-es6": "github:typhonjs-backbone/backbone-es6@master",
-      "parse": "npm:parse@^1.7.0",
+      "parse": "npm:parse@^1.0.0",
       "typhonjs-core-backbone-common": "github:typhonjs-backbone/typhonjs-core-backbone-common@master",
       "typhonjs-core-backbone-events": "github:typhonjs-backbone/typhonjs-core-backbone-events@master",
       "typhonjs-core-backbone-query": "github:typhonjs-backbone/typhonjs-core-backbone-query@master",
       "typhonjs-core-utils": "github:typhonjs-common/typhonjs-core-utils@master",
-      "underscore": "npm:underscore@^1.8.3"
+      "underscore": "npm:underscore@^1.0.0"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.8.35",
-      "babel-runtime": "npm:babel-runtime@^5.8.35",
-      "core-js": "npm:core-js@^1.2.6",
-      "jquery": "npm:jquery@^2.2.0"
+      "babel": "npm:babel-core@^5.0.0",
+      "babel-runtime": "npm:babel-runtime@^5.0.0",
+      "core-js": "npm:core-js@^1.2.0",
+      "jquery": "npm:jquery@^2.0.0"
     }
   },
   "devDependencies": {
