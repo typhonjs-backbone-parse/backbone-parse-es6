@@ -60,7 +60,7 @@ import Debug            from 'backbone-es6/src/Debug.js';
  *
  * export default new MyCollection();   // If desired drop "new" to export the class itself and not an instance.
  */
-class ParseCollection extends Collection
+export default class ParseCollection extends Collection
 {
    /**
     * When creating a Collection, you may choose to pass in the initial array of models. The collection's comparator
@@ -254,8 +254,3 @@ Debug.log(`ParseCollection - parse - 3 - parseObject: ${JSON.stringify(model.toJ
       });
    }
 }
-
-/**
- * Exports the ParseCollection class.
- */
-export default ParseCollection;
