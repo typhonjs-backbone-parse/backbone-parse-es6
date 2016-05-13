@@ -1,7 +1,7 @@
 ![Backbone-Parse-ES6](http://i.imgur.com/VNuAXXX.png)
 
 [![Backbone](https://img.shields.io/badge/backbone-1.3.3-yellowgreen.svg?style=flat)](https://github.com/jashkenas/backbone)
-[![Parse](https://img.shields.io/badge/parse-1.8.4-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
+[![Parse](https://img.shields.io/badge/parse-1.8.5-yellowgreen.svg?style=flat)](https://github.com/ParsePlatform/Parse-SDK-JS)
 [![Documentation](http://docs.typhonjs.io/typhonjs-backbone-parse/backbone-parse-es6/badge.svg)](http://docs.typhonjs.io/typhonjs-backbone-parse/backbone-parse-es6/)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 [![License](https://img.shields.io/badge/license-MPLv2-yellowgreen.svg?style=flat)](https://github.com/typhonjs-backbone-parse/backbone-parse-es6/blob/master/LICENSE)
@@ -21,7 +21,7 @@ backbone-parse-es6 uses [JSPM](http://www.jspm.io) / [SystemJS](https://github.c
 - https://github.com/typhonjs-demos/backbone-parse-es6-todos
 - https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved
 
-This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, UMD and Global distributions that contain the backbone-parse-es6 and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.8.4), jQuery (2.2.3) and Underscore (1.8.3) libraries.
+This repository contains several pre-packed downloads in the `dist/` directory. There are AMD, CJS, UMD and Global distributions that contain the backbone-parse-es6 and Parse libraries. The "global-inclusive" bundle includes the latest Parse (1.8.5), jQuery (2.2.3) and Underscore (1.8.3) libraries.
 
 API documentation can be found online here:
 http://docs.typhonjs.io/typhonjs-backbone-parse/backbone-parse-es6/
